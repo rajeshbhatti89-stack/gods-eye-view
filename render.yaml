@@ -2,6 +2,7 @@ services:
   - type: web
     name: gods-eye-view
     env: node
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm run dev
     envVars:
