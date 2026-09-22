@@ -4,12 +4,8 @@ services:
     env: node
     plan: free
     buildCommand: npm ci && npm run build
-    startCommand: npm run dev
+    startCommand: npm run preview -- --host 0.0.0.0
     envVars:
-      - key: HOST
-        value: 0.0.0.0
-      - key: PORT
-        value: 10000
       - key: GOOGLE_MAPS_API_KEY
         sync: false
       - key: CESIUM_ION_TOKEN
