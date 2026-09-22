@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  gods-eye:
+    build: .
+    container_name: gods-eye-view
+    ports:
+      - "4173:4173"
+    environment:
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      - CESIUM_ION_TOKEN=${CESIUM_ION_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HOST=0.0.0.0
+      - PORT=4173
+    restart: unless-stopped

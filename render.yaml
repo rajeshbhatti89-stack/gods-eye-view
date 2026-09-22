@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: gods-eye-view
+    env: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run dev
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+      - key: CESIUM_ION_TOKEN
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+    autoDeploy: true
