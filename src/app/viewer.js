@@ -129,6 +129,14 @@ export function createApplicationViewer({ container, creditContainer }) {
     viewer.scene.skyAtmosphere.atmosphereLightIntensity = 18;
     viewer.scene.skyAtmosphere.saturationShift = -0.12;
     viewer.scene.skyAtmosphere.brightnessShift = -0.08;
+    
+    // Strict clamp map bounds exclusively to India
+    const indiaBounds = Cesium.Rectangle.fromDegrees(68.0, 6.0, 97.4, 37.5);
+    viewer.scene.globe.cartographicLimitRectangle = indiaBounds;
+    // Set default home/view to India
+    viewer.camera.DEFAULT_VIEW_RECTANGLE = indiaBounds;
+    viewer.camera.DEFAULT_VIEW_FACTOR = 0;
+    
     return viewer;
   } catch (error) {
     viewer.destroy();

@@ -8,6 +8,13 @@ export const MAP_STACKS = [
     requiresIon: false,
   },
   {
+    id: 'bhuvan-imagery',
+    label: 'ISRO Bhuvan Satellite (India)',
+    shortLabel: 'Bhuvan',
+    kind: 'bhuvan-imagery',
+    requiresIon: false,
+  },
+  {
     id: 'bing-aerial',
     label: 'Bing Aerial',
     shortLabel: 'Aerial',

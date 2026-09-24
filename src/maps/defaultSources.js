@@ -5,7 +5,9 @@ import {
   createOsmImagery,
   createEsriImagery,
   createIonImagery,
+  createBhuvanImagery,
   ESRI_ATTRIBUTION_HTML,
+  BHUVAN_ATTRIBUTION_HTML,
 } from './imagery.js';
 import { createWorldTerrain, createKeylessTerrain } from './terrain.js';
 
@@ -25,7 +27,7 @@ export function createDefaultMapSources({
       : createKeylessTerrain,
   };
   return {
-    defaultId: googleTileset ? 'photoreal' : 'esri-imagery',
+    defaultId: googleTileset ? 'photoreal' : 'bhuvan-imagery',
     unknownId: 'photoreal',
     recoveryId: googleTileset ? 'photoreal' : null,
     state: { hasCesiumIonToken: hasIon },
@@ -49,7 +51,9 @@ export function createDefaultMapSources({
           ? () => createIonImagery(descriptor.style, ionToken)
           : descriptor.id === 'osm'
             ? createOsmImagery
-            : createEsriImagery;
+            : descriptor.id === 'bhuvan-imagery'
+              ? createBhuvanImagery
+              : createEsriImagery;
       return {
         ...common,
         imagery,
@@ -67,7 +71,20 @@ export function createDefaultMapSources({
                 message: 'Esri Satellite tile requests failed; using OSM',
               },
             }
-          : {}),
+          : descriptor.id === 'bhuvan-imagery'
+            ? {
+                credit: BHUVAN_ATTRIBUTION_HTML,
+                constructionFallback: {
+                  id: 'esri-imagery',
+                  message: 'ISRO Bhuvan is unavailable; using Esri',
+                },
+                tileFailureFallback: {
+                  id: 'esri-imagery',
+                  threshold: 2,
+                  message: 'ISRO Bhuvan requests failed; using Esri',
+                },
+              }
+            : {}),
       };
     }),
   };

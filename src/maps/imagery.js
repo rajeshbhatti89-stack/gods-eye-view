@@ -4,6 +4,21 @@ import * as Cesium from 'cesium';
 export const ESRI_ATTRIBUTION_HTML =
   '<a href="https://www.esri.com" target="_blank" rel="noopener">Powered by Esri</a>';
 
+export const BHUVAN_ATTRIBUTION_HTML =
+  '<a href="https://bhuvan.nrsc.gov.in" target="_blank" rel="noopener">Imagery © ISRO Bhuvan</a>';
+
+export function createBhuvanImagery() {
+  return new Cesium.WebMapServiceImageryProvider({
+    url: 'https://bhuvan-vec1.nrsc.gov.in/bhuvan/gwc/service/wms/',
+    layers: 'india3',
+    parameters: {
+      transparent: 'true',
+      format: 'image/jpeg'
+    },
+    credit: 'Imagery © ISRO Bhuvan'
+  });
+}
+
 export function createOsmImagery() {
   return new Cesium.OpenStreetMapImageryProvider({
     url: 'https://tile.openstreetmap.org/',
