@@ -372,7 +372,7 @@ function buildLocalInfrastructureWorkload(count) {
     const sourceId = index < split ? 'local-datacenters' : 'local-dams';
     const isDatacenter = sourceId === 'local-datacenters';
     const entry = createLocalInfrastructureOverlayEntry({
-      id: `${isDatacenter ? 'dc' : 'dam'}-${index}`,
+      id: `${isDatacenter ? 'delhi' : 'dam'}-${index}`,
       layerId: sourceId,
       position: workload.entries[index].position,
       properties: isDatacenter
@@ -435,7 +435,7 @@ function buildPhase3FirmsWorkload(count) {
       const isDatacenter = index < LOCAL_OVERLAY_COHORT_LIMIT;
       const sourceId = isDatacenter ? 'local-datacenters' : 'local-dams';
       const entry = createLocalInfrastructureOverlayEntry({
-        id: `${isDatacenter ? 'dc' : 'dam'}-${index}`,
+        id: `${isDatacenter ? 'delhi' : 'dam'}-${index}`,
         layerId: sourceId,
         position,
         properties: isDatacenter
@@ -524,7 +524,7 @@ function buildPhase3VesselsWorkload(count) {
       const isDatacenter = index < LOCAL_OVERLAY_COHORT_LIMIT;
       const sourceId = isDatacenter ? 'local-datacenters' : 'local-dams';
       const entry = createLocalInfrastructureOverlayEntry({
-        id: `${isDatacenter ? 'dc' : 'dam'}-${index}`,
+        id: `${isDatacenter ? 'delhi' : 'dam'}-${index}`,
         layerId: sourceId,
         position,
         properties: isDatacenter

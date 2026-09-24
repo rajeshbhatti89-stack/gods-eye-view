@@ -304,12 +304,12 @@ test('a shape straddling the antimeridian measures what it looks like', () => {
   );
 
   // And the ordinary case is untouched.
-  const austin = [
+  const delhi = [
     { lon: -97.75, lat: 30.26 },
     { lon: -97.74, lat: 30.26 },
     { lon: -97.74, lat: 30.27 },
   ];
-  const centroid = ringCentroid(austin);
+  const centroid = ringCentroid(delhi);
   assert.ok(Math.abs(centroid.lon + 97.7433) < 0.001);
   assert.ok(Math.abs(centroid.lat - 30.2633) < 0.001);
 });

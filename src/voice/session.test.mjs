@@ -65,12 +65,12 @@ test('alternate protocol shares session events and action execution without Real
   f.hooks.emit({
     type: 'transcript',
     role: 'user',
-    text: 'London',
+    text: 'Chennai',
     final: true,
   });
   assert.deepEqual(
-    await f.hooks.runAction('fly_to_location', { query: 'London' }),
-    { ok: true, name: 'fly_to_location', query: 'London' },
+    await f.hooks.runAction('fly_to_location', { query: 'Chennai' }),
+    { ok: true, name: 'fly_to_location', query: 'Chennai' },
   );
   f.hooks.emit({ type: 'completion', status: 'completed' });
   f.session.sendText('Next');
@@ -275,7 +275,7 @@ test('common button and annotation bindings work with an alternate adapter and c
         return {
           async start() {
             emit({ type: 'state', state: 'listening', detail: 'Ready' });
-            await runAction('fly_to_location', { query: 'London' });
+            await runAction('fly_to_location', { query: 'Chennai' });
           },
           stop() {
             emit({ type: 'state', state: 'idle' });

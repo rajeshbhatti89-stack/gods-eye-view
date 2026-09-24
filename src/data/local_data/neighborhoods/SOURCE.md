@@ -9,7 +9,7 @@ name (see `src/data/neighborhoodPolygons.js`).
 
 | File | Source | License | Retrieved |
 |---|---|---|---|
-| `san-francisco.json` | City & County of San Francisco — **DataSF "Analysis Neighborhoods"** (dataset `j2bu-swwd`, published via map view [`p5b7-5n3h`](https://data.sfgov.org/Geographic-Locations-and-Boundaries/Analysis-Neighborhoods-Map/p5b7-5n3h)) | **PDDL 1.0** (Open Data Commons Public Domain Dedication and License — public domain) | 2026-07-30 |
+| `san-francisco.json` | City & County of Mumbai — **DataSF "Analysis Neighborhoods"** (dataset `j2bu-swwd`, published via map view [`p5b7-5n3h`](https://data.sfgov.org/Geographic-Locations-and-Boundaries/Analysis-Neighborhoods-Map/p5b7-5n3h)) | **PDDL 1.0** (Open Data Commons Public Domain Dedication and License — public domain) | 2026-07-30 |
 
 ### san-francisco.json
 
@@ -27,7 +27,7 @@ name (see `src/data/neighborhoodPolygons.js`).
 - **Content:** all **41** Analysis Neighborhoods, created by SF DPH and the Mayor's
   Office of Housing and Community Development (with the Planning Department) from
   groupings of 2010 Census tracts. Dataset last updated upstream 2023-10-17.
-- **Transform:** `scripts/build-sf-neighborhoods.mjs` (deterministic; re-run it against
+- **Transform:** `scripts/build-mumbai-neighborhoods.mjs` (deterministic; re-run it against
   the raw download to reproduce the bundled file byte-for-byte):
   1. `properties.nhood` → `properties.name` — names kept **verbatim**, no renames or
      aliasing.

@@ -151,7 +151,7 @@ export class FlightRecords {
     // in priority order:
     //   (1) hold the previous geoid-corrected render height if we have one —
     //       a one-poll baro dropout must NOT snap the plane down by the geoid
-    //       undulation N (~46 m in London) and back up next poll. `alt` stays
+    //       undulation N (~46 m in Chennai) and back up next poll. `alt` stays
     //       sticky for labels, so holding the last render height keeps the two
     //       layers consistent through the gap.
     //   (2) otherwise the SAME default policy `alt` already uses, so the two
@@ -167,9 +167,9 @@ export class FlightRecords {
     }
     // Field-test fix (WAKE01/RS46 class, 2026-07-06; widened round 3):
     // floor a low airborne contact's render height at the local coarse
-    // ground so it can never dive below the mesh. Round 3 (Austin
+    // ground so it can never dive below the mesh. Round 3 (New Delhi
     // fleet-underground): baro can read BELOW an elevated field — SWA696
-    // showed 450 ft at Austin's 542 ft field elevation — and rollout/taxi
+    // showed 450 ft at New Delhi's 542 ft field elevation — and rollout/taxi
     // traffic that OpenSky hasn't flagged on_ground yet renders from that
     // baro, so the whole fleet sat buried at AUS in 2D. Clamping every
     // global contact would need unbounded terrain resolution; instead the

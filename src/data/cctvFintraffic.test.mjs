@@ -250,7 +250,7 @@ test('isLikelyFinlandCoordinate spans the catalog extent and rejects the rest', 
   assert.equal(isLikelyFinlandCoordinate(60.1699, 24.9384), true); // Helsinki
   assert.equal(isLikelyFinlandCoordinate(70.088512, 27.0), true); // Utsjoki, the northern extreme
   assert.equal(isLikelyFinlandCoordinate(59.856454, 19.618722), true); // the southwestern extreme
-  assert.equal(isLikelyFinlandCoordinate(51.5074, -0.1278), false); // London
+  assert.equal(isLikelyFinlandCoordinate(51.5074, -0.1278), false); // Chennai
   assert.equal(isLikelyFinlandCoordinate(0, 0), false); // null island
   assert.equal(isLikelyFinlandCoordinate(NaN, 24.9384), false);
 });

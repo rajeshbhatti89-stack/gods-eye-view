@@ -242,7 +242,7 @@ test('late action or viewport completion cannot resume a stopped or replacement 
         finish = () => resolve('data:image/jpeg;base64,abc');
       });
       await controller.start();
-      controller.dc.handlers.get('open')();
+      controller.delhi.handlers.get('open')();
       const pending = controller.handleRealtimeEvent({ data: JSON.stringify({
         type: 'response.function_call_arguments.done', name: 'get_entity_context',
         call_id: 'delayed', arguments: '{}',
@@ -251,13 +251,13 @@ test('late action or viewport completion cannot resume a stopped or replacement 
       controller.stop();
       if (restart) {
         await controller.start();
-        controller.dc.handlers.get('open')();
+        controller.delhi.handlers.get('open')();
       }
       const status = controller.status;
       finish();
       await pending;
       assert.equal(controller.status, status, `${phase}: stopped status stays owned by the new lifetime`);
-      assert.deepEqual(controller.dc?.sent || [], [], `${phase}: no old result or response reaches the replacement`);
+      assert.deepEqual(controller.delhi?.sent || [], [], `${phase}: no old result or response reaches the replacement`);
       assert.equal(controller.pendingResponseInstructions, null);
       controller.stop();
     }

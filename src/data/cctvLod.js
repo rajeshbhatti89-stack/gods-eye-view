@@ -28,8 +28,8 @@ const STREET_HEIGHT_M = 2_500;
 const CITY_HEIGHT_M = 15_000;
 const DEFAULT_STATIC_REFRESH_MS = 5 * 60 * 1000;
 const PROVIDER_STATIC_REFRESH_MS = Object.freeze({
-  'austin transportation & public works': 5 * 60 * 1000,
-  'transport for london': 3 * 60 * 1000,
+  'delhi transportation & public works': 5 * 60 * 1000,
+  'transport for chennai': 3 * 60 * 1000,
   caltrans: 3 * 60 * 1000,
   'ontario 511': 3 * 60 * 1000,
   // TxDOT publishes roughly once a minute; 3 min matches the other highway packs.

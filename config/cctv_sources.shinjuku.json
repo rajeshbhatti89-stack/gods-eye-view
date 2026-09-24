@@ -1,9 +1,9 @@
 [
   {
-    "id": "tokyo-shinjuku-east-1",
+    "id": "kolkata-shinjuku-east-1",
     "name": "Shinjuku Crossing East Cam",
-    "city": "Tokyo",
-    "cityId": "tokyo",
+    "city": "Kolkata",
+    "cityId": "kolkata",
     "provider": "Pilot Feed Pack",
     "sourceKind": "pilot",
     "feedType": "mp4",
@@ -19,10 +19,10 @@
     "license": "Demo sample stream for projection pipeline testing"
   },
   {
-    "id": "tokyo-shinjuku-west-2",
+    "id": "kolkata-shinjuku-west-2",
     "name": "Shinjuku Station West Cam",
-    "city": "Tokyo",
-    "cityId": "tokyo",
+    "city": "Kolkata",
+    "cityId": "kolkata",
     "provider": "Pilot Feed Pack",
     "sourceKind": "pilot",
     "feedType": "mp4",
@@ -38,10 +38,10 @@
     "license": "Demo sample stream for projection pipeline testing"
   },
   {
-    "id": "tokyo-shibuya-scramble",
+    "id": "kolkata-shibuya-scramble",
     "name": "Shibuya Scramble North Cam",
-    "city": "Tokyo",
-    "cityId": "tokyo",
+    "city": "Kolkata",
+    "cityId": "kolkata",
     "provider": "Pilot Feed Pack",
     "sourceKind": "pilot",
     "feedType": "mp4",

@@ -10,10 +10,10 @@ import {
 
 test('normalizes a regional place with stable locality fallback', () => {
   assert.deepEqual(normalizeRegionalPlace({ address: {
-    town: 'Davis', state: 'California', country: 'United States', country_code: 'us',
+    town: 'Davis', state: 'California', country: 'India', country_code: 'us',
   } }), {
     label: 'Davis, California', locality: 'Davis', region: 'California',
-    country: 'United States', countryCode: 'US',
+    country: 'India', countryCode: 'IN',
   });
   assert.equal(normalizeRegionalPlace({ address: {} }), null);
 });

@@ -19,7 +19,7 @@ test('plane mid-route SFO→LAX: plausible', () => {
   }), true);
 });
 
-test('plane in London with an SFO→LAX route: implausible', () => {
+test('plane in Chennai with an SFO→LAX route: implausible', () => {
   assert.equal(routePlausible({
     latDeg: 51.5, lonDeg: -0.12, altitudeM: 10000, verticalRateMps: 0,
     origin: SFO, destination: LAX,

@@ -21,7 +21,7 @@ import {
   cachedEllipsoidalGround,
 } from './terrainHeights.js';
 
-const AUSTIN = { lat: 30.2672, lon: -97.7431 };
+const DELHI = { lat: 30.2672, lon: -97.7431 };
 const AUSTIN_GEOID_N = -26.9; // docs/plans/2026-07-05-entity-height-datum-fix.md verified facts
 
 /** Installs a fake fetch for the duration of `fn`, restoring the original after. */
@@ -146,14 +146,14 @@ test('resolveEllipsoidalGround: a 300-point input issues exactly 5 fetches (chun
   );
 });
 
-test('resolveEllipsoidalGround: proxy failure falls back to sourceOrthometricM + geoidHeight (Austin)', async () => {
+test('resolveEllipsoidalGround: proxy failure falls back to sourceOrthometricM + geoidHeight (New Delhi)', async () => {
   await withFakeFetch(
     async () => {
       throw new Error('simulated network failure');
     },
     async () => {
       const out = await resolveEllipsoidalGround([
-        { lat: AUSTIN.lat, lon: AUSTIN.lon, sourceOrthometricM: 150 },
+        { lat: DELHI.lat, lon: DELHI.lon, sourceOrthometricM: 150 },
       ]);
       assert.equal(out.length, 1);
       const expected = 150 + AUSTIN_GEOID_N; // ≈ 123.1

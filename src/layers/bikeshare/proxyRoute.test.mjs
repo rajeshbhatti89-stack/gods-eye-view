@@ -16,7 +16,7 @@ import { createBikeshareSource } from './source.js';
 import { createModel } from './model.js';
 import { CITY_BY_ID } from './registry.js';
 
-const AUSTIN = CITY_BY_ID.get('austin-capmetro');
+const DELHI = CITY_BY_ID.get('delhi-capmetro');
 
 const STATION_INFORMATION = {
   data: {
@@ -132,8 +132,8 @@ async function withUpstream(byUrl, run) {
 
 test('the station source reaches the mounted proxy and both documents join into a station record', async () => {
   const upstreamByUrl = {
-    [AUSTIN.stationInformationUrl]: STATION_INFORMATION,
-    [AUSTIN.stationStatusUrl]: STATION_STATUS,
+    [DELHI.stationInformationUrl]: STATION_INFORMATION,
+    [DELHI.stationStatusUrl]: STATION_STATUS,
   };
 
   const { info, status, requested } = await withUpstream(
@@ -142,15 +142,15 @@ test('the station source reaches the mounted proxy and both documents join into 
       const source = createBikeshareSource({
         fetchImpl: mountGbfsProxy(),
       });
-      const info = await source.getStations(AUSTIN.stationInformationUrl);
-      const status = await source.getStations(AUSTIN.stationStatusUrl);
+      const info = await source.getStations(DELHI.stationInformationUrl);
+      const status = await source.getStations(DELHI.stationStatusUrl);
       return { info, status, requested };
     },
   );
 
   assert.deepEqual(
     requested,
-    [AUSTIN.stationInformationUrl, AUSTIN.stationStatusUrl],
+    [DELHI.stationInformationUrl, DELHI.stationStatusUrl],
     'the proxy reached the upstream the client asked for, unchanged',
   );
 
@@ -188,17 +188,17 @@ test('the station source reaches the mounted proxy and both documents join into 
 
 test('the proxy relays its cache policy and upstream host through the mounted route', async () => {
   await withUpstream(
-    { [AUSTIN.stationStatusUrl]: STATION_STATUS },
+    { [DELHI.stationStatusUrl]: STATION_STATUS },
     async () => {
       const mounted = mountGbfsProxy();
       const response = await mounted(
-        '/api/gbfs/' + encodeURIComponent(AUSTIN.stationStatusUrl),
+        '/api/gbfs/' + encodeURIComponent(DELHI.stationStatusUrl),
       );
       assert.equal(response.status, 200);
       assert.equal(response.headers.get('cache-control'), 'no-store');
       assert.equal(
         response.headers.get('x-gbfs-upstream'),
-        'austin.publicbikesystem.net',
+        'delhi.publicbikesystem.net',
       );
     },
   );
@@ -206,11 +206,11 @@ test('the proxy relays its cache policy and upstream host through the mounted ro
 
 test('the query-string shape the client used to send is refused by the mounted route', async () => {
   await withUpstream(
-    { [AUSTIN.stationStatusUrl]: STATION_STATUS },
+    { [DELHI.stationStatusUrl]: STATION_STATUS },
     async (requested) => {
       const mounted = mountGbfsProxy();
       const response = await mounted(
-        '/api/gbfs?url=' + encodeURIComponent(AUSTIN.stationStatusUrl),
+        '/api/gbfs?url=' + encodeURIComponent(DELHI.stationStatusUrl),
       );
       assert.equal(
         response.status,
@@ -261,22 +261,22 @@ for (const hook of ['configureServer', 'configurePreviewServer']) {
 
     const { info, status, requested } = await withUpstream(
       {
-        [AUSTIN.stationInformationUrl]: STATION_INFORMATION,
-        [AUSTIN.stationStatusUrl]: STATION_STATUS,
+        [DELHI.stationInformationUrl]: STATION_INFORMATION,
+        [DELHI.stationStatusUrl]: STATION_STATUS,
       },
       async (requested) => {
         const source = createBikeshareSource({
           fetchImpl: mountGbfsProxy((server) => plugin[hook](server)),
         });
-        const info = await source.getStations(AUSTIN.stationInformationUrl);
-        const status = await source.getStations(AUSTIN.stationStatusUrl);
+        const info = await source.getStations(DELHI.stationInformationUrl);
+        const status = await source.getStations(DELHI.stationStatusUrl);
         return { info, status, requested };
       },
     );
 
     assert.deepEqual(requested, [
-      AUSTIN.stationInformationUrl,
-      AUSTIN.stationStatusUrl,
+      DELHI.stationInformationUrl,
+      DELHI.stationStatusUrl,
     ]);
 
     const model = createModel({});

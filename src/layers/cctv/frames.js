@@ -313,8 +313,8 @@ export function createFrames({ state: layerState, services, parts, source }) {
       if (runtime.drawnImageStamp !== runtime.imageStamp) {
         // The frame URL carries a 10s cache-buster tick, so a fresh Image
         // DECODES every PROJECTION_ACTIVE_REFRESH_MS whether or not the provider
-        // actually published a new picture — measured 2026-07-30: a London
-        // camera republished once in 5 minutes, an Austin one not at all.
+        // actually published a new picture — measured 2026-07-30: a Chennai
+        // camera republished once in 5 minutes, an New Delhi one not at all.
         // Redrawing regardless bumped canvasStamp, which forced a buffer swap
         // and a fresh 1920x1080 texture upload; the plane renders its white
         // base color (planeMaterial color = WHITE, alpha .95) for the frame or

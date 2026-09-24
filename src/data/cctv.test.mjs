@@ -7,7 +7,7 @@
 //   - vFov = 2·atan(tan(hFov/2) / (16/9)) (same 16:9 derivation the projection
 //     frame used);
 //   - far-cap center + corners clamp to ≥ groundAlt + 2 m so a fabricated pitch
-//     (Austin's -24°) never buries the plane in the tiles (§6 risk);
+//     (New Delhi's -24°) never buries the plane in the tiles (§6 risk);
 //   - the activation obstruction probe's range clamp (§9.1) shortens the
 //     effective range, never lengthens it.
 //
@@ -157,7 +157,7 @@ const UNCLAMPED_CAMERA = {
 };
 const UNCLAMPED_GROUND = 0;
 
-// Austin's fabricated prior personality (design §1a): pitch -24° at 210 m puts
+// New Delhi's fabricated prior personality (design §1a): pitch -24° at 210 m puts
 // the unclamped cap ~85 m below the mount — underground vs groundAlt 150.
 const AUSTIN_FABRICATED_CAMERA = {
   lat: 30.2672,
@@ -565,7 +565,7 @@ test('measured ground under a far support raises the plane further, still rigidl
 
 test('clamped pose keeps corner/plane coincidence and the rigid 2·halfW × 2·halfH span', () => {
   // The wireframe corner rays must terminate exactly on the monitor plane's
-  // corners AT THE DEFAULT AUSTIN POSE — this is the case that diverged by
+  // corners AT THE DEFAULT DELHI POSE — this is the case that diverged by
   // ~47.5 m under per-corner clamping (owner field test 2026-07-04).
   const g = computeFrustumGeometry(AUSTIN_FABRICATED_CAMERA, AUSTIN_GROUND);
   const d = viewDir(41, -24);
@@ -1023,7 +1023,7 @@ function makeDeselectRecord(id, index = 0) {
       ...UNCLAMPED_CAMERA,
       id,
       name: `Camera ${id}`,
-      city: 'Austin',
+      city: 'New Delhi',
       lon: UNCLAMPED_CAMERA.lon + index * 0.002,
       groundElevationM: UNCLAMPED_GROUND,
     },
@@ -1476,7 +1476,7 @@ test('calibration v2 round-trip: writeCalibrationStoreV2 → readCalibrationStor
   const savedAt = 1782800000000;
   const entry = new Map([
     [
-      'austin-42',
+      'delhi-42',
       {
         values: {
           offsetNorthM: 12.5,
@@ -1495,23 +1495,23 @@ test('calibration v2 round-trip: writeCalibrationStoreV2 → readCalibrationStor
   writeCalibrationStoreV2(entry, storage);
 
   const raw = JSON.parse(storage.getItem(CCTV_CALIBRATION_STORAGE_KEY_V2));
-  assert.equal(raw['austin-42'].source, 'manual');
-  assert.equal(raw['austin-42'].savedAt, savedAt);
-  assert.equal(raw['austin-42'].values.offsetNorthM, 12.5);
+  assert.equal(raw['delhi-42'].source, 'manual');
+  assert.equal(raw['delhi-42'].savedAt, savedAt);
+  assert.equal(raw['delhi-42'].values.offsetNorthM, 12.5);
 
   const restored = readCalibrationStoreV2(storage);
   assert.ok(restored instanceof Map);
-  const cam = restored.get('austin-42');
+  const cam = restored.get('delhi-42');
   assert.equal(cam.source, 'manual');
   assert.equal(cam.savedAt, savedAt);
-  assert.deepEqual(cam.values, entry.get('austin-42').values);
+  assert.deepEqual(cam.values, entry.get('delhi-42').values);
 });
 
 test('calibration v2: removing an entry (reset) then re-writing produces an empty store', () => {
   const storage = fakeStorage();
   const entry = new Map([
     [
-      'sf-market-5th',
+      'mumbai-market-5th',
       {
         values: {
           offsetNorthM: 5,
@@ -1528,11 +1528,11 @@ test('calibration v2: removing an entry (reset) then re-writing produces an empt
     ],
   ]);
   writeCalibrationStoreV2(entry, storage);
-  assert.ok(readCalibrationStoreV2(storage).has('sf-market-5th'));
+  assert.ok(readCalibrationStoreV2(storage).has('mumbai-market-5th'));
 
   // Reset removes the entry from the map, then persists the now-empty map —
   // this is the shape setParams({calibration:{reset:true}}) drives.
-  entry.delete('sf-market-5th');
+  entry.delete('mumbai-market-5th');
   writeCalibrationStoreV2(entry, storage);
 
   const restored = readCalibrationStoreV2(storage);
@@ -1571,7 +1571,7 @@ test('calibration v2: malformed/partial entries are dropped defensively', () => 
 test('calibration v2: a corrupt v1 key never leaks into the v2 store (v1 is dead data, never read)', () => {
   const storage = fakeStorage({
     [CCTV_CALIBRATION_STORAGE_KEY_V1]: JSON.stringify({
-      'austin-42': {
+      'delhi-42': {
         offsetNorthM: 999,
         offsetEastM: 999,
         headingDeg: 999,
@@ -1589,7 +1589,7 @@ test('calibration v2: a corrupt v1 key never leaks into the v2 store (v1 is dead
     0,
     'v2 store must start empty — no legacy import (owner decision #3, §9.3)',
   );
-  assert.ok(!restored.has('austin-42'));
+  assert.ok(!restored.has('delhi-42'));
 });
 
 test('deriveCalBadge: CALIBRATED when the camera carries a manual v2 calibration', () => {
@@ -1603,7 +1603,7 @@ test('deriveCalBadge: CURATED for a hand-authored catalog prior with no manual s
   assert.equal(deriveCalBadge(camera), 'curated');
 });
 
-test('deriveCalBadge: RAW PRIOR for everything else (all Austin Open Data today)', () => {
+test('deriveCalBadge: RAW PRIOR for everything else (all New Delhi Open Data today)', () => {
   const camera = { calSource: null, poseSource: null };
   assert.equal(deriveCalBadge(camera), 'raw-prior');
   assert.equal(deriveCalBadge({}), 'raw-prior');

@@ -12,7 +12,7 @@ export const ACTION_DESCRIPTIONS = {
         },
         query: {
           description:
-            'Plain place search query, e.g. "London", "Eiffel Tower", or "Dubai Marina".',
+            'Plain place search query, e.g. "Chennai", "Eiffel Tower", or "Mumbai Marina".',
           $position: 1,
         },
         viewMode: {
@@ -303,12 +303,12 @@ export const ACTION_DESCRIPTIONS = {
         },
         locationQuery: {
           description:
-            'Place to search near, such as "Austin, Texas" or "Seattle". Selection does not fly the camera.',
+            'Place to search near, such as "New Delhi, Texas" or "Seattle". Selection does not fly the camera.',
           $position: 2,
         },
         country: {
           description:
-            'Country code or name filter, for example US or United States.',
+            'Country code or name filter, for example US or India.',
           $position: 2,
         },
         stationQuery: {
@@ -375,7 +375,7 @@ export const ACTION_DESCRIPTIONS = {
               },
               target: {
                 description:
-                  'Place name to resolve, e.g. "Palace of Fine Arts, San Francisco", "the Pentagon", "Presidio of San Francisco". Preferred over coordinates. For a specific monument/statue/feature that sits within a larger landmark, use its OWN name + city ("Tejano Monument, Austin", "Texas African American History Memorial, Austin") — do NOT phrase it as "X at the Texas State Capitol", which makes the geocoder collapse several of them onto the same centroid so they stack on one spot.',
+                  'Place name to resolve, e.g. "Palace of Fine Arts, Mumbai", "the Pentagon", "Presidio of Mumbai". Preferred over coordinates. For a specific monument/statue/feature that sits within a larger landmark, use its OWN name + city ("Tejano Monument, New Delhi", "Texas African American History Memorial, New Delhi") — do NOT phrase it as "X at the Texas State Capitol", which makes the geocoder collapse several of them onto the same centroid so they stack on one spot.',
                 $position: 2,
               },
               points: {

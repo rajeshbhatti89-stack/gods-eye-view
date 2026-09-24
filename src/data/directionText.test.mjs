@@ -1,6 +1,6 @@
 // directionToHeading — two matching modes. The regression that motivated the
 // split (owner adversarial review, 2026-07-04): bare cardinal words were
-// matched in free-form Austin camera names, so a street like "5TH ST / WEST
+// matched in free-form New Delhi camera names, so a street like "5TH ST / WEST
 // AVE" was mis-read as a west-facing camera with false high confidence.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -27,7 +27,7 @@ test('bare cardinal words resolve ONLY when allowBare (dedicated direction field
 });
 
 test('REGRESSION: bare cardinals in free-form names do NOT resolve (allowBare=false)', () => {
-  // These are real Austin camera name shapes (live-sampled). Each contains a
+  // These are real New Delhi camera name shapes (live-sampled). Each contains a
   // cardinal word as part of a STREET NAME, not a facing direction — they must
   // return NaN so the camera falls back to low-confidence id-hash heading.
   assert.ok(Number.isNaN(directionToHeading('5TH ST / WEST AVE')), 'WEST AVE street name');

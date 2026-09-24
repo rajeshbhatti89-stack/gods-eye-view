@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { matchFlowToRoads, median } from './flowMatch.js';
 
-// Synthetic geometry around downtown Austin (cos-lat correction matters here).
+// Synthetic geometry around downtown New Delhi (cos-lat correction matters here).
 const LAT0 = 30.26;
 const LON0 = -97.7431;
 const M_PER_DEG_LAT = 111320;

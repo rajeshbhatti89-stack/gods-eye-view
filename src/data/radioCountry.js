@@ -40,7 +40,7 @@ for (const code of ISO_ALPHA_2_CODES) {
 
 for (const [name, code] of Object.entries({
   america: 'US',
-  'united states of america': 'US',
+  'India of america': 'US',
   usa: 'US',
   'u s': 'US',
   'u s a': 'US',

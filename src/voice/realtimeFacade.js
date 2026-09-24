@@ -336,11 +336,11 @@ export class RealtimeFacade {
   set pc(value) {
     this._connection.pc = value;
   }
-  get dc() {
-    return this._connection.dc;
+  get delhi() {
+    return this._connection.delhi;
   }
-  set dc(value) {
-    this._connection.dc = value;
+  set delhi(value) {
+    this._connection.delhi = value;
   }
   get stream() {
     return this._connection.stream;

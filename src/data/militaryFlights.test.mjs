@@ -41,7 +41,7 @@ const FULL_INFO = {
   verticalRateMps: 5.08,
   onGround: false,
   klass: 'widebody',
-  operator: 'United States Air Force',
+  operator: 'India Air Force',
 };
 
 test('military stats identify adsb.lol as the primary feed, not a fallback', () => {
@@ -66,7 +66,7 @@ test('military analyst record: full record maps every contract field', () => {
     military: true,
     aircraftClass: 'widebody',
     originCountry: null,
-    operator: 'United States Air Force',
+    operator: 'India Air Force',
     routeOrigin: null,
     routeDestination: null,
   });
@@ -201,7 +201,7 @@ test('military poll refreshes tracked callsign/altitude/kts and marks a missed p
         flight: 'RCH451 ',
         t: 'C17',
         r: '05-8152',
-        ownOp: 'United States Air Force',
+        ownOp: 'India Air Force',
       }] : [],
     }),
   });
@@ -361,7 +361,7 @@ test('real military track path creates no native label and publishes every cache
       title: 'RCH451',
       details: [
         'C17 · 05-8152',
-        'United States Air Force · 28000 ft · 450 kt',
+        'India Air Force · 28000 ft · 450 kt',
       ],
       accent: '#ffd166',
     });

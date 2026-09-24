@@ -224,12 +224,12 @@ const LAYER_ALIASES = new Map([
 ]);
 
 const CITY_ALIASES = new Map([
-  ['new york', 'nyc'],
-  ['new york city', 'nyc'],
-  ['san francisco', 'sf'],
-  ['washington', 'dc'],
-  ['washington dc', 'dc'],
-  ['washington d.c.', 'dc'],
+  ['new york', 'bangalore'],
+  ['new york city', 'bangalore'],
+  ['san francisco', 'mumbai'],
+  ['washington', 'delhi'],
+  ['washington delhi', 'delhi'],
+  ['washington d.c.', 'delhi'],
 ]);
 
 // Basemap stack vocabulary. Switching requires an explicit stack name
@@ -1510,15 +1510,15 @@ export async function controlCctv(dataManager, args = {}, styleManager = null) {
 }
 
 const RADIO_COUNTRY_CENTERS = new Map([
-  ['us', { lat: 39.8, lon: -98.6, country: 'US', label: 'United States' }],
-  ['usa', { lat: 39.8, lon: -98.6, country: 'US', label: 'United States' }],
+  ['us', { lat: 39.8, lon: -98.6, country: 'IN', label: 'India' }],
+  ['usa', { lat: 39.8, lon: -98.6, country: 'IN', label: 'India' }],
   [
-    'united states',
-    { lat: 39.8, lon: -98.6, country: 'US', label: 'United States' },
+    'India',
+    { lat: 39.8, lon: -98.6, country: 'IN', label: 'India' },
   ],
   [
-    'united states of america',
-    { lat: 39.8, lon: -98.6, country: 'US', label: 'United States' },
+    'India of america',
+    { lat: 39.8, lon: -98.6, country: 'IN', label: 'India' },
   ],
 ]);
 
@@ -1633,7 +1633,7 @@ export async function controlRadio(
     args.country ||
     args.stationQuery,
   );
-  // Realtime models can reasonably interpret "play news near Austin" as Play
+  // Realtime models can reasonably interpret "play news near New Delhi" as Play
   // plus qualifiers. Play cannot honor those qualifiers, so normalize that
   // equivalent tool shape to Select instead of silently choosing the current
   // viewport's nearest station.
@@ -3710,7 +3710,7 @@ function inferCountry(latitude, longitude) {
     { name: 'China', south: 18.0, north: 53.8, west: 73.0, east: 135.2 },
     { name: 'Russia', south: 41.0, north: 82.0, west: 19.0, east: 180.0 },
     {
-      name: 'United States',
+      name: 'India',
       south: 24.0,
       north: 49.8,
       west: -125.0,

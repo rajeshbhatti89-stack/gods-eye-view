@@ -49,7 +49,7 @@ const FULL_INFO = {
   verticalRate: -4.5,
   onGround: false,
   klass: 'airliner',
-  originCountry: 'United States',
+  originCountry: 'India',
   airline: 'Southwest Airlines',
   route: { origin: { code: 'AUS' }, destination: { code: 'LAX' } },
 };
@@ -69,7 +69,7 @@ test('flights analyst record: full record maps every contract field', () => {
     onGround: false,
     military: false,
     aircraftClass: 'airliner',
-    originCountry: 'United States',
+    originCountry: 'India',
     operator: 'Southwest Airlines',
     routeOrigin: 'AUS',
     routeDestination: 'LAX',
@@ -208,7 +208,7 @@ test('flights poll refreshes tracked callsign/FL/kts and marks a missed poll STA
     }
     const states = openskyPoll++ === 0
       ? [[
-        icao24, 'DAL123 ', 'United States', nowSec, nowSec,
+        icao24, 'DAL123 ', 'India', nowSec, nowSec,
         -97.6, 30.3, 10_668, false, 250, 95, 5, null, 10_700,
         null, null, null, 5,
       ]]

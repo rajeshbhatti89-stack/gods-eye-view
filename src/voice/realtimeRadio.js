@@ -46,7 +46,7 @@ export class RealtimeRadio {
   get dataManager() {
     return this.readDataManager();
   }
-  get dc() {
+  get delhi() {
     return this.readChannel();
   }
   get userTurnPending() {
@@ -206,7 +206,7 @@ export class RealtimeRadio {
     this.pendingRadioPlaybackResult = null;
     const handoffEpoch = ++this.radioHandoffEpoch;
     const handoffAttemptId = `voice-radio-${this.sessionId}-${handoffEpoch}`;
-    const handoffChannel = this.dc;
+    const handoffChannel = this.delhi;
     this.radioHandoffInFlight = true;
     this.radioHandoffAttemptId = handoffAttemptId;
     this.radioHandoffInFlightResult = pendingResult;
@@ -229,7 +229,7 @@ export class RealtimeRadio {
           !this.isRadioHandoffReserved() &&
           handoffEpoch === this.radioHandoffEpoch &&
           !this.userTurnPending &&
-          this.dc === handoffChannel &&
+          this.delhi === handoffChannel &&
           handoffChannel?.readyState === 'open',
       },
     );
@@ -244,7 +244,7 @@ export class RealtimeRadio {
     this.debugLog('tool.radio_handoff', { result: radioHandoff.result });
     if (radioHandoff.result?.ok || radioHandoff.cancelled || !stillCurrent)
       return;
-    if (this.dc?.readyState === 'open' && !this.userTurnPending) {
+    if (this.delhi?.readyState === 'open' && !this.userTurnPending) {
       this.setStatus('listening', 'Radio did not start');
       this.queueResponseCreate(
         'Say exactly one short correction: “The Radio station could not start. Voice is still on.”',

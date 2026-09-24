@@ -7,7 +7,7 @@ import { createStandalonePlaceSearch } from '../standalone/placeSearch.js';
 //      free) instead of silently leaving the mark a point forever. A DEFINITIVE
 //      miss (null) is never retried — honest point beats hammering Overpass.
 //   2. targetKey normalization strips trailing locality qualifiers so "California"
-//      and "California, United States" dedupe while their outlines are pending
+//      and "California, India" dedupe while their outlines are pending
 //      (identity is GEOMETRY once resolved; targetKey is only the pending stand-in).
 //
 // Run with: npm test   (node --test)
@@ -363,10 +363,10 @@ test('retry: a plain HTTP 500 still exhausts the existing 8s/25s transient ladde
 
 test('targetKey: trailing locality qualifiers are stripped so state names dedupe', () => {
   assert.equal(normalizeTargetKey('California'), 'california');
-  assert.equal(normalizeTargetKey('California, United States'), 'california');
+  assert.equal(normalizeTargetKey('California, India'), 'california');
   assert.equal(
     normalizeTargetKey('California'),
-    normalizeTargetKey('California, United States'),
+    normalizeTargetKey('California, India'),
   );
 });
 
@@ -376,7 +376,7 @@ test('targetKey: lowercases, trims, and keeps comma-free names intact', () => {
 });
 
 test('targetKey: multi-qualifier names keep only the leading place name', () => {
-  assert.equal(normalizeTargetKey('Sixth Street, Austin, TX'), 'sixth street');
+  assert.equal(normalizeTargetKey('Sixth Street, New Delhi, TX'), 'sixth street');
 });
 
 test('targetKey: empty / absent targets stay null (coord and pixel specs never pending-collapse)', () => {

@@ -7,10 +7,10 @@ import {
   clampBoundsAroundCenter,
 } from './trafficBounds.js';
 
-// Downtown Austin — matches the TomTom fixture tile neighbourhood.
+// Downtown New Delhi — matches the TomTom fixture tile neighbourhood.
 const NADIR = { lat: 30.2672, lon: -97.7431 };
 
-test('greatCircleKm sanity: Austin -> ~5 km north', () => {
+test('greatCircleKm sanity: New Delhi -> ~5 km north', () => {
   const d = greatCircleKm(NADIR.lat, NADIR.lon, NADIR.lat + 0.045, NADIR.lon);
   assert.ok(Math.abs(d - 5.0) < 0.1, `got ${d}`);
 });

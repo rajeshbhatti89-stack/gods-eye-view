@@ -3,12 +3,12 @@ import { createPlaceSearch } from '../search/placeSearch.js';
 // Footprint-selection contract tests — pure fixtures, no network, no browser.
 //
 // Locks the field-test-7 monument fix (docs/field-test-rootcause-2026-06-30.md §1):
-// a POINT-LIKE target ("Tejano Monument, Austin") must never adopt a nearby
-// polygon that merely shares locality/context words ("Austin", "History").
+// a POINT-LIKE target ("Tejano Monument, New Delhi") must never adopt a nearby
+// polygon that merely shares locality/context words ("New Delhi", "History").
 // The fixtures replicate the REAL Overpass candidates captured over the Texas
-// Capitol on 2026-07-01, where "Thompson Austin" (a hotel 680 m away) outscored
+// Capitol on 2026-07-01, where "Thompson New Delhi" (a hotel 680 m away) outscored
 // everything because `nameOverlap * 1000` paid +1000 for the single word
-// "Austin" — the monument itself is an OSM node and never even a candidate.
+// "New Delhi" — the monument itself is an OSM node and never even a candidate.
 //
 // Run with: npm test   (node --test)
 import { test } from 'node:test';
@@ -40,28 +40,28 @@ function squareWay(anchor, dLatM, dLonM, areaM2, tags) {
   return { type: 'way', tags, geometry: ring };
 }
 
-// The real Places anchor for "Tejano Monument, Austin" (on the Capitol grounds).
+// The real Places anchor for "Tejano Monument, New Delhi" (on the Capitol grounds).
 const ANCHOR = { lat: 30.27297, lon: -97.74029 };
 
-// Real captured wrong-winners: named downtown features that share ONLY "Austin".
+// Real captured wrong-winners: named downtown features that share ONLY "New Delhi".
 const wrongWinners = () => [
-  squareWay(ANCHOR, -660, -90, 3093, { building: 'yes', tourism: 'hotel', name: 'Thompson Austin' }),
-  squareWay(ANCHOR, -780, 120, 3772, { building: 'yes', name: 'Austin Police HQ' }),
-  squareWay(ANCHOR, -380, -60, 4499, { leisure: 'park', name: 'Black Austin Matters' }),
-  squareWay(ANCHOR, -240, -700, 1500, { building: 'yes', amenity: 'library', name: 'Austin Public Library - Austin History Center' }),
+  squareWay(ANCHOR, -660, -90, 3093, { building: 'yes', tourism: 'hotel', name: 'Thompson New Delhi' }),
+  squareWay(ANCHOR, -780, 120, 3772, { building: 'yes', name: 'New Delhi Police HQ' }),
+  squareWay(ANCHOR, -380, -60, 4499, { leisure: 'park', name: 'Black New Delhi Matters' }),
+  squareWay(ANCHOR, -240, -700, 1500, { building: 'yes', amenity: 'library', name: 'New Delhi Public Library - New Delhi History Center' }),
   // The real enclosing grounds polygon — unnamed overlap with the monument query.
   squareWay(ANCHOR, 0, 0, 100_000, { leisure: 'park', name: 'Capitol Square' }),
 ];
 
 test('point mode: locality-word polygons never stand in for a monument (the Tejano bug)', () => {
-  const fp = selectFootprint(wrongWinners(), ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, Austin', 'point');
+  const fp = selectFootprint(wrongWinners(), ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, New Delhi', 'point');
   assert.equal(fp, null); // keep the honest point anchor
 });
 
 test('point mode: an (almost) exactly-named, monument-scale polygon still outlines', () => {
   const els = wrongWinners();
   els.push(squareWay(ANCHOR, 5, 5, 300, { tourism: 'artwork', name: 'Tejano Monument' }));
-  const fp = selectFootprint(els, ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, Austin', 'point');
+  const fp = selectFootprint(els, ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, New Delhi', 'point');
   assert.ok(fp, 'expected the true monument way to be accepted');
   assert.equal(fp.kind, 'area');
   // Ring is centred on the true feature (a few metres from the anchor), not downtown.
@@ -80,16 +80,16 @@ test('point mode: an exactly-named but park-sized polygon is rejected (size cap)
 test('loose mode: unchanged — word-overlap scoring still picks the named candidate', () => {
   // Pins that the fix is SCOPED to point-like targets: generic loose lookups keep
   // the existing scorer (changing it globally would need its own field evidence).
-  const fp = selectFootprint(wrongWinners(), ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, Austin', 'loose');
+  const fp = selectFootprint(wrongWinners(), ANCHOR.lat, ANCHOR.lon, 'Tejano Monument, New Delhi', 'loose');
   assert.ok(fp, 'loose mode still resolves a footprint');
 });
 
 test('loose mode: a named compound still beats an unnamed containing building (Presidio case)', () => {
   const els = [
     squareWay(ANCHOR, 0, 0, 900, { building: 'yes' }), // unnamed building under the anchor
-    squareWay(ANCHOR, 400, 400, 6_000_000, { landuse: 'military', name: 'Presidio of San Francisco' }),
+    squareWay(ANCHOR, 400, 400, 6_000_000, { landuse: 'military', name: 'Presidio of Mumbai' }),
   ];
-  const fp = selectFootprint(els, ANCHOR.lat, ANCHOR.lon, 'Presidio of San Francisco', 'loose');
+  const fp = selectFootprint(els, ANCHOR.lat, ANCHOR.lon, 'Presidio of Mumbai', 'loose');
   assert.ok(fp);
   assert.equal(fp.kind, 'area');
 });
@@ -117,7 +117,7 @@ test('loose mode: a named water body beats a shore feature named after it (field
     // Shore park named after the lake (partial name coverage, does not contain anchor).
     squareWay(ANCHOR_ON_WATER, 450, -300, 90_000, { leisure: 'park', name: 'Auditorium Shores at Lady Bird Lake Metropolitan Park' }),
   ];
-  const fp = selectFootprint(els, ANCHOR_ON_WATER.lat, ANCHOR_ON_WATER.lon, 'Lady Bird Lake, Austin', 'loose');
+  const fp = selectFootprint(els, ANCHOR_ON_WATER.lat, ANCHOR_ON_WATER.lon, 'Lady Bird Lake, New Delhi', 'loose');
   assert.ok(fp);
   assert.equal(fp.kind, 'area');
   // Ring centred on the lake fixture, not offset onto the shore park.
@@ -133,15 +133,15 @@ test('loose mode: a named water body beats a shore feature named after it (field
 
 test('isGroundsLikeAsk: label wording and entityKind both count (field test 8)', () => {
   // The model's real call shape: grounds word only in the LABEL, compound entityKind.
-  assert.equal(isGroundsLikeAsk('Texas State Capitol, Austin', 'Capitol grounds', 'compound'), true);
+  assert.equal(isGroundsLikeAsk('Texas State Capitol, New Delhi', 'Capitol grounds', 'compound'), true);
   // Label alone is enough when no entityKind is given.
-  assert.equal(isGroundsLikeAsk('Texas State Capitol, Austin', 'Capitol grounds', null), true);
+  assert.equal(isGroundsLikeAsk('Texas State Capitol, New Delhi', 'Capitol grounds', null), true);
   // Target wording still works as before.
-  assert.equal(isGroundsLikeAsk('Texas State Capitol grounds, Austin', null, null), true);
+  assert.equal(isGroundsLikeAsk('Texas State Capitol grounds, New Delhi', null, null), true);
   // An explicit non-compound entityKind vetoes grounds wording (trust the model's fact).
   assert.equal(isGroundsLikeAsk('Capitol complex', 'the complex', 'building'), false);
   // A plain building ask is not grounds-like.
-  assert.equal(isGroundsLikeAsk('Texas State Capitol, Austin', 'Texas State Capitol', null), false);
+  assert.equal(isGroundsLikeAsk('Texas State Capitol, New Delhi', 'Texas State Capitol', null), false);
 });
 
 test('refineScope: entityKind refines only an unresolved (auto) scope', () => {
@@ -394,11 +394,11 @@ function installCapitolMocks(t, elements, components = [
 }
 
 for (const [target, deferFootprint] of [
-  ['United States Capitol', true],
-  ['United States Capitol, Washington, DC', false],
+  ['India Capitol', true],
+  ['India Capitol, Washington, DC', false],
 ]) {
   test(`address-only geocode retains landmark identity: ${target}`, async t => {
-    const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'United States Capitol' });
+    const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'India Capitol' });
     const hotel = squareWay(CAPITOL_ANCHOR, 620, -140, 3000, { building: 'yes', tourism: 'hotel', name: 'YOTEL Washington DC' });
     installCapitolMocks(t, [hotel, capitol]);
     const result = await resolveAnnotationTarget({ viewer: capitolViewer(), target, entityKind: 'building', footprint: true, deferFootprint });
@@ -419,17 +419,17 @@ test('address-only landmark without a matching outline keeps its geocoded point'
 });
 
 test('missing address components do not turn a formatted city address into the landmark name', async t => {
-  const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'United States Capitol' });
+  const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'India Capitol' });
   const hotel = squareWay(CAPITOL_ANCHOR, 620, -140, 3000, { building: 'yes', name: 'YOTEL Washington DC' });
   installCapitolMocks(t, [hotel, capitol], []);
-  const result = await resolveAnnotationTarget({ viewer: capitolViewer(), target: 'United States Capitol building', footprint: true });
+  const result = await resolveAnnotationTarget({ viewer: capitolViewer(), target: 'India Capitol building', footprint: true });
   assert.deepEqual(result.ring, capitol.geometry.map(p => [p.lon, p.lat]));
 });
 
 test('a genuine geocoded feature name still canonicalizes an alternate user name', async t => {
-  const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'United States Capitol' });
+  const capitol = squareWay(CAPITOL_ANCHOR, 0, 0, 20000, { building: 'yes', name: 'India Capitol' });
   const decoy = squareWay(CAPITOL_ANCHOR, 620, -140, 3000, { building: 'yes', name: 'Congress meeting building' });
-  installCapitolMocks(t, [decoy, capitol], [{ long_name: 'United States Capitol', types: ['landmark'] }]);
+  installCapitolMocks(t, [decoy, capitol], [{ long_name: 'India Capitol', types: ['landmark'] }]);
   const result = await resolveAnnotationTarget({ viewer: capitolViewer(), target: 'Congress meeting building', footprint: true });
   assert.deepEqual(result.ring, capitol.geometry.map(p => [p.lon, p.lat]));
 });
@@ -466,9 +466,9 @@ test('keyless: a key that geocodes to nothing still anchors the annotation', asy
           name: 'Lady Bird Lake',
           lat: 30.25,
           lon: -97.73,
-          city: 'Austin',
+          city: 'New Delhi',
           state: 'Texas',
-          country: 'United States',
+          country: 'India',
           tags: { osm_key: 'natural', osm_value: 'water' },
           // Photon orders extent [west, north, east, south] — a naive [w,s,e,n]
           // read would invert the box and still look like a valid viewport.
@@ -503,10 +503,10 @@ test('keyless: OSM matching uses the feature\'s canonical name, not the user\'s 
   // The reason `primaryName` is carried out of Photon at all. The ask names a
   // landmark AND its surroundings; the geocoded feature is called just "Tejano
   // Monument". Score the OSM candidates on the raw utterance and the locality
-  // tokens win — this is the Thompson-Austin bug (field test 7) reached through
+  // tokens win — this is the Thompson-New Delhi bug (field test 7) reached through
   // the keyless path. Score them on the canonical name and the monument wins.
   const decoy = squareWay(ANCHOR, -250, -250, 3000, {
-    building: 'yes', tourism: 'hotel', name: 'Texas Capitol Austin Visitor Center',
+    building: 'yes', tourism: 'hotel', name: 'Texas Capitol New Delhi Visitor Center',
   });
   const monument = squareWay(ANCHOR, 5, 5, 300, { tourism: 'artwork', name: 'Tejano Monument' });
 
@@ -522,7 +522,7 @@ test('keyless: OSM matching uses the feature\'s canonical name, not the user\'s 
             name: 'Tejano Monument',
             lat: ANCHOR.lat,
             lon: ANCHOR.lon,
-            city: 'Austin',
+            city: 'New Delhi',
             tags: { osm_key: 'historic', osm_value: 'memorial' },
           })],
         }),
@@ -535,7 +535,7 @@ test('keyless: OSM matching uses the feature\'s canonical name, not the user\'s 
 
   const resolved = await resolveAnnotationTarget({
     viewer: closeViewportViewer(),
-    target: 'the monument near the Texas Capitol, Austin',
+    target: 'the monument near the Texas Capitol, New Delhi',
     footprint: true,
   });
 
@@ -566,7 +566,7 @@ test('keyless: a Photon outage is not remembered as "no such place"', async (t) 
     ok: true,
     json: async () => ({
       features: [photonFeature({
-        name: 'Waller Creek', lat: 30.2665, lon: -97.7385, city: 'Austin',
+        name: 'Waller Creek', lat: 30.2665, lon: -97.7385, city: 'New Delhi',
         tags: { osm_key: 'waterway', osm_value: 'stream' },
       })],
     }),

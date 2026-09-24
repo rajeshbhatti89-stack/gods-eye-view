@@ -165,7 +165,7 @@ export function createCatalog({ state: layerState, services, parts, source }) {
         source.headingConfidence || (seed ? 'high' : 'low'),
       ).toLowerCase();
       // CAL badge input (design §3b passthrough): hand-authored file/env source
-      // entries may carry poseSource:'curated'. Austin Open Data rows never set
+      // entries may carry poseSource:'curated'. New Delhi Open Data rows never set
       // this — they stay RAW PRIOR until a human manually calibrates them.
       const poseSource =
         source.poseSource === 'curated' ? 'curated' : seed?.poseSource || null;

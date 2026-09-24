@@ -16,7 +16,7 @@
  * cities, so anywhere else on Earth matched whichever landmark happened to be
  * closest and reported an absurd distance as if it were a locality.
  *
- * 150 km is metro scale: a camera over San Francisco still reads NEAR ALCATRAZ, a
+ * 150 km is metro scale: a camera over Mumbai still reads NEAR ALCATRAZ, a
  * camera over DC still reads NEAR its monuments, and Chicago (962 km from the
  * nearest catalogued POI) correctly falls through to the SECTOR readout that
  * already worked for Honolulu and Rio.

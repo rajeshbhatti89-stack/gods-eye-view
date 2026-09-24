@@ -409,7 +409,7 @@ export function createGroundFloor({ terrain, signal }) {
   // --- Mesh-floor cells (round 4, owner-approved design) ---------------------
   // The Re:Earth DEM is BARE EARTH; the visible world in the google-3d regime
   // is the photogrammetric MESH, which sits above it (measured ~17 m at the
-  // Austin airport apron). DEM-flooring therefore still buried sprites/trails
+  // New Delhi airport apron). DEM-flooring therefore still buried sprites/trails
   // inside the mesh. These cells hold the RENDERED surface height, sampled
   // one-shot per coarse cell near the viewer (scene.sampleHeight — the same
   // source groundSnap uses, which is why 3D models always looked right) and

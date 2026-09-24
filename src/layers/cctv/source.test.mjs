@@ -5,7 +5,7 @@ import { createCctvSource, createCctvLayer } from './index.js';
 const camera = {
   id: 'pack/camera ?x',
   name: 'Camera & road',
-  city: 'Austin',
+  city: 'New Delhi',
   lat: 30.267,
   lon: -97.744,
   headingDeg: 45,

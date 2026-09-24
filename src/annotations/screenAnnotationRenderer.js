@@ -71,7 +71,7 @@ export function createScreenAnnotationRenderer(
   const scratch = new Cesium.Cartesian2();
   const scratchDir = new Cesium.Cartesian3();
   // Per-point ground height cache. Marks must sit on the real surface, not at
-  // sea level — otherwise in elevated cities (Austin ~150 m) they project
+  // sea level — otherwise in elevated cities (New Delhi ~150 m) they project
   // underground and parallax sinks them at oblique angles. Sampled once the
   // tiles under the point load, then settled (stable, no per-frame jitter).
   const heightCache = new Map();

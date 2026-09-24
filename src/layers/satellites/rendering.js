@@ -92,7 +92,7 @@ export function createRendering({
    * α, so its ECEF longitude λ = α − gmst DECREASES by ΔGMST as time advances
    * (it drifts WEST). Cesium.Matrix3.fromRotationZ(θ) rotates +X toward +Y,
    * i.e. INCREASES longitude by θ — so we rotate the baked points by −ΔGMST.
-   * Mental check: ISS baked over Austin at t0; 10 min later Austin has rotated
+   * Mental check: ISS baked over New Delhi at t0; 10 min later New Delhi has rotated
    * east under the (inertial) ring, so the ring must sit further WEST in ECEF.
    *
    * Wraparound: gstime returns radians in [0, 2π), so the raw difference can be

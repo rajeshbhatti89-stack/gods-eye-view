@@ -51,7 +51,7 @@ export class RealtimeTurns {
   get runner() {
     return this.readRunner();
   }
-  get dc() {
+  get delhi() {
     return this.readChannel();
   }
   get dataManager() {
@@ -69,7 +69,7 @@ export class RealtimeTurns {
    * injection hygiene as failedLabels), never instruction-bearing prose.
    */
   notifyMapEvent(payload) {
-    if (!this.dc || this.dc.readyState !== 'open') return false;
+    if (!this.delhi || this.delhi.readyState !== 'open') return false;
     return this.sendRealtimeEvent(
       {
         type: 'conversation.item.create',
@@ -84,7 +84,7 @@ export class RealtimeTurns {
   }
 
   sendTextCommand(text) {
-    if (!this.dc || this.dc.readyState !== 'open') {
+    if (!this.delhi || this.delhi.readyState !== 'open') {
       throw new Error('GEV voice is not connected');
     }
     const cleanText = String(text || '').trim();
@@ -162,7 +162,7 @@ export class RealtimeTurns {
       });
       return;
     }
-    if (!this.dc || this.dc.readyState !== 'open') return;
+    if (!this.delhi || this.delhi.readyState !== 'open') return;
     this.pendingUserTextResponse = false;
     this.responseCreatePending = true;
     const sent = this.sendRealtimeEvent(
@@ -173,11 +173,11 @@ export class RealtimeTurns {
   }
 
   ownsConversation(channel) {
-    return this.dc === channel && channel?.readyState === 'open';
+    return this.delhi === channel && channel?.readyState === 'open';
   }
 
   async handleRealtimeEvent(event) {
-    const eventChannel = this.dc;
+    const eventChannel = this.delhi;
     let payload = null;
     try {
       payload = JSON.parse(event.data);
@@ -342,7 +342,7 @@ export class RealtimeTurns {
       keys.forEach((key) => this.processedCalls.set(key, performance.now()));
 
       let result;
-      const resultChannel = this.dc;
+      const resultChannel = this.delhi;
       let radioHandoffEpochAtStart = this.radio.radioHandoffEpoch;
       let toolController = null;
       let radioOwnershipClaimed = false;
@@ -409,7 +409,7 @@ export class RealtimeTurns {
             isCurrent: () =>
               this.activeToolAbortControllers.has(toolController) &&
               !this.userTurnPending &&
-              this.dc === resultChannel &&
+              this.delhi === resultChannel &&
               resultChannel?.readyState === 'open' &&
               (radioAuthorityDomain !== 'playback' ||
                 radioHandoffEpochAtStart === this.radio.radioHandoffEpoch),
@@ -420,7 +420,7 @@ export class RealtimeTurns {
           const sessionIsCurrent =
             this.activeToolAbortControllers.has(toolController) &&
             !this.userTurnPending &&
-            this.dc === resultChannel &&
+            this.delhi === resultChannel &&
             resultChannel?.readyState === 'open';
           const handoffIsCurrent =
             sessionIsCurrent &&
@@ -557,7 +557,7 @@ export class RealtimeTurns {
       this.stop();
       return;
     }
-    if (sentOutput && this.dc?.readyState === 'open') {
+    if (sentOutput && this.delhi?.readyState === 'open') {
       // The viewport-image send is best-effort context. It must never block the
       // response — a throw here would strand the turn at EXECUTING (M13). Guard
       // it so queueResponseCreate always runs, image or not.
@@ -581,7 +581,7 @@ export class RealtimeTurns {
   }
 
   sendToolOutput(callId, result) {
-    if (!callId || !this.dc || this.dc.readyState !== 'open') return false;
+    if (!callId || !this.delhi || this.delhi.readyState !== 'open') return false;
     this.sendRealtimeEvent(
       {
         type: 'conversation.item.create',
@@ -641,7 +641,7 @@ export class RealtimeTurns {
         // Don't trap the whole session in 'error' for one bad response — the
         // connection is still live. Recover to listening so the user can retry
         // (mirrors the transient-blip philosophy, H8).
-        if (this.dc?.readyState === 'open') {
+        if (this.delhi?.readyState === 'open') {
           this.setStatus('listening', 'Ask or command');
         }
       }
@@ -678,8 +678,8 @@ export class RealtimeTurns {
       this.responseActive ||
       this.responseCreatePending ||
       this.userTurnPending ||
-      !this.dc ||
-      this.dc.readyState !== 'open'
+      !this.delhi ||
+      this.delhi.readyState !== 'open'
     )
       return;
     const instructions = this.pendingResponseInstructions;

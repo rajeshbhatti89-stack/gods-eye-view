@@ -25,7 +25,7 @@ test('every pack labels by its feed name; explicit codes win; the id is the last
       ...base,
       id: '354',
       name: '5TH ST / CONGRESS AVE',
-      sourceKind: 'austin-open-data',
+      sourceKind: 'delhi-open-data',
     }).code,
     '5TH ST / CONGRESS AVE',
   );

@@ -82,7 +82,7 @@ export function createTerrainHeights({ source, signal }) {
    * Field-test round 5 (2026-07-06, the "sea-level poison"): like
    * cachedEllipsoidalGround but returns null for geoid-FALLBACK entries —
    * only a real Re:Earth value counts. A fallback (cached when the proxy
-   * failed mid-burst) is the geoid surface, which at Austin sits ~165 m below
+   * failed mid-burst) is the geoid surface, which at New Delhi sits ~165 m below
    * the airport: floors built on it sank every sprite/trail, and the mesh
    * sampler's sanity gate rejected REAL surface samples against it. Floor
    * consumers read THIS; the plain read stays for display-only consumers.

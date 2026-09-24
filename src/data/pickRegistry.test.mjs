@@ -24,7 +24,7 @@ import {
 
 test('resolvePickId: string pick id (flights/military/bikeshare/cctv billboards)', () => {
   assert.equal(resolvePickId({ id: 'aaa001' }), 'aaa001');
-  assert.equal(resolvePickId({ id: undefined, primitive: { id: 'station:austin:1' } }), 'station:austin:1');
+  assert.equal(resolvePickId({ id: undefined, primitive: { id: 'station:delhi:1' } }), 'station:delhi:1');
 });
 
 test('resolvePickId: numeric pick id (satellite NORAD numbers) → String', () => {

@@ -11,8 +11,8 @@ import { createPresetGeocoder } from './presetGeocoder.js';
 import { createPlaceSearch } from './placeSearch.js';
 
 const PRESETS = {
-  austin: {
-    name: 'Austin',
+  delhi: {
+    name: 'New Delhi',
     viewBounds: {
       southwest: { lat: 30.1, lng: -97.95 },
       northeast: { lat: 30.52, lng: -97.55 },
@@ -22,8 +22,8 @@ const PRESETS = {
       { name: 'Pennybacker Bridge', lat: 30.3451, lon: -97.7951 },
     ],
   },
-  sf: {
-    name: 'San Francisco',
+  mumbai: {
+    name: 'Mumbai',
     viewBounds: {
       southwest: { lat: 37.7, lng: -122.52 },
       northeast: { lat: 37.84, lng: -122.35 },
@@ -72,7 +72,7 @@ test('a coordinate box stays inside the poles and wraps at the dateline', async 
 
 test('a query that is not a coordinate is passed on, not declined', async () => {
   const geocoder = createCoordinateGeocoder();
-  for (const query of ['paris', '12junk, 34oops', '']) {
+  for (const query of ['kolkata', '12junk, 34oops', '']) {
     const outcome = await geocoder.geocode(query);
     assert.equal(outcome.place, null);
     assert.equal(
@@ -85,21 +85,21 @@ test('a query that is not a coordinate is passed on, not declined', async () => 
 
 test('bundled names match exactly: city id, city name, or landmark', async () => {
   const geocoder = createPresetGeocoder({ presets: PRESETS });
-  const city = (await geocoder.geocode('austin')).place;
-  assert.equal(city.label, 'Austin');
+  const city = (await geocoder.geocode('delhi')).place;
+  assert.equal(city.label, 'New Delhi');
   assert.deepEqual(city.types, ['locality']);
-  assert.deepEqual(city.viewport, PRESETS.austin.viewBounds);
+  assert.deepEqual(city.viewport, PRESETS.delhi.viewBounds);
   assert.equal(city.lat, 30.2747, 'a city anchors on its first landmark');
 
-  assert.equal((await geocoder.geocode('SF')).place.label, 'San Francisco');
+  assert.equal((await geocoder.geocode('SF')).place.label, 'Mumbai');
   assert.equal(
     (await geocoder.geocode('san francisco')).place.label,
-    'San Francisco',
+    'Mumbai',
   );
-  assert.equal((await geocoder.geocode('  AUSTIN  ')).place.label, 'Austin');
+  assert.equal((await geocoder.geocode('  DELHI  ')).place.label, 'New Delhi');
 
   const landmark = (await geocoder.geocode('pennybacker bridge')).place;
-  assert.equal(landmark.label, 'Pennybacker Bridge, Austin');
+  assert.equal(landmark.label, 'Pennybacker Bridge, New Delhi');
   assert.deepEqual(landmark.types, ['point_of_interest']);
   assert.equal(landmark.lat, 30.3451);
   assert.equal(landmark.exact, true);
@@ -108,10 +108,10 @@ test('bundled names match exactly: city id, city name, or landmark', async () =>
 test('a near miss is handed on rather than answered from the bundle', async () => {
   const geocoder = createPresetGeocoder({ presets: PRESETS });
   for (const query of [
-    'austin texas',
-    'austin, tx',
+    'delhi texas',
+    'delhi, tx',
     'aus',
-    'new austin',
+    'new delhi',
     'golden gate',
     'bridge',
     '',
@@ -162,17 +162,17 @@ test('the offline providers answer ahead of the network ones, which stay in orde
   assert.equal(coordinate.place.lat, 43.1731);
   assert.deepEqual(asked, [], 'a coordinate reaches no network provider');
 
-  const preset = await search.geocode('paris');
+  const preset = await search.geocode('kolkata');
   assert.equal(preset.place.label, 'photon hit');
   assert.deepEqual(
     asked,
-    ['google:paris', 'photon:paris'],
+    ['google:kolkata', 'photon:kolkata'],
     'an unknown name still walks Google then Photon',
   );
 
   asked.length = 0;
   const bundled = await search.geocode('Golden Gate Bridge');
-  assert.equal(bundled.place.label, 'Golden Gate Bridge, San Francisco');
+  assert.equal(bundled.place.label, 'Golden Gate Bridge, Mumbai');
   assert.deepEqual(asked, [], 'a bundled name reaches no network provider');
 });
 
@@ -184,7 +184,7 @@ test('a cancelled search stops the offline providers too', async () => {
     createPresetGeocoder({ presets: PRESETS }),
   ]) {
     await assert.rejects(
-      geocoder.geocode('austin', { signal: controller.signal }),
+      geocoder.geocode('delhi', { signal: controller.signal }),
       (error) => error.name === 'AbortError',
     );
   }

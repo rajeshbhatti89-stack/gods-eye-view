@@ -1,6 +1,6 @@
 // Pure-logic unit tests for the voice-lifecycle size guards (Batch 11, M13).
 // These helpers are DOM/WebRTC-free so they pin the screenshot down-scaling and
-// payload-byte estimation that keep an oversized dc.send from stranding a turn.
+// payload-byte estimation that keep an oversized delhi.send from stranding a turn.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DataLayerManager } from '../data/manager.js';
@@ -617,7 +617,7 @@ test('direct Radio pause or stop cancels a pending voice handoff', async () => {
     },
   });
   controller.debugLog = () => {};
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send() {},
     close() { order.push('voice-stop'); },
@@ -657,7 +657,7 @@ test('confirmed manual Radio playback closes active voice without stopping Radio
   controller.debugLog = () => {};
   controller.status = 'listening';
   controller.radioVoiceDucked = true;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     close() { order.push('voice-stop'); },
   };
@@ -666,7 +666,7 @@ test('confirmed manual Radio playback closes active voice without stopping Radio
 
   assert.deepEqual(order, ['voice-stop', 'radio-fade-in']);
   assert.equal(controller.status, 'idle');
-  assert.equal(controller.dc, null);
+  assert.equal(controller.delhi, null);
 });
 
 test('manual playback takeover survives stale voice preflight cleanup', async () => {
@@ -704,7 +704,7 @@ test('manual playback takeover survives stale voice preflight cleanup', async ()
   });
   controller.debugLog = () => {};
   controller.status = 'listening';
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   controller.pendingRadioPlaybackResult = { ok: true, radioPlaybackRequested: true };
 
   const pending = controller.handleRealtimeEvent({
@@ -765,12 +765,12 @@ test('manual Radio playback does not close voice when voice is already idle', ()
       },
     },
   });
-  controller.dc = { readyState: 'open', close() { voiceStops += 1; } };
+  controller.delhi = { readyState: 'open', close() { voiceStops += 1; } };
 
   playbackControl('play');
 
   assert.equal(voiceStops, 0);
-  assert.equal(controller.dc?.readyState, 'open');
+  assert.equal(controller.delhi?.readyState, 'open');
 });
 
 test('active-response Realtime errors invalidate pending and in-flight Radio handoffs', async () => {
@@ -797,7 +797,7 @@ test('active-response Realtime errors invalidate pending and in-flight Radio han
     },
   });
   controller.debugLog = () => {};
-  controller.dc = { readyState: 'open', send() {}, close() { order.push('voice-stop'); } };
+  controller.delhi = { readyState: 'open', send() {}, close() { order.push('voice-stop'); } };
   controller.pendingRadioPlaybackResult = { ok: true, radioPlaybackRequested: true };
   controller.radioHandoffInFlight = true;
 
@@ -863,7 +863,7 @@ test('Radio handoff waits for response.done so later multi-intent tools execute 
   const controller = new GevRealtimeController({ runner, ui, radioLayer });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) {
       const payload = JSON.parse(message);
@@ -946,7 +946,7 @@ test('Radio playback failure leaves voice connected and speaks a correction', as
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() { order.push('voice-stop'); },
@@ -972,7 +972,7 @@ test('Radio playback failure leaves voice connected and speaks a correction', as
   }));
 
   assert.deepEqual(order, ['radio-stop']);
-  assert.equal(controller.dc?.readyState, 'open');
+  assert.equal(controller.delhi?.readyState, 'open');
   assert.ok(sent.some((message) => (
     message.type === 'response.create'
     && message.response?.instructions?.includes('Voice is still on')
@@ -1011,7 +1011,7 @@ test('detected speech cancels a prepared Radio handoff before a cancelled respon
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send() {},
     close() { order.push('voice-stop'); },
@@ -1042,7 +1042,7 @@ test('detected speech cancels a prepared Radio handoff before a cancelled respon
   }));
 
   assert.deepEqual(order, [], 'the new user turn keeps voice open and Radio silent');
-  assert.equal(controller.dc?.readyState, 'open');
+  assert.equal(controller.delhi?.readyState, 'open');
 });
 
 test('a Radio tool result that resolves after speech interruption cannot re-arm playback', async () => {
@@ -1070,7 +1070,7 @@ test('a Radio tool result that resolves after speech interruption cannot re-arm 
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
   const sent = [];
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -1127,7 +1127,7 @@ test('sibling tool calls in one response do not abort an in-flight Radio action'
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   const event = (payload) => ({ data: JSON.stringify(payload) });
 
   const pendingRadio = controller.handleRealtimeEvent(event({
@@ -1135,7 +1135,7 @@ test('sibling tool calls in one response do not abort an in-flight Radio action'
     response_id: 'response-multi-tool',
     call_id: 'radio-sibling',
     name: 'control_radio',
-    arguments: '{"action":"select","locationId":"austin"}',
+    arguments: '{"action":"select","locationId":"delhi"}',
   }));
   await Promise.resolve();
   await controller.handleRealtimeEvent(event({
@@ -1173,7 +1173,7 @@ test('Radio stop does not abort an unrelated sibling tool from the same response
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   const event = (payload) => ({ data: JSON.stringify(payload) });
 
   const pendingStyle = controller.handleRealtimeEvent(event({
@@ -1220,7 +1220,7 @@ test('real Radio Select cannot enable or play after a same-response Disable comp
     getUIState: () => ({ ...state, enabled }),
     selectRequestedStation(criteria) {
       selectionCalls.push(criteria);
-      state.selected = { id: 'late-austin', name: 'Late Austin' };
+      state.selected = { id: 'late-delhi', name: 'Late New Delhi' };
       return state.selected;
     },
   };
@@ -1248,7 +1248,7 @@ test('real Radio Select cannot enable or play after a same-response Disable comp
       json: async () => ({
         status: 'OK',
         results: [{
-          formatted_address: 'Austin, TX',
+          formatted_address: 'New Delhi, TX',
           geometry: { location: { lat: 30.2672, lng: -97.7431 } },
         }],
       }),
@@ -1262,7 +1262,7 @@ test('real Radio Select cannot enable or play after a same-response Disable comp
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() { voiceClosed = true; },
@@ -1379,7 +1379,7 @@ test('generic same-response Radio visibility disable supersedes delayed Select',
       json: async () => ({
         status: 'OK',
         results: [{
-          formatted_address: 'Austin, TX',
+          formatted_address: 'New Delhi, TX',
           geometry: { location: { lat: 30.2672, lng: -97.7431 } },
         }],
       }),
@@ -1396,7 +1396,7 @@ test('generic same-response Radio visibility disable supersedes delayed Select',
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -1514,7 +1514,7 @@ test('same-response Pause aborts a real manager enable already in flight', async
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -1649,7 +1649,7 @@ test('Pause and Stop preserve independent dedicated and generic Radio ON across 
               });
               controller.debugLog = () => {};
               controller.sendVisualContextIfUseful = async () => false;
-              controller.dc = {
+              controller.delhi = {
                 readyState: 'open',
                 send(message) { sent.push(JSON.parse(message)); },
                 close() {},
@@ -1778,7 +1778,7 @@ test('successful same- or newer-response Stop aborts Select across real manager 
       });
       controller.debugLog = () => {};
       controller.sendVisualContextIfUseful = async () => false;
-      controller.dc = {
+      controller.delhi = {
         readyState: 'open',
         send(message) { sent.push(JSON.parse(message)); },
         close() {},
@@ -1865,7 +1865,7 @@ test('same-response pause and disable suppress play/select handoffs without canc
       });
       controller.debugLog = () => {};
       controller.sendVisualContextIfUseful = async () => false;
-      controller.dc = {
+      controller.delhi = {
         readyState: 'open',
         send(message) { sent.push(JSON.parse(message)); },
         close() {},
@@ -1934,7 +1934,7 @@ test('Realtime Radio route exceptions preserve the authoritative lifecycle summa
     });
     controller.debugLog = () => {};
     controller.sendVisualContextIfUseful = async () => false;
-    controller.dc = {
+    controller.delhi = {
       readyState: 'open',
       send(message) { sent.push(JSON.parse(message)); },
       close() {},
@@ -1992,7 +1992,7 @@ test('different-response Radio stop remains a cancellation authority for an olde
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -2063,7 +2063,7 @@ test('failed same-response stop does not suppress a successful playback request'
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -2169,7 +2169,7 @@ test('failed same-response Stop preserves Select auto-enable held inside real ma
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -2261,7 +2261,7 @@ test('failed same-response Pause and Disable do not suppress valid older playbac
       });
       controller.debugLog = () => {};
       controller.sendVisualContextIfUseful = async () => false;
-      controller.dc = {
+      controller.delhi = {
         readyState: 'open',
         send(message) { sent.push(JSON.parse(message)); },
         close() {},
@@ -2329,7 +2329,7 @@ test('failed generic same-response Radio OFF does not suppress valid older playb
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -2414,7 +2414,7 @@ test('direct user Radio OFF aborts an in-flight voice enable before settled publ
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send(message) { sent.push(JSON.parse(message)); },
     close() {},
@@ -2510,7 +2510,7 @@ test('direct user Radio OFF freezes a prepared handoff until disable success or 
         radioAction: 'select',
         radioPlaybackRequested: true,
       };
-      controller.dc = {
+      controller.delhi = {
         readyState: 'open',
         send() {},
         close() { trace.push('voice:close'); },
@@ -2612,7 +2612,7 @@ test('dedicated and generic Radio OFF reservations freeze an in-flight playback 
           radioAction: 'select',
           radioPlaybackRequested: true,
         };
-        controller.dc = {
+        controller.delhi = {
           readyState: 'open',
           send() {},
           close() { trace.push('voice:close'); },
@@ -2702,7 +2702,7 @@ test('delayed Stop reports its result before committing or resuming a prepared h
         radioAction: 'select',
         radioPlaybackRequested: true,
       };
-      controller.dc = {
+      controller.delhi = {
         readyState: 'open',
         send(message) {
           const payload = JSON.parse(message);
@@ -2768,7 +2768,7 @@ test('stale handoff cleanup cannot erase a resumed successor across repeated fai
   });
   controller.debugLog = () => {};
   controller.queueResponseCreate = () => {};
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   const preparedResult = {
     ok: true,
     action: 'control_radio',
@@ -2826,7 +2826,7 @@ test('a later same-response stop clears an already prepared playback result', as
   });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   const event = (payload) => ({ data: JSON.stringify(payload) });
 
   await controller.handleRealtimeEvent(event({
@@ -3211,7 +3211,7 @@ test('F4: once the cap latches, queued function calls do not execute', async () 
       item_id: 'i1',
       call_id: 'c1',
       name: 'fly_to_location',
-      arguments: '{"query":"London"}',
+      arguments: '{"query":"Chennai"}',
     }),
   });
   assert.deepEqual(toolCalls, [], 'no map mutation after the session ended');
@@ -3228,7 +3228,7 @@ test('F4: a cap between tool events stops every later tool', async () => {
     runner: async (name) => { executed.push(name); return { ok: true }; },
   });
   controller.status = 'listening';
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   controller.costTracker = createVoiceCostTracker({
     modelId: 'gpt-realtime-2',
     limits: { warnUsd: 2, capUsd: 5 },
@@ -3248,14 +3248,14 @@ test('F4: tools DO execute normally while the session is healthy', async () => {
   // Guards the gate against being trivially always-on.
   const { controller, toolCalls } = costControllerHarness();
   controller.status = 'listening';
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   await controller.handleRealtimeEvent({
     data: JSON.stringify({
       type: 'response.function_call_arguments.done',
       item_id: 'i2',
       call_id: 'c2',
       name: 'fly_to_location',
-      arguments: '{"query":"London"}',
+      arguments: '{"query":"Chennai"}',
     }),
   });
   assert.deepEqual(toolCalls, ['fly_to_location']);
@@ -3265,7 +3265,7 @@ test('F4: an output_item.done arriving after the cap does not execute either', a
   // The other extractor path (response.output_item.done), same guarantee.
   const { controller, toolCalls } = costControllerHarness();
   controller.status = 'listening';
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   controller.costCapStopped = true;
   await controller.handleRealtimeEvent({
     data: JSON.stringify({
@@ -3291,12 +3291,12 @@ test('F5: teardown always closes the channel, in one step', () => {
   let closed = false;
   let pcClosed = false;
   controller.responseActive = true;
-  controller.dc = { readyState: 'open', send() {}, close() { closed = true; } };
+  controller.delhi = { readyState: 'open', send() {}, close() { closed = true; } };
   controller.pc = { close() { pcClosed = true; } };
   controller.stop();
   assert.equal(closed, true, 'data channel closed');
   assert.equal(pcClosed, true, 'peer connection closed');
-  assert.equal(controller.dc, null);
+  assert.equal(controller.delhi, null);
   assert.equal(controller.pc, null);
 });
 
@@ -3312,7 +3312,7 @@ test('F5: a response in flight at teardown marks the accounting INCOMPLETE', () 
   });
   controller.recordUsage(usdUsage(1));
   controller.responseActive = true;
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   controller.stop();
   const state = controller.costTracker.state();
   assert.equal(state.incomplete, true);
@@ -3327,7 +3327,7 @@ test('F5: a clean teardown does not mark the total incomplete', () => {
   controller.costTracker = createVoiceCostTracker({ modelId: 'gpt-realtime-2' });
   controller.recordUsage(usdUsage(1));
   controller.responseActive = false;
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   controller.stop();
   assert.equal(controller.costTracker.state().incomplete, false);
   assert.equal(controller.costTracker.state().display, '~$1.00');
@@ -3341,7 +3341,7 @@ test('F2/F5: no stray message listener survives teardown to double-meter', () =>
   controller.status = 'listening';
   const added = [];
   controller.responseActive = true;
-  controller.dc = {
+  controller.delhi = {
     readyState: 'open',
     send() {},
     close() {},
@@ -3362,7 +3362,7 @@ test('F3: setVoiceTier does NOT rebuild the tracker while transport is live', ()
   });
   controller.recordUsage(usdUsage(3));
   controller.status = 'error';
-  controller.dc = { readyState: 'open', send() {}, close() {} };
+  controller.delhi = { readyState: 'open', send() {}, close() {} };
   assert.equal(controller.isVoiceSessionSettled(), false);
 
   controller.setVoiceTier('mini');
@@ -3375,7 +3375,7 @@ test('F3: setVoiceTier does NOT rebuild the tracker while transport is live', ()
 test('F3: once fully settled, setVoiceTier does rebuild the preview tracker', () => {
   const { controller } = costControllerHarness();
   controller.status = 'idle';
-  controller.dc = null;
+  controller.delhi = null;
   controller.pc = null;
   assert.equal(controller.isVoiceSessionSettled(), true);
   controller.setVoiceTier('mini');
@@ -3435,7 +3435,7 @@ function textCommandController() {
     ui: {},
     runner: async () => ({}),
   });
-  controller.dc = { readyState: 'open' };
+  controller.delhi = { readyState: 'open' };
   controller.sendRealtimeEvent = (event, label) => {
     sent.push(label || event?.type);
     return true;
@@ -3500,7 +3500,7 @@ function lateToolEvent(responseId, callId) {
       response_id: responseId,
       call_id: callId,
       name: 'fly_to_location',
-      arguments: '{"query":"Paris"}',
+      arguments: '{"query":"Kolkata"}',
     }),
   };
 }
@@ -3645,7 +3645,7 @@ function lateToolItemEvent(responseId, callId, itemId = 'item_stale') {
         id: itemId,
         call_id: callId,
         name: 'fly_to_location',
-        arguments: '{"query":"Paris"}',
+        arguments: '{"query":"Kolkata"}',
       },
     }),
   };

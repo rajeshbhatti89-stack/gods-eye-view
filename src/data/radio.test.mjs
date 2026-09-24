@@ -472,8 +472,8 @@ test('late media errors after replacement or Pause cannot mutate the active stat
       tags: ['news'],
       languages: ['English'],
       state: 'Texas',
-      country: 'United States',
-      countryCode: 'US',
+      country: 'India',
+      countryCode: 'IN',
       metadataTrust: 'untrusted-community',
       codec: 'MP3',
       bitrate: 128,
@@ -488,8 +488,8 @@ test('late media errors after replacement or Pause cannot mutate the active stat
       tags: ['news'],
       languages: ['English'],
       state: 'Texas',
-      country: 'United States',
-      countryCode: 'US',
+      country: 'India',
+      countryCode: 'IN',
       metadataTrust: 'untrusted-community',
       codec: 'MP3',
       bitrate: 128,
@@ -633,8 +633,8 @@ test('unusable directory responses preserve warm client state atomically', async
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -736,8 +736,8 @@ test('tuner drag keeps one immutable catalog resolution through refresh and rele
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -845,8 +845,8 @@ test('failed exact tuner release cannot consume a stale playback fallback', asyn
       tags: ['news'],
       languages: ['English'],
       state: 'Texas',
-      country: 'United States',
-      countryCode: 'US',
+      country: 'India',
+      countryCode: 'IN',
       metadataTrust: 'untrusted-community',
       codec: 'MP3',
       bitrate: 128,
@@ -861,8 +861,8 @@ test('failed exact tuner release cannot consume a stale playback fallback', asyn
       tags: ['news'],
       languages: ['English'],
       state: 'Texas',
-      country: 'United States',
-      countryCode: 'US',
+      country: 'India',
+      countryCode: 'IN',
       metadataTrust: 'untrusted-community',
       codec: 'MP3',
       bitrate: 128,
@@ -973,8 +973,8 @@ test('tuner cancellation restores the frozen start marker after catalog removal'
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -1086,8 +1086,8 @@ test('Radio public tuner, filter, and resume mutations require certain enabled l
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -1169,8 +1169,8 @@ test('tuner refuses a degraded fallback that has no accepted catalog generation'
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -1214,8 +1214,8 @@ test('accepted snapshots allowlist station fields and never regress generation i
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -1338,8 +1338,8 @@ test('update abort, destroy, and re-init invalidate the prior session and reset 
     tags: ['news'],
     languages: ['English'],
     state: 'Texas',
-    country: 'United States',
-    countryCode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     metadataTrust: 'untrusted-community',
     codec: 'MP3',
     bitrate: 128,
@@ -1433,21 +1433,21 @@ test('global viewport ranking prefers English stations, then distance', () => {
 
 test('explicit Radio requests combine category, country, station name, and distance', () => {
   const rows = [
-    { id: 'music-austin', name: 'Austin Music', tags: ['music'], countryCode: 'US', country: 'United States', lat: 30.26, lon: -97.74 },
-    { id: 'news-dallas', name: 'Texas News', tags: ['news'], countryCode: 'US', country: 'United States', lat: 32.77, lon: -96.79 },
-    { id: 'news-austin', name: 'Austin Public News', tags: ['news'], countryCode: 'US', country: 'United States', lat: 30.27, lon: -97.75 },
+    { id: 'music-delhi', name: 'New Delhi Music', tags: ['music'], countryCode: 'IN', country: 'India', lat: 30.26, lon: -97.74 },
+    { id: 'news-dallas', name: 'Texas News', tags: ['news'], countryCode: 'IN', country: 'India', lat: 32.77, lon: -96.79 },
+    { id: 'news-delhi', name: 'New Delhi Public News', tags: ['news'], countryCode: 'IN', country: 'India', lat: 30.27, lon: -97.75 },
     { id: 'news-mexico', name: 'Noticias', tags: ['news'], countryCode: 'MX', country: 'Mexico', lat: 25.68, lon: -100.31 },
   ];
   const ranked = rankRadioStationsForRequest(rows, {
     categoryId: 'news',
-    country: 'US',
+    country: 'IN',
     anchor: { lat: 30.2672, lon: -97.7431 },
   });
-  assert.deepEqual(ranked.map((station) => station.id), ['news-austin', 'news-dallas']);
+  assert.deepEqual(ranked.map((station) => station.id), ['news-delhi', 'news-dallas']);
   assert.equal(rankRadioStationsForRequest(rows, {
     categoryId: 'news',
     stationQuery: 'public',
-  })[0].id, 'news-austin');
+  })[0].id, 'news-delhi');
 });
 
 test('viewport ranking treats the antimeridian as adjacent', () => {
@@ -1484,14 +1484,14 @@ test('Radio text uses protected selected and bounded ambient WorldOverlay entrie
   const position = { x: 1, y: 2, z: 3 };
   const selected = createRadioSelectedOverlayEntry({
     id: 'station-a',
-    name: 'Austin News 93.9 FM - KQA',
+    name: 'New Delhi News 93.9 FM - KQA',
     tags: ['news'],
   }, position);
   assert.equal(selected.variant, 'selected');
   assert.equal(selected.selected, true);
   assert.equal(selected.protected, true);
   assert.equal(selected.paintLane, 'selected');
-  assert.equal(selected.title, '93.9 FM — Austin News');
+  assert.equal(selected.title, '93.9 FM — New Delhi News');
   assert.equal(selected.position, position);
   assert.equal(selected.maxDistance, RADIO_GLOBE_INTERACTION_MAX_DISTANCE_M);
 

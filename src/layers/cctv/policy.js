@@ -176,8 +176,8 @@ export const CAMERA_ICON = (() => {
 
 export const CAMERA_SEEDS = [
   {
-    id: 'nyc-midtown-w',
-    cityId: 'nyc',
+    id: 'bangalore-midtown-w',
+    cityId: 'bangalore',
     poiIndex: 1,
     label: 'Midtown West @ 34th',
     offsetNorthM: 120,
@@ -188,8 +188,8 @@ export const CAMERA_SEEDS = [
     elevationM: 26,
   },
   {
-    id: 'nyc-wtc-n',
-    cityId: 'nyc',
+    id: 'bangalore-wtc-n',
+    cityId: 'bangalore',
     poiIndex: 2,
     label: 'WTC North Plaza',
     offsetNorthM: 95,
@@ -200,8 +200,8 @@ export const CAMERA_SEEDS = [
     elevationM: 32,
   },
   {
-    id: 'nyc-times-square-ne',
-    cityId: 'nyc',
+    id: 'bangalore-times-square-ne',
+    cityId: 'bangalore',
     poiIndex: 1,
     label: 'Times Sq Northeast',
     offsetNorthM: 230,
@@ -213,8 +213,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'sf-market-5th',
-    cityId: 'sf',
+    id: 'mumbai-market-5th',
+    cityId: 'mumbai',
     poiIndex: 2,
     label: 'Market & 5th',
     offsetNorthM: -160,
@@ -225,8 +225,8 @@ export const CAMERA_SEEDS = [
     elevationM: 20,
   },
   {
-    id: 'sf-financial-district',
-    cityId: 'sf',
+    id: 'mumbai-financial-district',
+    cityId: 'mumbai',
     poiIndex: 1,
     label: 'SF Financial Core',
     offsetNorthM: 110,
@@ -238,8 +238,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'tokyo-shibuya-scramble',
-    cityId: 'tokyo',
+    id: 'kolkata-shibuya-scramble',
+    cityId: 'kolkata',
     poiIndex: 4,
     label: 'Shibuya Crossing',
     offsetNorthM: 180,
@@ -250,8 +250,8 @@ export const CAMERA_SEEDS = [
     elevationM: 30,
   },
   {
-    id: 'tokyo-ginza-core',
-    cityId: 'tokyo',
+    id: 'kolkata-ginza-core',
+    cityId: 'kolkata',
     poiIndex: 0,
     label: 'Ginza Core',
     offsetNorthM: -180,
@@ -262,8 +262,8 @@ export const CAMERA_SEEDS = [
     elevationM: 28,
   },
   {
-    id: 'tokyo-asakusa-n',
-    cityId: 'tokyo',
+    id: 'kolkata-asakusa-n',
+    cityId: 'kolkata',
     poiIndex: 3,
     label: 'Asakusa North Gate',
     offsetNorthM: 110,
@@ -275,8 +275,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'london-city-a1',
-    cityId: 'london',
+    id: 'chennai-city-a1',
+    cityId: 'chennai',
     poiIndex: 4,
     label: 'City Cluster A1',
     offsetNorthM: 80,
@@ -287,8 +287,8 @@ export const CAMERA_SEEDS = [
     elevationM: 27,
   },
   {
-    id: 'london-soho-core',
-    cityId: 'london',
+    id: 'chennai-soho-core',
+    cityId: 'chennai',
     poiIndex: 2,
     label: 'Soho Core',
     offsetNorthM: 210,
@@ -300,8 +300,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'paris-rivoli',
-    cityId: 'paris',
+    id: 'kolkata-rivoli',
+    cityId: 'kolkata',
     poiIndex: 4,
     label: 'Rue de Rivoli',
     offsetNorthM: 55,
@@ -312,8 +312,8 @@ export const CAMERA_SEEDS = [
     elevationM: 22,
   },
   {
-    id: 'paris-champs-n',
-    cityId: 'paris',
+    id: 'kolkata-champs-n',
+    cityId: 'kolkata',
     poiIndex: 1,
     label: 'Champs-Élysées North',
     offsetNorthM: 130,
@@ -325,8 +325,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'dc-mall-center',
-    cityId: 'dc',
+    id: 'delhi-mall-center',
+    cityId: 'delhi',
     poiIndex: 1,
     label: 'National Mall Center',
     offsetNorthM: 120,
@@ -337,8 +337,8 @@ export const CAMERA_SEEDS = [
     elevationM: 24,
   },
   {
-    id: 'dc-pentagon-s',
-    cityId: 'dc',
+    id: 'delhi-pentagon-s',
+    cityId: 'delhi',
     poiIndex: 3,
     label: 'Pentagon South',
     offsetNorthM: -100,
@@ -350,8 +350,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'dubai-difc-loop',
-    cityId: 'dubai',
+    id: 'mumbai-difc-loop',
+    cityId: 'mumbai',
     poiIndex: 4,
     label: 'DIFC Loop',
     offsetNorthM: 92,
@@ -362,8 +362,8 @@ export const CAMERA_SEEDS = [
     elevationM: 26,
   },
   {
-    id: 'dubai-downtown-east',
-    cityId: 'dubai',
+    id: 'mumbai-downtown-east',
+    cityId: 'mumbai',
     poiIndex: 0,
     label: 'Downtown East',
     offsetNorthM: -130,
@@ -375,8 +375,8 @@ export const CAMERA_SEEDS = [
   },
 
   {
-    id: 'austin-congress-s',
-    cityId: 'austin',
+    id: 'delhi-congress-s',
+    cityId: 'delhi',
     poiIndex: 0,
     label: 'Congress Southbound',
     offsetNorthM: -165,
@@ -387,8 +387,8 @@ export const CAMERA_SEEDS = [
     elevationM: 24,
   },
   {
-    id: 'austin-downtown-west',
-    cityId: 'austin',
+    id: 'delhi-downtown-west',
+    cityId: 'delhi',
     poiIndex: 1,
     label: 'Downtown West',
     offsetNorthM: -120,

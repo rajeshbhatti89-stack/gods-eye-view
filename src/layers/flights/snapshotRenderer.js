@@ -26,7 +26,7 @@ export function createFlightSnapshotRenderer({
   return function applySnapshot(snapshot, viewer) {
     const currentIcaos = new Set();
     const acceptedSnapshotIcaos = new Set();
-    // Field-test round 3 (2026-07-06, Austin fleet-underground): viewer
+    // Field-test round 3 (2026-07-06, New Delhi fleet-underground): viewer
     // subpoint + collected floor cells for the viewer-proximate low-contact
     // clamp below — one carto read per poll, one batch warm after the loop.
     const viewerCarto =

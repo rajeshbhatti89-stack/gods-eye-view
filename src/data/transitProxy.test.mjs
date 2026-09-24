@@ -311,7 +311,7 @@ test('retained routes validate the entire identifier and only MBTA is opted in',
     '/trail/mbta/%2E%2E',
     '/trail/mbta/%E0%A4%A',
     `/trail/mbta/${encodeURIComponent('é'.repeat(129))}`,
-    '/trail/capmetro-austin/b',
+    '/trail/capmetro-delhi/b',
   ])
     assert.equal(resolveTransitRoute(path), null);
 });

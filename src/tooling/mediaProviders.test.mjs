@@ -35,7 +35,7 @@ function fixture(t, id) {
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(path.join(root, 'config'));
   writeFileSync(
-    path.join(root, 'config/cctv_sources.austin.json'),
+    path.join(root, 'config/cctv_sources.delhi.json'),
     JSON.stringify([
       {
         id,
@@ -156,7 +156,7 @@ test('a failed CCTV media fetch reports a fixed health message, not the error te
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(path.join(root, 'config'));
   writeFileSync(
-    path.join(root, 'config/cctv_sources.austin.json'),
+    path.join(root, 'config/cctv_sources.delhi.json'),
     JSON.stringify([
       {
         id: 'leaky',

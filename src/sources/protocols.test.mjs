@@ -18,8 +18,8 @@ const station = {
   codec: 'mp3',
   lastcheckok: 1,
   hls: 0,
-  countrycode: 'US',
-  country: 'US',
+  countryCode: 'IN',
+  country: 'IN',
   tags: 'News,news,air_traffic',
   bitrate: 128,
   clickcount: 10,
@@ -29,7 +29,7 @@ test('radio records normalize identity, country and tags and project only public
   const result = normalizeRadioBrowserStation(station);
   assert.equal(result.name, 'Test Radio');
   assert.equal(result.countryCode, 'US');
-  assert.equal(result.country, 'United States');
+  assert.equal(result.country, 'India');
   assert.deepEqual(result.tags, ['news', 'air traffic']);
   assert.equal(result.lat, 30.2);
   assert.equal(result.metadataTrust, 'untrusted-community');

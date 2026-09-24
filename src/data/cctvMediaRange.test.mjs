@@ -172,7 +172,7 @@ function mount(t, respond) {
   const before = {
     json: process.env.CCTV_SOURCES_JSON,
     file: process.env.CCTV_SOURCES_FILE,
-    austin: process.env.CCTV_FORCE_AUSTIN,
+    delhi: process.env.CCTV_FORCE_AUSTIN,
   };
   process.env.CCTV_SOURCES_JSON = JSON.stringify([CAMERA]);
   process.env.CCTV_SOURCES_FILE = 'absent-source-file.json';
@@ -192,7 +192,7 @@ function mount(t, respond) {
     for (const [name, value] of [
       ['CCTV_SOURCES_JSON', before.json],
       ['CCTV_SOURCES_FILE', before.file],
-      ['CCTV_FORCE_AUSTIN', before.austin],
+      ['CCTV_FORCE_AUSTIN', before.delhi],
     ]) {
       if (value === undefined) delete process.env[name];
       else process.env[name] = value;

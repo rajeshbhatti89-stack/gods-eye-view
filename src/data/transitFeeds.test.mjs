@@ -200,7 +200,7 @@ test('only MBTA retains proxy history while every other registered feed stays li
       .map((feed) => feed.id),
     ['mbta'],
   );
-  assert.equal(getTransitFeed('capmetro-austin').defaultEnabled, true);
+  assert.equal(getTransitFeed('capmetro-delhi').defaultEnabled, true);
   assert.equal(getTransitFeed('mbta').attribution, 'MBTA / MassDOT');
 });
 

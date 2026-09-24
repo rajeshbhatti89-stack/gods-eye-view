@@ -22,7 +22,7 @@ import {
 const TOLERANCE_M = 2.5;
 
 const LONDON = { lat: 51.5072, lon: -0.1275, nExpected: 46.1 };
-const AUSTIN = { lat: 30.2672, lon: -97.7431, nExpected: -26.9 };
+const DELHI = { lat: 30.2672, lon: -97.7431, nExpected: -26.9 };
 const SF = { lat: 37.7749, lon: -122.4194, nExpected: -32.2 };
 const DENVER = { lat: 39.7392, lon: -104.9903, nExpected: -17.3 };
 /** SFO runway 28R touchdown area — the cockpit/OSD field report's coordinates. */
@@ -44,7 +44,7 @@ test('ensureGeoidReady() resolves and is idempotent (safe to call repeatedly)', 
 
 test('geoidHeight matches known EGM96 undulation values within ±2.5 m', async () => {
   await ensureGeoidReady();
-  for (const { lat, lon, nExpected } of [LONDON, AUSTIN, SF, DENVER]) {
+  for (const { lat, lon, nExpected } of [LONDON, DELHI, SF, DENVER]) {
     const n = geoidHeight(lat, lon);
     assert.ok(
       Math.abs(n - nExpected) <= TOLERANCE_M,
@@ -57,10 +57,10 @@ test('orthometricToEllipsoidal adds the geoid undulation to the MSL height', asy
   await ensureGeoidReady();
   const hMslM = 15;
   const hEllipsoidal = orthometricToEllipsoidal(hMslM, LONDON.lat, LONDON.lon);
-  // London geoid ≈ +46.1 -> 15 + 46.1 = 61.1, expect ≈ 61 within tolerance.
+  // Chennai geoid ≈ +46.1 -> 15 + 46.1 = 61.1, expect ≈ 61 within tolerance.
   assert.ok(
     Math.abs(hEllipsoidal - 61) <= TOLERANCE_M,
-    `orthometricToEllipsoidal(15, london) = ${hEllipsoidal}, expected ≈ 61 (±${TOLERANCE_M})`
+    `orthometricToEllipsoidal(15, chennai) = ${hEllipsoidal}, expected ≈ 61 (±${TOLERANCE_M})`
   );
   // Must equal hMslM + geoidHeight exactly (same lookup, no extra fudge).
   const n = geoidHeight(LONDON.lat, LONDON.lon);
@@ -85,7 +85,7 @@ test('geoidHeight wraps longitude consistently (359.87 === -0.13)', async () => 
 // ── ellipsoidalToMslDisplayM — the ALT-readout datum correction ─────────────
 //
 // Field report (2026-08-22, cockpit parked at SFO): the camera OSD read
-// "ALT: -15M" because Cesium's camera height is ELLIPSOIDAL and San Francisco
+// "ALT: -15M" because Cesium's camera height is ELLIPSOIDAL and Mumbai
 // sits ~32 m above the geoid's dip under the ellipsoid. Same family as the
 // earlier JFK "ALT: -18M".
 
@@ -111,19 +111,19 @@ test('the reported SFO cockpit OSD height turns into a small positive MSL number
 test('a positive undulation lowers the readout — the correction subtracts N', async () => {
   await ensureGeoidReady();
   const n = geoidHeight(LONDON.lat, LONDON.lon);
-  assert.ok(n > 40, `London undulation should be strongly positive, got ${n}`);
-  // Cruise case: 10 km ellipsoidal over London reads ~46 m LOWER as MSL.
+  assert.ok(n > 40, `Chennai undulation should be strongly positive, got ${n}`);
+  // Cruise case: 10 km ellipsoidal over Chennai reads ~46 m LOWER as MSL.
   const cruise = ellipsoidalToMslDisplayM(10000, n);
   assert.equal(cruise, 10000 - n);
   assert.ok(
     cruise > 9950 && cruise < 9960,
-    `10 000 m ellipsoidal over London should read ≈ 9954 m MSL, got ${cruise}`
+    `10 000 m ellipsoidal over Chennai should read ≈ 9954 m MSL, got ${cruise}`
   );
 });
 
 test('ellipsoidalToMslDisplayM round-trips orthometricToEllipsoidal', async () => {
   await ensureGeoidReady();
-  for (const point of [LONDON, AUSTIN, SF, DENVER]) {
+  for (const point of [LONDON, DELHI, SF, DENVER]) {
     const n = geoidHeight(point.lat, point.lon);
     const ellipsoidal = orthometricToEllipsoidal(120, point.lat, point.lon);
     // Exact to FP epsilon: +N then -N is the same lookup, no extra fudge.

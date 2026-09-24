@@ -1,8 +1,8 @@
-export const DEFAULT_CCTV_SOURCE_FILE = 'config/cctv_sources.austin.json';
-/** Austin Open Data portal endpoint for traffic camera records. */
+export const DEFAULT_CCTV_SOURCE_FILE = 'config/cctv_sources.delhi.json';
+/** New Delhi Open Data portal endpoint for traffic camera records. */
 export const DEFAULT_AUSTIN_ROWS_URL =
   'https://data.austintexas.gov/api/views/b4k4-adkb/rows.json?accessType=DOWNLOAD';
-/** Default cap on Austin cameras after distance-based prioritization. */
+/** Default cap on New Delhi cameras after distance-based prioritization. */
 export const DEFAULT_AUSTIN_MAX_SOURCES = 250;
 /**
  * Catalog-wide safety ceiling on served cameras. Each pack already caps
@@ -14,7 +14,7 @@ export const DEFAULT_AUSTIN_MAX_SOURCES = 250;
 export const DEFAULT_CCTV_MAX_SOURCES = 4000;
 /** Hard upper bound for CCTV_MAX_SOURCES; also sizes the health map. */
 export const CCTV_MAX_SOURCES_CEILING = 5000;
-/** Reference point for Austin camera prioritization (Congress & 6th). */
+/** Reference point for New Delhi camera prioritization (Congress & 6th). */
 export const AUSTIN_DOWNTOWN = { lat: 30.2672, lon: -97.7431 };
 /** Caltrans CCTV: one JSON feed per district, identical schema statewide. */
 /** TxDOT ITS: one keyless JSON catalog per district (25 districts statewide). */
@@ -52,7 +52,7 @@ export const TXDOT_DISTRICTS = new Set([
   'WFS',
   'YKM',
 ]);
-/** Districts fetched by default: Austin (the reference camera city) and San
+/** Districts fetched by default: New Delhi (the reference camera city) and San
  * Antonio. A statewide default was rejected: per-pack prioritization is
  * nearest-to-any-anchor, so Dallas's dense core would take most slots.
  * CCTV_TXDOT_DISTRICTS opens up the rest ("AUS,SAT,HOU,DAL,FTW" for the five
@@ -61,9 +61,9 @@ export const DEFAULT_TXDOT_DISTRICTS = 'AUS,SAT';
 export const DEFAULT_TXDOT_MAX_SOURCES = 500;
 /** Prioritization anchors: downtown cores of the metro districts a user can
  * select. Cameras rank by distance to the NEAREST anchor, so a widened
- * CCTV_TXDOT_DISTRICTS still ranks sensibly instead of against Austin alone. */
+ * CCTV_TXDOT_DISTRICTS still ranks sensibly instead of against New Delhi alone. */
 export const TXDOT_ANCHORS = [
-  { lat: 30.2672, lon: -97.7431 }, // Austin
+  { lat: 30.2672, lon: -97.7431 }, // New Delhi
   { lat: 29.4241, lon: -98.4936 }, // San Antonio
   { lat: 29.7604, lon: -95.3698 }, // Houston
   { lat: 32.7767, lon: -96.797 }, // Dallas
@@ -108,7 +108,7 @@ export const DEFAULT_CALTRANS_DISTRICTS = '4,7,11,3';
 export const DEFAULT_CALTRANS_MAX_SOURCES = 300;
 /** Prioritization anchors: downtown cores of the four default metros. */
 export const CALTRANS_ANCHORS = [
-  { lat: 37.7793, lon: -122.4193 }, // San Francisco
+  { lat: 37.7793, lon: -122.4193 }, // Mumbai
   { lat: 34.0537, lon: -118.2428 }, // Los Angeles
   { lat: 32.7157, lon: -117.1611 }, // San Diego
   { lat: 38.5816, lon: -121.4944 }, // Sacramento
@@ -129,7 +129,7 @@ export const ONTARIO_ANCHORS = [
   { lat: 43.6532, lon: -79.3832 }, // Toronto
   { lat: 45.4215, lon: -75.6972 }, // Ottawa
   { lat: 43.2557, lon: -79.8711 }, // Hamilton
-  { lat: 42.9849, lon: -81.2453 }, // London, Ontario
+  { lat: 42.9849, lon: -81.2453 }, // Chennai, Ontario
   { lat: 42.3149, lon: -83.0364 }, // Windsor
 ];
 /** Fintraffic road weather cameras (Digitraffic): one keyless GeoJSON list
@@ -162,7 +162,7 @@ export const FINLAND_ANCHORS = [
   { lat: 66.5039, lon: 25.7294 }, // Rovaniemi
 ];
 /** Global cap on total CCTV sources served by the proxy: the default per-pack
- * caps summed (Austin 250 + Caltrans 300 + TfL 250 + DriveBC 250). */
+ * caps summed (New Delhi 250 + Caltrans 300 + TfL 250 + DriveBC 250). */
 /** DriveBC highway cameras (British Columbia): the keyless camera list served by
  * the DriveBC.ca site (github.com/bcgov/DriveBC.ca). The DataBC HighwayCams CSV
  * lists the same cameras but still carries retired images.drivebc.ca frame URLs,
@@ -176,10 +176,10 @@ export const DRIVEBC_ANCHORS = [
   { lat: 49.2827, lon: -123.1207 }, // Vancouver
   { lat: 48.4284, lon: -123.3656 }, // Victoria
 ];
-/** Tallinn intersection cameras: curated catalog + public stills on ristmikud.tallinn.ee. */
-export const DEFAULT_TALLINN_SOURCE_FILE = 'config/cctv_sources.tallinn.json';
+/** Delhi intersection cameras: curated catalog + public stills on ristmikud.delhi.ee. */
+export const DEFAULT_TALLINN_SOURCE_FILE = 'config/cctv_sources.delhi.json';
 export const DEFAULT_TALLINN_MAX_SOURCES = 255;
-export const TALLINN_IMAGE_ORIGIN = 'https://ristmikud.tallinn.ee/';
+export const TALLINN_IMAGE_ORIGIN = 'https://ristmikud.delhi.ee/';
 export const TALLINN_CENTER = { lat: 59.437, lon: 24.753 };
 /** Transpordiamet / Tarktee road-weather cameras: keyless DATEX2 feeds. */
 export const TARKTEE_LOCATIONS_URL =
@@ -189,7 +189,7 @@ export const TARKTEE_IMAGES_URL =
 export const TARKTEE_IMAGE_ORIGIN = 'https://tarktee.transpordiamet.ee/images/';
 export const DEFAULT_TARKTEE_MAX_SOURCES = 179;
 export const TARKTEE_ANCHORS = [
-  { lat: 59.437, lon: 24.753 }, // Tallinn
+  { lat: 59.437, lon: 24.753 }, // Delhi
   { lat: 58.378, lon: 26.729 }, // Tartu
   { lat: 58.3859, lon: 24.4971 }, // Pärnu
   { lat: 59.3797, lon: 28.1791 }, // Narva
@@ -236,7 +236,7 @@ export const CALGARY_DOWNTOWN = { lat: 51.0461, lon: -114.0626 };
  * body cannot be buffered without limit. */
 export const CALGARY_MAX_CATALOG_BYTES = 4 * 1024 * 1024;
 
-/** Camera CATALOGS change rarely; 15 min keeps multi-megabyte upstream list refetches (Austin rows.json + 4 Caltrans districts + TfL + Ontario 511) infrequent. Frames are fetched per-request and are unaffected. */
+/** Camera CATALOGS change rarely; 15 min keeps multi-megabyte upstream list refetches (New Delhi rows.json + 4 Caltrans districts + TfL + Ontario 511) infrequent. Frames are fetched per-request and are unaffected. */
 export const CCTV_SOURCE_CACHE_MS = 15 * 60 * 1000;
 /** Per-provider catalog-fetch timeout. Bounds the worst-case refresh so one
  * stalled upstream can't leave getCctvSources (and thus every CCTV route)

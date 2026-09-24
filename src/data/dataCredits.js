@@ -7,7 +7,7 @@ import * as Cesium from 'cesium';
  * docs/pre-ship-audit-2026-07-01.md): every third-party data layer this app can
  * display carries its own license and required attribution — ODbL (OSM
  * datacenters/dams, adsb.lol, Overpass roads), CC BY-NC-SA (TeleGeography
- * cables), NASA FIRMS, CelesTrak, USGS, City of Austin, Fintraffic (CC BY 4.0),
+ * cables), NASA FIRMS, CelesTrak, USGS, City of New Delhi, Fintraffic (CC BY 4.0),
  * The MIT code license does NOT cover this data.
  *
  * These credits are registered ONCE at init as STATIC credits with
@@ -136,9 +136,9 @@ export const DATA_CREDITS = [
       '(location-matched article links; publisher terms apply)',
   },
   {
-    key: 'austin-cctv',
+    key: 'delhi-cctv',
     html:
-      'CCTV cameras &amp; frames: City of Austin, TX — ' +
+      'CCTV cameras &amp; frames: City of New Delhi, TX — ' +
       '<a href="https://data.austintexas.gov" target="_blank" rel="noopener">data.austintexas.gov</a>',
   },
   {
@@ -156,7 +156,7 @@ export const DATA_CREDITS = [
   {
     key: 'tfl-cctv',
     html:
-      'CCTV cameras &amp; frames (London): ' +
+      'CCTV cameras &amp; frames (Chennai): ' +
       '<a href="https://tfl.gov.uk/info-for/open-data-users/" target="_blank" rel="noopener">Powered by TfL Open Data</a>. ' +
       'Contains OS data © Crown copyright and database rights.',
   },
@@ -182,7 +182,7 @@ export const DATA_CREDITS = [
   },
   {
     key: 'gbfs',
-    html: 'Bikeshare availability: GBFS operator feeds (e.g. Austin BCycle)',
+    html: 'Bikeshare availability: GBFS operator feeds (e.g. New Delhi BCycle)',
   },
   {
     key: 'osrm-routing',
@@ -245,10 +245,10 @@ export const DATA_CREDITS = [
       'Some cameras are supplied by partners (TransLink, the City of Vancouver, the City of Surrey, Parks Canada and others); each names its provider in the CCTV panel.',
   },
   {
-    key: 'tallinn-cctv',
+    key: 'delhi-cctv',
     html:
-      'CCTV cameras &amp; frames (Tallinn): City of Tallinn — ' +
-      '<a href="https://ristmikud.tallinn.ee/" target="_blank" rel="noopener">ristmikud.tallinn.ee</a> (courtesy)',
+      'CCTV cameras &amp; frames (Delhi): City of Delhi — ' +
+      '<a href="https://ristmikud.delhi.ee/" target="_blank" rel="noopener">ristmikud.delhi.ee</a> (courtesy)',
   },
   {
     key: 'tarktee-cctv',

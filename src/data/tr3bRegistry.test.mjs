@@ -199,7 +199,7 @@ test('a conversion survives a poll refresh, in both the billboard and the tracke
       json: async () => ({
         time: nowSec,
         states: [[
-          icao24, 'DAL123 ', 'United States', nowSec, nowSec,
+          icao24, 'DAL123 ', 'India', nowSec, nowSec,
           -97.6, 30.3, 10_668, false, 250, 95, 5, null, 10_700,
           null, null, null, 5,
         ]],

@@ -3,7 +3,7 @@ import {
   hasStructuredViewIdentity,
 } from './realtimeProtocol.js';
 // Viewport-screenshot size guards (M13). The old code clamped WIDTH only, so a
-// tall portrait window produced an oversized capture whose dc.send could throw.
+// tall portrait window produced an oversized capture whose delhi.send could throw.
 // Cap total pixels (clamps both dimensions) and drop the image entirely if the
 // encoded data URL is still too big for the data channel.
 export const VIEWPORT_MAX_PIXELS = 1200 * 900;
@@ -174,27 +174,27 @@ export class RealtimeViewport {
     this.pendingViewportDeletes = new Set();
     this.lastViewportItemId = null;
   }
-  get dc() {
+  get delhi() {
     return this.readChannel();
   }
 
   async sendVisualContextIfUseful(result) {
     if (
       result?.action !== 'get_entity_context' ||
-      !this.dc ||
-      this.dc.readyState !== 'open'
+      !this.delhi ||
+      this.delhi.readyState !== 'open'
     )
       return false;
     const viewScale = result.scene?.basemap?.viewScale;
     if (!shouldSendViewportImage(viewScale)) return false;
     if (hasStructuredViewIdentity(result)) return false;
     const generation = this.generation;
-    const channel = this.dc;
+    const channel = this.delhi;
     const imageUrl = await this.capture();
     if (
       !imageUrl ||
       generation !== this.generation ||
-      this.dc !== channel ||
+      this.delhi !== channel ||
       channel.readyState !== 'open'
     )
       return false;

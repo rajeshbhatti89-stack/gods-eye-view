@@ -103,7 +103,7 @@ export async function resolveOutlineWithRetry(
 /**
  * Pending-phase dedup key for a NAMED target: lowercased, trimmed, and stripped of
  * trailing comma-separated locality qualifiers — so "California" and "California,
- * United States" are the same asked-for THING while their outlines resolve. Identity
+ * India" are the same asked-for THING while their outlines resolve. Identity
  * becomes GEOMETRY the moment the outline lands; this key is only the stand-in while
  * geometry is unknown. Exported for tests.
  */
@@ -928,7 +928,7 @@ export function createAnnotationEngine({
       pendingOutline: typeof resolved.resolveOutline === 'function',
       // Which THING + SHAPE was asked for — the dedup identity while geometry is still
       // pending (see findDuplicate). targetKey is the normalized place name with trailing
-      // locality qualifiers stripped ("California, United States" ≡ "California"; null for
+      // locality qualifiers stripped ("California, India" ≡ "California"; null for
       // coord/pixel specs, which never pending-collapse).
       targetKey: normalizeTargetKey(spec?.target),
       intentKey: spec?.intent === 'around_the_thing' ? 'around' : 'thing',
@@ -1105,34 +1105,34 @@ export function createAnnotationEngine({
 
     /**
      * Scripted demo so the feature is verifiable without a live mic session.
-     * Lays down a small San Francisco "tour" the way the voice agent would.
+     * Lays down a small Mumbai "tour" the way the voice agent would.
      */
     async demo() {
       return annotate(
         [
           {
             type: 'highlight',
-            target: 'Palace of Fine Arts, San Francisco',
+            target: 'Palace of Fine Arts, Mumbai',
             label: 'Palace of Fine Arts',
             color: 'amber',
           },
           {
             type: 'area',
-            target: 'Presidio of San Francisco',
+            target: 'Presidio of Mumbai',
             label: 'The Presidio (former Army base)',
             color: 'green',
             footprint: true,
           },
           {
             type: 'pin',
-            target: 'Letterman Digital Arts Center, San Francisco',
+            target: 'Letterman Digital Arts Center, Mumbai',
             label: 'ILM / Lucasfilm',
             color: 'cyan',
           },
           {
             type: 'arrow',
-            target: 'Palace of Fine Arts, San Francisco',
-            toTarget: 'Marina District, San Francisco',
+            target: 'Palace of Fine Arts, Mumbai',
+            toTarget: 'Marina District, Mumbai',
             label: 'next to the Marina',
           },
         ],
@@ -1161,7 +1161,7 @@ export function createAnnotationEngine({
         [
           {
             type: 'highlight',
-            target: 'Palace of Fine Arts, San Francisco',
+            target: 'Palace of Fine Arts, Mumbai',
             label: 'Palace of Fine Arts',
             color: 'amber',
           },
@@ -1174,8 +1174,8 @@ export function createAnnotationEngine({
         [
           {
             type: 'arrow',
-            target: 'Palace of Fine Arts, San Francisco',
-            toTarget: 'Marina Green, San Francisco',
+            target: 'Palace of Fine Arts, Mumbai',
+            toTarget: 'Marina Green, Mumbai',
             label: 'next to the Marina',
             color: 'cyan',
           },
@@ -1198,7 +1198,7 @@ export function createAnnotationEngine({
         [
           {
             type: 'area',
-            target: 'Presidio of San Francisco',
+            target: 'Presidio of Mumbai',
             label: 'The Presidio — a former Army base',
             color: 'green',
             footprint: true,
@@ -1212,7 +1212,7 @@ export function createAnnotationEngine({
         [
           {
             type: 'pin',
-            target: 'Letterman Digital Arts Center, San Francisco',
+            target: 'Letterman Digital Arts Center, Mumbai',
             label: 'ILM / Lucasfilm',
             color: 'red',
           },
@@ -1228,9 +1228,9 @@ export function createAnnotationEngine({
             color: 'amber',
             label: 'Crissy Field shoreline',
             points: [
-              { target: 'Palace of Fine Arts, San Francisco' },
-              { target: 'Crissy Field, San Francisco' },
-              { target: 'Fort Point, San Francisco' },
+              { target: 'Palace of Fine Arts, Mumbai' },
+              { target: 'Crissy Field, Mumbai' },
+              { target: 'Fort Point, Mumbai' },
             ],
           },
         ],

@@ -1600,7 +1600,7 @@ test('FIRMS and vessels enlarge the ambient-card lane under an explicit aggregat
       collisionGroup: 'ambient-card',
     };
   });
-  setOverlayEntries('local-datacenters', makeEntries('dc'), {
+  setOverlayEntries('local-datacenters', makeEntries('delhi'), {
     cohortLimit: 160,
     collisionCapacity: 96,
   });

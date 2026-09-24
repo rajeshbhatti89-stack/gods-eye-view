@@ -28,7 +28,7 @@ function makeRecord() {
 
 test('selected bikeshare entry preserves source copy and protected-lane policy', () => {
   const record = makeRecord();
-  const entry = createBikeshareSelectedOverlayEntry('austin-capmetro:3790', record);
+  const entry = createBikeshareSelectedOverlayEntry('delhi-capmetro:3790', record);
   assert.equal(entry.position, record.point.position);
   assert.equal(entry.title, 'Congress & 6th');
   assert.deepEqual(entry.details, [
@@ -51,7 +51,7 @@ test('real station select/clear path publishes one card and creates no native la
     setVisible: (...args) => calls.push(['visible', ...args]),
     clearSource: (...args) => calls.push(['clear', ...args]),
   };
-  const key = 'austin-capmetro:3790';
+  const key = 'delhi-capmetro:3790';
   const record = makeRecord();
   const viewer = { entities: new Cesium.EntityCollection() };
   _setBikeshareSelectionStateForTest({ viewer, key, record, overlayHost });

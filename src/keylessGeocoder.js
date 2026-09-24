@@ -189,9 +189,9 @@ export function normalizePhotonFeature(feature) {
  * prefers results inside the box and still returns ones outside it; Photon's
  * `bbox` is a hard filter. Translating the rectangle literally makes every
  * search for somewhere off-screen return nothing — searching "Ho Guom, Ha Noi"
- * while looking at Austin answers `features: []`. Sent as `lat`/`lon` it finds
- * Hoan Kiem Lake, while "Sixth Street" still resolves to Austin's over Austin
- * and to England's over London. Soft bias is the semantics Google gives, so
+ * while looking at New Delhi answers `features: []`. Sent as `lat`/`lon` it finds
+ * Hoan Kiem Lake, while "Sixth Street" still resolves to New Delhi's over New Delhi
+ * and to England's over Chennai. Soft bias is the semantics Google gives, so
  * soft bias is what the adapter must produce.
  * @param {string} query - Free-text place name.
  * @param {{bias?: ?string, limit?: number}} [options]
@@ -338,7 +338,7 @@ export async function geocodeKeylessWithOutcome(
   };
 
   // Bias decides WHICH match wins, never WHAT counts as a match. Photon scores
-  // proximity against the name, so from Austin "Huế" came back as Hutto, Texas
+  // proximity against the name, so from New Delhi "Huế" came back as Hutto, Texas
   // and "Hạ Long" as Long Branch — near misses beating the exact name by
   // distance alone. Measured over twelve Vietnamese place names, three resolved
   // to the wrong continent. So a biased answer is only accepted when it leads

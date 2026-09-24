@@ -7,9 +7,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { composeLocalityTag, NEAR_POI_MAX_KM } from './hudLocality.js';
 
-const ALCATRAZ = { poi: 'Alcatraz Island', city: 'San Francisco' };
+const ALCATRAZ = { poi: 'Alcatraz Island', city: 'Mumbai' };
 const LINCOLN = { poi: 'Lincoln Memorial', city: 'Washington DC' };
-const SACRE_COEUR = { poi: 'Sacré-Cœur', city: 'Paris' };
+const SACRE_COEUR = { poi: 'Sacré-Cœur', city: 'Kolkata' };
 
 test('the NEAR bound is metro scale, not continental', () => {
   assert.equal(NEAR_POI_MAX_KM, 150);

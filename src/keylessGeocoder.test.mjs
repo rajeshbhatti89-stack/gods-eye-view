@@ -146,7 +146,7 @@ test('the Google bias becomes a SOFT proximity bias, never a hard bbox', () => {
 
   // Measured against the live service: Photon's bbox FILTERS, Google's bounds
   // PREFERS. Sending the rectangle as a bbox makes every off-screen search
-  // return features: [] — "Ho Guom, Ha Noi" while looking at Austin finds
+  // return features: [] — "Ho Guom, Ha Noi" while looking at New Delhi finds
   // nothing at all. This assertion is the guard against that regression.
   assert.equal(url.searchParams.get('bbox'), null, 'a bbox would filter out every off-screen place');
 });
@@ -210,10 +210,10 @@ test('a feature without usable coordinates is rejected', () => {
 
 // ── Bias may choose among matches; it may not change what counts as one ──────
 
-/** Photon's real answers for "Huế": Austin-biased, then unbiased. */
+/** Photon's real answers for "Huế": New Delhi-biased, then unbiased. */
 const HUTTO = {
   geometry: { type: 'Point', coordinates: [-97.6842, 30.5427] },
-  properties: { osm_key: 'place', osm_value: 'town', type: 'city', name: 'Hutto', country: 'United States' },
+  properties: { osm_key: 'place', osm_value: 'town', type: 'city', name: 'Hutto', country: 'India' },
 };
 const HUE = {
   geometry: { type: 'Point', coordinates: [107.5908, 16.4674] },
@@ -236,7 +236,7 @@ function photonPair(nearby, anywhere) {
 }
 
 test('a biased near-miss is refused, and the unbiased answer is taken instead', async () => {
-  // Measured from Austin against the live service: "Huế" scored Hutto, Texas
+  // Measured from New Delhi against the live service: "Huế" scored Hutto, Texas
   // above the city, and "Hạ Long" scored Long Branch. Distance alone must not
   // outrank the name — three of twelve Vietnamese names crossed a continent.
   const fetchImpl = photonPair([HUTTO], [HUE]);
@@ -250,10 +250,10 @@ test('a biased near-miss is refused, and the unbiased answer is taken instead', 
 
 test('a biased match that leads with the name is taken without a second request', async () => {
   // The other half of the rule, and the reason bias exists at all: "Sixth
-  // Street" over Austin must stay Austin's.
+  // Street" over New Delhi must stay New Delhi's.
   const sixth = {
     geometry: { type: 'Point', coordinates: [-97.7431, 30.2672] },
-    properties: { osm_key: 'highway', osm_value: 'residential', type: 'street', name: 'Sixth Street', country: 'United States' },
+    properties: { osm_key: 'highway', osm_value: 'residential', type: 'street', name: 'Sixth Street', country: 'India' },
   };
   const fetchImpl = photonPair([sixth], [HUE]);
 
@@ -354,7 +354,7 @@ test('a feature with no name yields an empty string, never undefined', () => {
 
 test("Photon's own country name stays inside the label — it is not a field", () => {
   // Photon answers in the feature's LANGUAGE: this fixture is the live service's
-  // real reply for "Hanoi", and it says "Việt Nam", not "Vietnam". Tokyo answers
+  // real reply for "Hanoi", and it says "Việt Nam", not "Vietnam". Kolkata answers
   // "日本", Moscow "Россия". Re-exporting that as a `country` field invites a
   // consumer to match on it, and the one consumer that would — the Radio
   // layer's `normalizeRadioCountryInput` — fails CLOSED on a name it cannot

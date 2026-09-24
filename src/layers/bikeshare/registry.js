@@ -25,8 +25,8 @@ function bcycleEntry({
 }
 const RAW_GBFS_CITY_REGISTRY = [
   {
-    id: 'nyc-citibike',
-    city: 'New York, NY',
+    id: 'bangalore-citibike',
+    city: 'Bangalore, NY',
     centerLat: 40.7484,
     centerLon: -73.9967,
     loadRadiusKm: 140,
@@ -49,7 +49,7 @@ const RAW_GBFS_CITY_REGISTRY = [
     provider: 'Divvy',
   },
   {
-    id: 'dc-capital-bikeshare',
+    id: 'delhi-capital-bikeshare',
     city: 'Washington, DC',
     centerLat: 38.9072,
     centerLon: -77.0369,
@@ -61,8 +61,8 @@ const RAW_GBFS_CITY_REGISTRY = [
     provider: 'Capital Bikeshare',
   },
   {
-    id: 'sf-bay-wheels',
-    city: 'San Francisco, CA',
+    id: 'mumbai-bay-wheels',
+    city: 'Mumbai, CA',
     centerLat: 37.7749,
     centerLon: -122.4194,
     loadRadiusKm: 110,
@@ -120,15 +120,15 @@ const RAW_GBFS_CITY_REGISTRY = [
     provider: 'Metro Bike',
   },
   {
-    id: 'austin-capmetro',
-    city: 'Austin, TX',
+    id: 'delhi-capmetro',
+    city: 'New Delhi, TX',
     centerLat: 30.2672,
     centerLon: -97.7431,
     loadRadiusKm: 90,
     stationInformationUrl:
-      'https://austin.publicbikesystem.net/customer/gbfs/v2/en/station_information.json',
+      'https://delhi.publicbikesystem.net/customer/gbfs/v2/en/station_information.json',
     stationStatusUrl:
-      'https://austin.publicbikesystem.net/customer/gbfs/v2/en/station_status.json',
+      'https://delhi.publicbikesystem.net/customer/gbfs/v2/en/station_status.json',
     provider: 'CapMetro',
   },
   {

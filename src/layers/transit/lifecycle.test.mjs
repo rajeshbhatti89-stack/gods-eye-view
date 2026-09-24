@@ -3753,7 +3753,7 @@ test('selected trail QA fixture survives repeated live CapMetro snapshots', asyn
   assert.equal(app.state()._selectedKey, key);
   for (let poll = 0; poll <= MISSED_POLLS_TO_DROP; poll++) {
     ingestion.applySnapshot(
-      getRegisteredTransitFeed('capmetro-austin'),
+      getRegisteredTransitFeed('capmetro-delhi'),
       {
         fetchedAt: now + poll,
         vehicles: [vehicle('live-bus', 30.268, -97.7431, now / 1000)],
@@ -3767,7 +3767,7 @@ test('selected trail QA fixture survives repeated live CapMetro snapshots', asyn
   );
   assert.equal(app.state()._selectedKey, key);
   assert.ok(
-    app.state()._vehicles.has('capmetro-austin:live-bus'),
+    app.state()._vehicles.has('capmetro-delhi:live-bus'),
     'live ingestion still runs',
   );
 });

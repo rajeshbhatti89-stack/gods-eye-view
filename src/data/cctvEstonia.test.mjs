@@ -44,18 +44,18 @@ const SAMPLE_IMAGES_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </payloadPublication>
 </d2LogicalModel>`;
 
-test('Tallinn catalog loads curated ristmikud stills only', () => {
+test('Delhi catalog loads curated ristmikud stills only', () => {
   const cameras = loadTallinnSourcesFromCatalog();
   assert.ok(
     cameras.length >= 200,
-    `expected a full Tallinn pack, got ${cameras.length}`,
+    `expected a full Delhi pack, got ${cameras.length}`,
   );
   for (const camera of cameras.slice(0, 25)) {
     assert.match(camera.id, /^tln-/);
-    assert.equal(camera.cityId, 'tallinn');
+    assert.equal(camera.cityId, 'delhi');
     assert.equal(camera.feedType, 'image');
-    assert.equal(camera.sourceKind, 'tallinn-ristmikud');
-    assert.ok(camera.url.startsWith('https://ristmikud.tallinn.ee/'));
+    assert.equal(camera.sourceKind, 'delhi-ristmikud');
+    assert.ok(camera.url.startsWith('https://ristmikud.delhi.ee/'));
     assert.equal(camera.url, camera.snapshotUrl);
     assert.ok(Number.isFinite(camera.lat) && Number.isFinite(camera.lon));
   }

@@ -199,7 +199,7 @@ test('dependent voice navigation waits for the destination viewport to arrive', 
   });
   let settled = false;
   const resultPromise = runner('fly_to_location', {
-    locationId: 'austin',
+    locationId: 'delhi',
     waitForArrival: true,
   }).then((result) => {
     settled = true;
@@ -256,7 +256,7 @@ test('nearest-aircraft voice action serializes layer enable, arrival, refresh, a
       return true;
     },
     async refreshLayer() {
-      order.push('refresh-austin');
+      order.push('refresh-delhi');
       return true;
     },
     getAll: () => [{ id: 'flights', name: 'Live Flights', enabled }],
@@ -264,7 +264,7 @@ test('nearest-aircraft voice action serializes layer enable, arrival, refresh, a
   const runner = createGevActionRunner({ viewer, styleManager, dataManager });
   const resultPromise = runner('select_nearest_aircraft', {
     layerId: 'flights',
-    locationId: 'austin',
+    locationId: 'delhi',
   });
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(order, ['enable', 'fly'], 'Flights must turn on before navigation begins');
@@ -276,7 +276,7 @@ test('nearest-aircraft voice action serializes layer enable, arrival, refresh, a
   assert.equal(result.feed.state, 'fallback');
   assert.equal(result.feed.source, 'adsb.lol fallback');
   assert.equal(trackedId, 'airborne-far', 'the closer landed record must be excluded');
-  assert.deepEqual(order, ['enable', 'fly', 'refresh-austin', 'track:airborne-far']);
+  assert.deepEqual(order, ['enable', 'fly', 'refresh-delhi', 'track:airborne-far']);
 });
 
 test('nearest-aircraft voice action refreshes an already-enabled viewport layer after arrival', async () => {
@@ -295,14 +295,14 @@ test('nearest-aircraft voice action refreshes an already-enabled viewport layer 
     source: 'OpenSky Network',
     getStats: () => ({ source: 'OpenSky Network', count: 1, lastUpdate: Date.now() }),
     getAnalystRecords: () => [
-      { id: 'DUPLICATE', icao24: 'fresh-austin', callsign: 'DUPLICATE', lat: 30.28, lon: -97.74, altitudeM: 1800, onGround: false },
+      { id: 'DUPLICATE', icao24: 'fresh-delhi', callsign: 'DUPLICATE', lat: 30.28, lon: -97.74, altitudeM: 1800, onGround: false },
     ],
-    findByQuery: (query) => (query === 'fresh-austin'
-      ? { icao24: 'fresh-austin', callsign: 'DUPLICATE', latitude: 30.28, longitude: -97.74, altitudeM: 1800 }
+    findByQuery: (query) => (query === 'fresh-delhi'
+      ? { icao24: 'fresh-delhi', callsign: 'DUPLICATE', latitude: 30.28, longitude: -97.74, altitudeM: 1800 }
       : null),
     trackById: (id) => {
       order.push(`track:${id}`);
-      return id === 'fresh-austin';
+      return id === 'fresh-delhi';
     },
   };
   const dataManager = {
@@ -313,7 +313,7 @@ test('nearest-aircraft voice action refreshes an already-enabled viewport layer 
       return true;
     },
     async refreshLayer() {
-      order.push('refresh-austin');
+      order.push('refresh-delhi');
       return true;
     },
     getAll: () => [{ id: 'flights', name: 'Live Flights', enabled: true }],
@@ -321,19 +321,19 @@ test('nearest-aircraft voice action refreshes an already-enabled viewport layer 
   const runner = createGevActionRunner({ viewer, styleManager, dataManager });
   const resultPromise = runner('select_nearest_aircraft', {
     layerId: 'flights',
-    locationId: 'austin',
+    locationId: 'delhi',
   });
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(order, ['enable-same-state', 'fly']);
   completeFlight();
   const result = await resultPromise;
   assert.equal(result.ok, true);
-  assert.equal(result.aircraft.id, 'fresh-austin');
+  assert.equal(result.aircraft.id, 'fresh-delhi');
   assert.deepEqual(order, [
     'enable-same-state',
     'fly',
-    'refresh-austin',
-    'track:fresh-austin',
+    'refresh-delhi',
+    'track:fresh-delhi',
   ]);
 });
 
@@ -371,7 +371,7 @@ test('fallback with zero airborne records reports enabled fallback without selec
   const runner = createGevActionRunner({ viewer, styleManager, dataManager });
   const resultPromise = runner('select_nearest_aircraft', {
     layerId: 'flights',
-    locationId: 'austin',
+    locationId: 'delhi',
   });
   await new Promise((resolve) => setImmediate(resolve));
   completeFlight();
@@ -1762,10 +1762,10 @@ test('voice CCTV coverage writes the canonical durable coverage mode', async () 
   ]);
 });
 
-test('voice Radio resolves Austin and exposes semantic selection, volume, pause, and stop', async () => {
-  const austin = knownRadioLocation('', 'austin');
-  assert.ok(Math.abs(austin.lat - 30.31) < 0.1);
-  assert.ok(Math.abs(austin.lon + 97.75) < 0.1);
+test('voice Radio resolves New Delhi and exposes semantic selection, volume, pause, and stop', async () => {
+  const delhi = knownRadioLocation('', 'delhi');
+  assert.ok(Math.abs(delhi.lat - 30.31) < 0.1);
+  assert.ok(Math.abs(delhi.lon + 97.75) < 0.1);
 
   let enabled = false;
   const calls = [];
@@ -1786,7 +1786,7 @@ test('voice Radio resolves Austin and exposes semantic selection, volume, pause,
     selectRequestedStation(criteria, options) {
       calls.push(['select', criteria, options]);
       state.filter = criteria.categoryId;
-      state.selected = { id: 'aus-news', name: 'Austin News' };
+      state.selected = { id: 'aus-news', name: 'New Delhi News' };
       return state.selected;
     },
     cycleStation(direction, options) {
@@ -1817,19 +1817,19 @@ test('voice Radio resolves Austin and exposes semantic selection, volume, pause,
   let result = await controlRadio({}, dataManager, {
     action: 'play',
     category: 'news',
-    locationId: 'austin',
+    locationId: 'delhi',
   });
   assert.equal(result.ok, true);
   assert.equal(result.radioAction, 'select');
   assert.equal(result.stationId, 'aus-news');
   assert.equal('station' in result, false);
-  assert.equal(result.requestedLocation, 'Austin');
+  assert.equal(result.requestedLocation, 'New Delhi');
   assert.equal(result.radioPlaybackRequested, true);
   assert.equal(result.audioState, 'stopped');
   assert.equal(result.lifecycleState, 'enabled');
   assert.equal(result.lifecycleUncertain, false);
   assert.equal(calls[1][1].categoryId, 'news');
-  assert.ok(Math.abs(calls[1][1].anchor.lat - austin.lat) < 0.001);
+  assert.ok(Math.abs(calls[1][1].anchor.lat - delhi.lat) < 0.001);
   assert.deepEqual(calls[1][2], { autoplay: false });
   assert.deepEqual(calls[0], ['enabled', 'radio', true, { origin: 'voice' }]);
 

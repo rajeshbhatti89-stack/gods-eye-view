@@ -12,9 +12,9 @@ import {
   COURSE_TRACK_ONLY_MPS, COURSE_CHORD_ONLY_MPS, COURSE_MIN_DPS, TURN_MIN_SPEED_MPS,
 } from './motionModel.js';
 
-const AUSTIN = { lat: 30.2672, lon: -97.7431, alt: 9000 };
+const DELHI = { lat: 30.2672, lon: -97.7431, alt: 9000 };
 const cart = (latOff, lonOff) =>
-  Cesium.Cartesian3.fromDegrees(AUSTIN.lon + lonOff, AUSTIN.lat + latOff, AUSTIN.alt);
+  Cesium.Cartesian3.fromDegrees(DELHI.lon + lonOff, DELHI.lat + latOff, DELHI.alt);
 
 test('norm helpers', () => {
   assert.equal(norm360(-90), 270);
@@ -63,7 +63,7 @@ test('stale coasting follows last source contact without allowing indefinite dri
 test('courseBetweenCartesians: due north ≈ 0°, due east ≈ 90°', () => {
   const from = cart(0, 0);
   const north = cart(1000 / 111320, 0);
-  const east = cart(0, 1000 / (111320 * Math.cos(AUSTIN.lat * Math.PI / 180)));
+  const east = cart(0, 1000 / (111320 * Math.cos(DELHI.lat * Math.PI / 180)));
   assert.ok(Math.abs(norm180(courseBetweenCartesians(from, north) - 0)) < 0.5);
   assert.ok(Math.abs(norm180(courseBetweenCartesians(from, east) - 90)) < 0.5);
 });

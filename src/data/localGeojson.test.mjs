@@ -181,7 +181,7 @@ test('local infrastructure card copy uses the owner-approved source fields', () 
 test('local infrastructure entries satisfy the shared presentation contract', () => {
   const position = Cesium.Cartesian3.fromDegrees(-97.7, 30.2, 2000);
   const entry = createLocalInfrastructureOverlayEntry({
-    id: 'dc-42',
+    id: 'delhi-42',
     layerId: 'local-datacenters',
     position,
     properties: { tags: { name: 'AUS-1', operator: 'Example Cloud' } },
@@ -189,7 +189,7 @@ test('local infrastructure entries satisfy the shared presentation contract', ()
     accent: '#00ffff',
   });
 
-  assert.equal(entry.id, 'dc-42');
+  assert.equal(entry.id, 'delhi-42');
   assert.equal(entry.source, 'local-datacenters');
   assert.equal(entry.position, position, 'entry stays attached to the mutable stem-tip Cartesian');
   assert.equal(entry.variant, 'card');
@@ -289,11 +289,11 @@ test('local overlay publisher owns add/remove/visibility lifecycle and becomes i
   publisher.publish([{ id: 'ignored-before-show' }]);
   publisher.show();
   publisher.show();
-  publisher.publish([{ id: 'dc-1' }]);
+  publisher.publish([{ id: 'delhi-1' }]);
   publisher.publish([]);
   publisher.hide();
   publisher.show();
-  publisher.publish([{ id: 'dc-2' }]);
+  publisher.publish([{ id: 'delhi-2' }]);
   publisher.destroy();
   const countAtDestroy = calls.length;
   publisher.show();
@@ -301,7 +301,7 @@ test('local overlay publisher owns add/remove/visibility lifecycle and becomes i
 
   assert.equal(calls.length, countAtDestroy, 'destroyed publishers reject late source work');
   assert.deepEqual(calls[0], ['visible', 'local-datacenters', true]);
-  assert.deepEqual(calls[1].slice(0, 3), ['entries', 'local-datacenters', [{ id: 'dc-1' }]]);
+  assert.deepEqual(calls[1].slice(0, 3), ['entries', 'local-datacenters', [{ id: 'delhi-1' }]]);
   assert.deepEqual(calls[1][3], {
     cohortLimit: LOCAL_OVERLAY_COHORT_LIMIT,
     collisionCapacity: 96,
@@ -1109,7 +1109,7 @@ async function createMultiFeatureLodHarness({ featureCount = 150, cameraHeightM 
     const lat = centerLat + Math.floor(i / 12) * 0.02;
     return JSON.stringify({
       type: 'Feature',
-      id: `dc-${i}`,
+      id: `delhi-${i}`,
       properties: i % 2 === 0
         ? { name: `Datacenter ${i}`, tags: { name: `Datacenter ${i}`, operator: 'Example Cloud' } }
         : { tags: {} },
@@ -1209,7 +1209,7 @@ test('globe-LOD caps live stems at the camera-height budget and widens as you zo
   const shownIds = new Set(
     env.dataSources[0].entities.values.filter((entity) => entity.show === true).map((entity) => entity.id),
   );
-  const namedIds = Array.from({ length: 150 }, (_, i) => i).filter((i) => i % 2 === 0).map((i) => `dc-${i}`);
+  const namedIds = Array.from({ length: 150 }, (_, i) => i).filter((i) => i % 2 === 0).map((i) => `delhi-${i}`);
   assert.ok(namedIds.every((id) => shownIds.has(id)), 'every named feature wins a stem before any unnamed one');
 
   // Zoom to continental framing: the budget opens to MID (200), so all 150

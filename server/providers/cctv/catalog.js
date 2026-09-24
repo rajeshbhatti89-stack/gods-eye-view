@@ -30,7 +30,7 @@ const envEnabled = (name) => String(process.env[name] || '1').trim() !== '0';
  * kill switch.
  */
 const LIVE_PACKS = [
-  { name: 'austin', enabled: () => true, load: loadAustinSourcesFromOpenData },
+  { name: 'delhi', enabled: () => true, load: loadAustinSourcesFromOpenData },
   {
     name: 'caltrans',
     enabled: () => true,
@@ -62,7 +62,7 @@ const LIVE_PACKS = [
     load: loadTxdotSourcesFromOpenData,
   },
   {
-    name: 'tallinn',
+    name: 'delhi',
     enabled: () => envEnabled('CCTV_TALLINN_ENABLED'),
     load: loadTallinnSourcesFromCatalog,
   },
@@ -181,7 +181,7 @@ export function createCctvCatalog({ sourceRoot = process.cwd() } = {}) {
     const preferAustin =
       String(process.env.CCTV_PREFER_AUSTIN || '1').trim() !== '0';
     // Live open-data packs load unless a file/env pack is configured and live
-    // packs aren't forced — the same gate that governed the Austin-only fetch
+    // packs aren't forced — the same gate that governed the New Delhi-only fetch
     // now governs every entry in LIVE_PACKS.
     const needsLiveSources =
       forceAustin || (fromFile.length + fromEnv.length === 0 && preferAustin);

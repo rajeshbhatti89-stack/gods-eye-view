@@ -96,16 +96,16 @@ test('a sibling tracking layer keeps its own subject slot', () => {
 test('the per-poll refresh updates values without stealing the selection', () => {
   withWindow(() => {
     selectTrackedSubjectContext(flightSubject('aaa001'));
-    const other = registerEntityContext({ __gevContextId: 'dc-7' }, {
-      id: 'dc-7', layerId: 'local-datacenters', label: 'Datacenter 7',
+    const other = registerEntityContext({ __gevContextId: 'delhi-7' }, {
+      id: 'delhi-7', layerId: 'local-datacenters', label: 'Datacenter 7',
     });
     selectEntityContext(other.entity);
-    assert.equal(getSelectedEntityContext()?.id, 'dc-7');
+    assert.equal(getSelectedEntityContext()?.id, 'delhi-7');
 
     refreshTrackedSubjectContext(flightSubject('aaa001', { latitude: 31.5 }));
     assert.equal(
       getSelectedEntityContext()?.id,
-      'dc-7',
+      'delhi-7',
       'a background position refresh must not resurrect a subject the operator replaced',
     );
     assert.equal(getContextStore().entities.get('aaa001').latitude, 31.5);

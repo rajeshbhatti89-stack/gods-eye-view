@@ -19,7 +19,7 @@ export function createMeshFloorSampler({
   // (field-test round 4, 2026-07-06).
   //
   // The visible world in the google-3d regime is the PHOTOGRAMMETRIC MESH,
-  // which sits above the Re:Earth bare-earth DEM (measured ~17 m at the Austin
+  // which sits above the Re:Earth bare-earth DEM (measured ~17 m at the New Delhi
   // airport apron) — so DEM-floored sprites/trails still buried themselves in
   // the mesh while 3D models (which groundSnap against the mesh) looked right.
   // This module samples the mesh height ONE-SHOT per coarse cell and reports it
@@ -157,12 +157,12 @@ export function createMeshFloorSampler({
       //    fields (AUS: mesh 138 m vs poisoned −27 m prior → dropped forever).
       //  - No prior at all means no way to tell a real surface from a
       //    coarse-LOD/rooftop/aircraft mis-hit — the old sanity-only branch
-      //    latched a 37 m "surface" at Austin permanently. The DEM lands
+      //    latched a 37 m "surface" at New Delhi permanently. The DEM lands
       //    within a poll (the same warm batch that queued this cell), so
       //    waiting costs one poll, not correctness.
       // 2026-08-21: a "provisional" tier that KEPT the reading when no prior
       // existed was built here and then removed, because it was measured failing.
-      // Run twice against the real GPU at the same Austin apron with the proxy
+      // Run twice against the real GPU at the same New Delhi apron with the proxy
       // down, it recorded 122.1 m once and 20.6 m the next time — the second is a
       // coarse-LOD read of ground that is really ~122 m, and it left the contact
       // ~100 m under the mesh. The DEM requirement above is not a formality.

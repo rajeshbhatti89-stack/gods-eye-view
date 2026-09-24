@@ -25,8 +25,8 @@ function station(overrides = {}) {
     favicon: 'https://station.example.org/logo.png',
     tags: 'news,jazz',
     language: 'English',
-    country: 'United States',
-    countrycode: 'US',
+    country: 'India',
+    countryCode: 'IN',
     state: 'Texas',
     codec: 'MP3',
     bitrate: 128,
@@ -78,7 +78,7 @@ test('normalization keeps only healthy geolocated public HTTPS MP3/AAC streams',
   const normalized = normalizeRadioBrowserStation(station());
   assert.equal(normalized.id, UUID);
   assert.equal(normalized.streamUrl, 'https://stream.example.org/live.mp3');
-  assert.equal(normalized.country, 'United States');
+  assert.equal(normalized.country, 'India');
   assert.equal(normalized.countryCode, 'US');
   assert.equal(normalized.metadataTrust, 'untrusted-community');
   const franceByName = normalizeRadioBrowserStation(station({ country: 'France', countrycode: '' }));

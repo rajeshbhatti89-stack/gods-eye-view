@@ -11,8 +11,8 @@ import {
   isOverBudget,
 } from './tomtomTiles.js';
 
-// Downtown Austin — the verified TomTom fixture tile (z12 x935 y1686).
-const AUSTIN = { lat: 30.2672, lon: -97.7431 };
+// Downtown New Delhi — the verified TomTom fixture tile (z12 x935 y1686).
+const DELHI = { lat: 30.2672, lon: -97.7431 };
 
 // ── Tile coordinate validation ──────────────────────────────
 
@@ -45,20 +45,20 @@ test('isValidTileCoord rejects non-integer inputs', () => {
 
 // ── Slippy tile math ────────────────────────────────────────
 
-test('lonLatToTile: downtown Austin @ z12 -> x935 y1686 (matches fixture)', () => {
-  const t = lonLatToTile(AUSTIN.lon, AUSTIN.lat, 12);
+test('lonLatToTile: downtown New Delhi @ z12 -> x935 y1686 (matches fixture)', () => {
+  const t = lonLatToTile(DELHI.lon, DELHI.lat, 12);
   assert.equal(t.x, 935);
   assert.equal(t.y, 1686);
 });
 
-test('tileToBBox: fixture tile bbox contains downtown Austin', () => {
+test('tileToBBox: fixture tile bbox contains downtown New Delhi', () => {
   const bbox = tileToBBox(12, 935, 1686);
   assert.ok(
-    bbox.west <= AUSTIN.lon && AUSTIN.lon <= bbox.east,
+    bbox.west <= DELHI.lon && DELHI.lon <= bbox.east,
     `lon outside [${bbox.west}, ${bbox.east}]`,
   );
   assert.ok(
-    bbox.south <= AUSTIN.lat && AUSTIN.lat <= bbox.north,
+    bbox.south <= DELHI.lat && DELHI.lat <= bbox.north,
     `lat outside [${bbox.south}, ${bbox.north}]`,
   );
   assert.ok(bbox.north > bbox.south && bbox.east > bbox.west);
@@ -91,12 +91,12 @@ test('lonLatToTile clamps poles and antimeridian into valid range', () => {
 
 // ── tilesForBounds ──────────────────────────────────────────
 
-test('tilesForBounds: clamped Austin viewport covers the fixture tile', () => {
+test('tilesForBounds: clamped New Delhi viewport covers the fixture tile', () => {
   const bounds = {
-    south: AUSTIN.lat - 0.025,
-    north: AUSTIN.lat + 0.025,
-    west: AUSTIN.lon - 0.025,
-    east: AUSTIN.lon + 0.025,
+    south: DELHI.lat - 0.025,
+    north: DELHI.lat + 0.025,
+    west: DELHI.lon - 0.025,
+    east: DELHI.lon + 0.025,
   };
   const tiles = tilesForBounds(bounds, 12);
   assert.ok(
@@ -124,7 +124,7 @@ test('tilesForBounds: bounds straddling a tile edge return both tiles', () => {
 });
 
 test('tilesForBounds: default zoom is 12 and every tile is valid', () => {
-  const bounds = { south: 51.49, north: 51.52, west: -0.14, east: -0.1 }; // London
+  const bounds = { south: 51.49, north: 51.52, west: -0.14, east: -0.1 }; // Chennai
   const tiles = tilesForBounds(bounds);
   assert.ok(tiles.length >= 1);
   for (const t of tiles) {

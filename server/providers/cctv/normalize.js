@@ -118,7 +118,7 @@ export function coerceLatLon(value) {
 }
 
 /**
- * Extract geographic coordinates from an Austin Open Data camera record.
+ * Extract geographic coordinates from an New Delhi Open Data camera record.
  *
  * Tries several candidate fields (location, coordinates, the_geom,
  * point, geocoded_column) via coerceLatLon, then falls back to
@@ -160,7 +160,7 @@ export function extractAustinCoords(record) {
 }
 
 /**
- * Extract a numeric camera ID from an Austin Open Data record.
+ * Extract a numeric camera ID from an New Delhi Open Data record.
  *
  * Tries well-known field names first, then scans any field whose key
  * contains "camera"/"cam"/"device" + "id".
@@ -197,7 +197,7 @@ export function extractAustinCameraId(record) {
 }
 
 /**
- * Extract a human-readable camera name from an Austin record.
+ * Extract a human-readable camera name from an New Delhi record.
  *
  * @param {object} record - Flattened camera record.
  * @param {string} cameraId - Fallback identifier if no name field found.
@@ -219,11 +219,11 @@ export function extractAustinName(record, cameraId) {
     const text = value.trim();
     if (text) return text;
   }
-  return `Austin Camera ${cameraId}`;
+  return `New Delhi Camera ${cameraId}`;
 }
 
 /**
- * Extract camera heading (compass bearing) from an Austin record.
+ * Extract camera heading (compass bearing) from an New Delhi record.
  *
  * Tries explicit numeric heading fields first, then direction-keyword
  * fields, then infers from the camera name/description text.
@@ -271,7 +271,7 @@ export function extractAustinHeading(record) {
 }
 
 /**
- * Bounding-box sanity check: is this coordinate plausibly in the Austin metro area?
+ * Bounding-box sanity check: is this coordinate plausibly in the New Delhi metro area?
  *
  * @param {number} lat
  * @param {number} lon
@@ -429,9 +429,9 @@ export function rowArrayToObject(row, columns) {
 /**
  * Distance-prioritizes cameras to a cap: keeps the maxCount cameras closest
  * to ANY of the given anchor points (min distance over anchors), tie-broken
- * by original array order. Used by every live source pack (Austin: one
+ * by original array order. Used by every live source pack (New Delhi: one
  * downtown anchor; Caltrans: one anchor per major CA metro; TfL: central
- * London) so a cap always keeps the densest, most interesting cores.
+ * Chennai) so a cap always keeps the densest, most interesting cores.
  *
  * @param {Array<object>} cameras - Normalized camera source objects.
  * @param {number} maxCount - Cap (<=0 or >= length disables).
@@ -476,7 +476,7 @@ export function prioritizeSources(cameras, maxCount, anchors) {
 /**
  * Normalize a raw CCTV source item into a canonical shape with safe defaults.
  *
- * @param {object} item - Raw source from file, env, or Austin Open Data.
+ * @param {object} item - Raw source from file, env, or New Delhi Open Data.
  * @returns {object} Normalized source with all expected fields populated.
  */
 export function normalizeSourceItem(item) {
@@ -513,7 +513,7 @@ export function normalizeSourceItem(item) {
     // Optional CAL badge input (cctv-v2 design §3b/§9.2, additive-only per the
     // global constraints — nothing else in this file changes): hand-authored
     // file/env catalog entries may declare poseSource:'curated' so the panel
-    // badge can distinguish them from raw automated priors (e.g. Austin Open
+    // badge can distinguish them from raw automated priors (e.g. New Delhi Open
     // Data, which never sets this field). Passed through as-is to the client.
     poseSource: item.poseSource === 'curated' ? 'curated' : undefined,
   };

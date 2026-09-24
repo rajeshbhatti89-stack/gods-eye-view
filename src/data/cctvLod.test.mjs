@@ -629,11 +629,11 @@ test('applyEvictionGrace with a full selection keeps no graced cards', () => {
 
 test('staticFrameRefreshMs follows known pack cadences and bounds explicit values', () => {
   assert.equal(
-    staticFrameRefreshMs({ provider: 'Austin Transportation & Public Works' }),
+    staticFrameRefreshMs({ provider: 'New Delhi Transportation & Public Works' }),
     300_000,
   );
   assert.equal(
-    staticFrameRefreshMs({ provider: 'Transport for London' }),
+    staticFrameRefreshMs({ provider: 'Transport for Chennai' }),
     180_000,
   );
   assert.equal(staticFrameRefreshMs({ provider: 'Caltrans' }), 180_000);

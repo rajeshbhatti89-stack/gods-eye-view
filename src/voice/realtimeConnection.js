@@ -33,7 +33,7 @@ export class RealtimeConnection {
     );
     this.connectionAbort = null;
     this.pc = null;
-    this.dc = null;
+    this.delhi = null;
     this.stream = null;
     this.audioEl = null;
     this.startEpoch = 0;
@@ -170,8 +170,8 @@ export class RealtimeConnection {
         .forEach((track) => this.pc.addTrack(track, this.stream));
 
       const dataChannel = this.pc.createDataChannel('oai-events');
-      this.dc = dataChannel;
-      const ownsChannel = () => ownsConnection() && this.dc === dataChannel;
+      this.delhi = dataChannel;
+      const ownsChannel = () => ownsConnection() && this.delhi === dataChannel;
       dataChannel.addEventListener('open', () => {
         if (!ownsChannel()) return;
         const detail = this.input.pushToTalkMode
@@ -201,7 +201,7 @@ export class RealtimeConnection {
       dataChannel.addEventListener('close', () => {
         if (this._tearingDown || !ownsChannel()) return;
         if (
-          this.dc === dataChannel &&
+          this.delhi === dataChannel &&
           this.status !== 'idle' &&
           this.status !== 'error'
         ) {
@@ -263,7 +263,7 @@ export class RealtimeConnection {
       this.stream = null;
     if (resources.localPc && this.pc === resources.localPc) {
       this.pc = null;
-      this.dc = null;
+      this.delhi = null;
     }
     releaseStartResources(resources);
     this.debugLog('session.start.abandoned', {
@@ -316,18 +316,18 @@ export class RealtimeConnection {
   }
 
   sendRealtimeEvent(message, logEventName = 'client.event') {
-    if (!this.dc || this.dc.readyState !== 'open') return false;
+    if (!this.delhi || this.delhi.readyState !== 'open') return false;
     this.debugLog(logEventName, {
       type: message?.type || null,
       message,
     });
-    // A dc.send() that exceeds the SCTP send-buffer / max message size throws.
+    // A delhi.send() that exceeds the SCTP send-buffer / max message size throws.
     // If that throw escaped it would abort handleRealtimeEvent BEFORE
     // queueResponseCreate + setStatus('listening'), stranding the turn at
     // EXECUTING. Swallow it and signal failure so callers can fall through
     // without the offending payload (M13).
     try {
-      this.dc.send(JSON.stringify(message));
+      this.delhi.send(JSON.stringify(message));
       return true;
     } catch (error) {
       this.debugLog('client.send.failed', {
@@ -346,13 +346,13 @@ export class RealtimeConnection {
   }
 
   closeTransport() {
-    if (this.dc) {
+    if (this.delhi) {
       try {
-        this.dc.close();
+        this.delhi.close();
       } catch {
         /* no-op */
       }
-      this.dc = null;
+      this.delhi = null;
     }
     if (this.pc) {
       try {

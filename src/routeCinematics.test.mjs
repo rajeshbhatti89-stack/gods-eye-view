@@ -181,7 +181,7 @@ function maxStep(values) {
   return worst;
 }
 
-// Austin: a 6-waypoint route with two sharp turns (a right, then a left).
+// New Delhi: a 6-waypoint route with two sharp turns (a right, then a left).
 const TWO_TURN_ROUTE = [
   [-97.7600, 30.2600],
   [-97.7480, 30.2600],

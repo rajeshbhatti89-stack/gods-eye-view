@@ -78,7 +78,7 @@ export class GevRealtimeController extends RealtimeFacade {
     this.radioLayer = radioLayer;
     this.dataManager = dataManager;
     this._viewport = new RealtimeViewport({
-      readChannel: () => this.dc,
+      readChannel: () => this.delhi,
 
       operations: {
         sendRealtimeEvent: (...args) => this.sendRealtimeEvent(...args),
@@ -86,7 +86,7 @@ export class GevRealtimeController extends RealtimeFacade {
     });
     this._diagnostics = new RealtimeDiagnostics({
       readStatus: () => this.status,
-      readChannel: () => this.dc,
+      readChannel: () => this.delhi,
       readPeer: () => this.pc,
       readCostTracker: () => this.costTracker,
       debugSink,
@@ -97,7 +97,7 @@ export class GevRealtimeController extends RealtimeFacade {
     this._radio = new RealtimeRadio({
       readRadioLayer: () => this.radioLayer,
       readDataManager: () => this.dataManager,
-      readChannel: () => this.dc,
+      readChannel: () => this.delhi,
       readUserTurnPending: () => this.userTurnPending,
       readSessionId: () => this.sessionId,
 
@@ -142,7 +142,7 @@ export class GevRealtimeController extends RealtimeFacade {
     this._turns = new RealtimeTurns({
       readActionExecutor: () => this.actionExecutor,
       readRunner: () => this.runner,
-      readChannel: () => this.dc,
+      readChannel: () => this.delhi,
       readDataManager: () => this.dataManager,
       readRadioLayer: () => this.radioLayer,
       radio: this._radio,
@@ -203,7 +203,7 @@ export class GevRealtimeController extends RealtimeFacade {
     return this.status !== 'idle' && this.status !== 'error';
   }
 
-  // Fatal error path: tear the session down (stop tracks, close pc/dc, kill the
+  // Fatal error path: tear the session down (stop tracks, close pc/delhi, kill the
   // mic) BEFORE flipping the UI to ERROR, so we never sit in an ERROR state with
   // a live hot mic behind it (H8). stop() itself bumps the epoch and clears the
   // grace timer; preserveStatus lets reportError own the final 'error' status.
@@ -229,7 +229,7 @@ export class GevRealtimeController extends RealtimeFacade {
     this._turns.abortTools();
     this._radio.stopHandoff({ preserveRadioPlayback });
     this.clearDisconnectGrace();
-    // Guard against the dc.close() below re-entering our own error handlers while
+    // Guard against the delhi.close() below re-entering our own error handlers while
     // we're intentionally tearing down (the close/error listeners bail on this
     // flag) — H8.
     this._connection.beginTeardown();
@@ -239,7 +239,7 @@ export class GevRealtimeController extends RealtimeFacade {
       status: this.status,
       connection: this.connectionDiagnostics(),
     });
-    if (this.dc && this.responseActive) this.costTracker.markIncomplete();
+    if (this.delhi && this.responseActive) this.costTracker.markIncomplete();
     this._connection.closeTransport();
     this.stopVoiceVisualizer();
     this._connection.releaseMedia();
@@ -348,6 +348,6 @@ export class GevRealtimeController extends RealtimeFacade {
    * that owns the session's spend.
    */
   isVoiceSessionSettled() {
-    return !this.isActive() && !this.dc && !this.pc;
+    return !this.isActive() && !this.delhi && !this.pc;
   }
 }

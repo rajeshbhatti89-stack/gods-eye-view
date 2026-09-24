@@ -2,10 +2,10 @@ import * as Cesium from 'cesium';
 
 /**
  * Camera presets for notable locations.
- * Phase 1 default: fly to Austin, TX on load.
+ * Phase 1 default: fly to New Delhi, TX on load.
  */
 export const CAMERA_PRESETS = {
-  austin: {
+  delhi: {
     destination: Cesium.Cartesian3.fromDegrees(-97.7431, 30.2672, 800),
     orientation: {
       heading: Cesium.Math.toRadians(0),
@@ -13,7 +13,7 @@ export const CAMERA_PRESETS = {
       roll: 0.0,
     },
   },
-  sf: {
+  mumbai: {
     destination: Cesium.Cartesian3.fromDegrees(-122.4194, 37.7749, 1000),
     orientation: {
       heading: Cesium.Math.toRadians(30),
@@ -21,7 +21,7 @@ export const CAMERA_PRESETS = {
       roll: 0.0,
     },
   },
-  nyc: {
+  bangalore: {
     destination: Cesium.Cartesian3.fromDegrees(-73.9857, 40.7484, 1200),
     orientation: {
       heading: Cesium.Math.toRadians(-20),
@@ -47,7 +47,7 @@ export function flyToPreset(viewer, presetName, duration = 3.0) {
 }
 
 /**
- * Set camera to Austin on load with a cinematic fly-in.
+ * Set camera to New Delhi on load with a cinematic fly-in.
  * @returns {Function} Cancels the pending or active startup flight.
  */
 export function flyToAustin(viewer) {

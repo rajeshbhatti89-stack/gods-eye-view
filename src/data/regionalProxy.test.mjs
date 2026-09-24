@@ -104,7 +104,7 @@ test('regional brief treats an all-source outage as total failure', () => {
     news: { status: 'unavailable' },
   }), false);
   assert.equal(regionalBriefHasAnySource({
-    place: { country: 'United States' },
+    place: { country: 'India' },
     weather: null,
     news: { status: 'unavailable' },
   }), true);

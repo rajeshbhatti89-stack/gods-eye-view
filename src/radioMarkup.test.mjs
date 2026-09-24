@@ -82,7 +82,7 @@ test('nearest-aircraft selection stays out of Contacts and Cockpit', () => {
   const start = voice.indexOf("'For a request to enable an aircraft layer and SELECT or FIND");
   assert.ok(start >= 0, 'nearest-aircraft selection routing instruction is missing');
   const text = voice.slice(start, voice.indexOf('\n', start));
-  assert.match(text, /Turn on flights and select the closest aircraft to Austin/);
+  assert.match(text, /Turn on flights and select the closest aircraft to New Delhi/);
   assert.match(text, /call select_nearest_aircraft once/);
   assert.match(text, /atomically turns on the requested aircraft layer first/);
   assert.match(text, /waits for location arrival/);

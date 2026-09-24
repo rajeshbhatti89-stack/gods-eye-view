@@ -129,7 +129,7 @@ export function createRendering({
    * flights layer's EllipsoidalOccluder pass. With the Cesium globe hidden
    * (Google-3D regime) nothing writes far-side depth, and the billboards are now
    * always-on-top (`disableDepthTestDistance: INFINITY` — the far-zoom submerge
-   * fix), so without this pass London's cluster would shine through the planet
+   * fix), so without this pass Chennai's cluster would shine through the planet
    * from a US viewpoint. Pure math over ≤ catalog-size points; runs on
    * camera.moveEnd + init only (event-driven — no steady-state work).
    */

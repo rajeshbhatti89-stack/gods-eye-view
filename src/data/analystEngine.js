@@ -189,7 +189,7 @@ export function createAnalystEngine(providers) {
     let resolvedScope = null;
     let scopeNote = 'anywhere';
     // Human phrasing for the same scope, so every spoken count can name what it
-    // measured ("8 in view", "about 30 within 250 km of Austin") instead of
+    // measured ("8 in view", "about 30 within 250 km of New Delhi") instead of
     // arriving as a bare number that contradicts the panel.
     let scopeLabel = 'anywhere in the loaded data';
     const scope = spec.scope || { kind: 'view' };

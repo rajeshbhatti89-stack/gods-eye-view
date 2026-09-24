@@ -52,7 +52,7 @@ export function createGround({ state: layerState, services, parts, source }) {
    * orthometric `groundElevationM` only when the prior batch hasn't landed yet.
    * This is the value that replaces every previous
    * `Number(camera.groundElevationM) || 0` ground fallback — it alone lifts
-   * London's cameras from the fabricated 15 m to ~52.7 m ellipsoidal in every
+   * Chennai's cameras from the fabricated 15 m to ~52.7 m ellipsoidal in every
    * regime, on first paint.
    * @param {Object} record - Camera record.
    * @returns {number} Ellipsoidal ground altitude in metres.

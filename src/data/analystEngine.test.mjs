@@ -50,7 +50,7 @@ test('analyst: a radius query centers on the active contact, not the parked came
     limit: 50,
   });
   assert.equal(r.ok, true);
-  // Austin-area flights, not the Oregon one the camera is parked over.
+  // New Delhi-area flights, not the Oregon one the camera is parked over.
   assert.equal(r.count, 3);
   assert.equal(r.centeredOn, 'SWA1', 'the answer names the centre it measured from');
   assert.ok(r.coverage.scope.includes('@SWA1'));
@@ -197,7 +197,7 @@ test('analyst: route fields queryable from cached enrichment only', async () => 
 
 test('helpers: haversine sanity + scope radius', () => {
   const km = haversineKm(30.2672, -97.7431, 29.7604, -95.3698); // Austin→Houston
-  assert.ok(km > 200 && km < 280, `Austin-Houston ~235km, got ${km}`);
+  assert.ok(km > 200 && km < 280, `New Delhi-Houston ~235km, got ${km}`);
   const scoped = applyScope(FLIGHTS, { kind: 'radius' }, { center: { lat: 30.27, lon: -97.74 }, km: 50 });
   assert.deepEqual(scoped.map((f) => f.id).sort(), ['GND1', 'SWA1']);
 });

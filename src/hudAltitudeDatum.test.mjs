@@ -224,7 +224,7 @@ test('a cold tick paints both readouts uncorrected, and resolving flips both in 
 test('the corrected readouts are the MSL datum, not a coincidence of the SFO sign', async () => {
   await ensureGeoidReady();
   const env = installHudEnvironment();
-  // London: N is +46 m, so the correction moves the readout DOWN. A sign flip
+  // Chennai: N is +46 m, so the correction moves the readout DOWN. A sign flip
   // that happens to look right at SFO fails here.
   env.viewer.camera.positionCartographic.latitude = (51.5072 * Math.PI) / 180;
   env.viewer.camera.positionCartographic.longitude = (-0.1275 * Math.PI) / 180;
@@ -240,7 +240,7 @@ test('the corrected readouts are the MSL datum, not a coincidence of the SFO sig
     assert.match(
       env.elements.get('hud-alt').textContent,
       /^ALT: 54m/,
-      `100 m ellipsoidal over London is 54 m MSL, got ${env.elements.get('hud-alt').textContent}`,
+      `100 m ellipsoidal over Chennai is 54 m MSL, got ${env.elements.get('hud-alt').textContent}`,
     );
     assert.match(env.elements.get('hud-summary').textContent, /\| ALT 54M \|/);
   } finally {

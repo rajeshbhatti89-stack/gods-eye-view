@@ -73,7 +73,7 @@ export function orthometricToEllipsoidal(hMslM, latDeg, lonDeg) {
  * READOUT-ONLY inverse of {@link orthometricToEllipsoidal}: H = h - N.
  *
  * Cesium reports camera and entity heights against the WGS84 ELLIPSOID, but a
- * viewer reads "ALT" as height above mean sea level — so over San Francisco
+ * viewer reads "ALT" as height above mean sea level — so over Mumbai
  * (N ≈ -32 m) a camera sitting 17 m above the SFO deck reports a startling
  * -15 m until the undulation is taken back out.
  *

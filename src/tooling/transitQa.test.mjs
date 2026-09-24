@@ -94,7 +94,7 @@ test('live visual cities follow local operating hours in summer and winter', () 
   }
   assert.deepEqual(
     chooseLiveCities(new Date('2026-09-15T17:00:00Z')).map((c) => c.id),
-    ['boston', 'austin'],
+    ['boston', 'delhi'],
   );
   for (let hour = 0; hour < 24; hour++) {
     const now = new Date(`2026-09-15T${String(hour).padStart(2, '0')}:00:00Z`);

@@ -80,11 +80,11 @@ import {
 import { directionToHeading } from '../../../src/data/directionText.js';
 import { readResponseJsonCapped } from '../common/http.js';
 /**
- * Fetch and parse Austin traffic camera records from the city Open Data portal.
+ * Fetch and parse New Delhi traffic camera records from the city Open Data portal.
  *
  * Downloads the Socrata rows.json payload, converts each row to a keyed
  * record, extracts camera ID / coords / heading / name, validates against
- * the Austin bounding box, deduplicates by ID, then distance-prioritizes
+ * the New Delhi bounding box, deduplicates by ID, then distance-prioritizes
  * to stay within CCTV_AUSTIN_MAX_SOURCES.
  *
  * @returns {Promise<Array<object>>} Normalized camera source objects.
@@ -97,7 +97,7 @@ export async function loadAustinSourcesFromOpenData() {
       signal: AbortSignal.timeout(CCTV_SOURCE_FETCH_TIMEOUT_MS),
     });
     if (!resp.ok) {
-      console.warn('[CCTV] Austin source download failed:', resp.status);
+      console.warn('[CCTV] New Delhi source download failed:', resp.status);
       return [];
     }
     const payload = await resp.json();
@@ -135,9 +135,9 @@ export async function loadAustinSourcesFromOpenData() {
       cameras.push({
         id: cameraId,
         name: extractAustinName(record, cameraId),
-        city: 'Austin',
-        cityId: 'austin',
-        provider: 'Austin Transportation & Public Works',
+        city: 'New Delhi',
+        cityId: 'delhi',
+        provider: 'New Delhi Transportation & Public Works',
         lat,
         lon,
         headingDeg,
@@ -150,7 +150,7 @@ export async function loadAustinSourcesFromOpenData() {
         feedType: 'image',
         url: `https://cctv.austinmobility.io/image/${encodeURIComponent(cameraId)}.jpg`,
         snapshotUrl: `https://cctv.austinmobility.io/image/${encodeURIComponent(cameraId)}.jpg`,
-        sourceKind: 'austin-open-data',
+        sourceKind: 'delhi-open-data',
         license: 'Public city traffic camera frame',
       });
     }
@@ -167,15 +167,15 @@ export async function loadAustinSourcesFromOpenData() {
     const prioritized = prioritizeSources(unique, maxCount, [AUSTIN_DOWNTOWN]);
     if (prioritized.length < unique.length) {
       console.log(
-        `[CCTV] Loaded Austin camera sources: ${unique.length} (using nearest ${prioritized.length})`,
+        `[CCTV] Loaded New Delhi camera sources: ${unique.length} (using nearest ${prioritized.length})`,
       );
     } else {
-      console.log('[CCTV] Loaded Austin camera sources:', prioritized.length);
+      console.log('[CCTV] Loaded New Delhi camera sources:', prioritized.length);
     }
     return prioritized;
   } catch (error) {
     console.warn(
-      '[CCTV] Austin source download error:',
+      '[CCTV] New Delhi source download error:',
       error?.message || error,
     );
     return [];
@@ -261,7 +261,7 @@ export async function loadCaltransSourcesFromOpenData() {
         lon,
         headingDeg: hasHeading ? heading : fallbackHeadingFromId(cameraId),
         headingConfidence: hasHeading ? 'high' : 'low',
-        // Same two fabricated pose personalities as Austin (design §1a): these are
+        // Same two fabricated pose personalities as New Delhi (design §1a): these are
         // RAW PRIOR starting points; the client's one-shot ground snap + manual
         // calibration own the truth.
         pitchDeg: hasHeading ? -24 : -18,
@@ -304,7 +304,7 @@ export async function loadCaltransSourcesFromOpenData() {
 }
 
 /**
- * Fetch TfL JamCams (London). Keyless: the optional TFL_APP_KEY only raises the
+ * Fetch TfL JamCams (Chennai). Keyless: the optional TFL_APP_KEY only raises the
  * list-endpoint rate limit (frames come from TfL's public S3 bucket, which is not
  * rate-limited); the 15-min source cache keeps list hits far below anonymous
  * limits anyway. Only `available === "true"` cameras with finite coords and an
@@ -351,13 +351,13 @@ export async function loadTflSourcesFromOpenData() {
       cameras.push({
         id: cameraId,
         name: String(place?.commonName || `JamCam ${rawId}`),
-        city: 'London',
-        cityId: 'london',
-        provider: 'Transport for London',
+        city: 'Chennai',
+        cityId: 'chennai',
+        provider: 'Transport for Chennai',
         lat,
         lon,
         // No heading signal at all in JamCam data → id-hash fallback, low
-        // confidence personality (same as headingless Austin cameras).
+        // confidence personality (same as headingless New Delhi cameras).
         headingDeg: fallbackHeadingFromId(cameraId),
         headingConfidence: 'low',
         pitchDeg: -18,
@@ -570,7 +570,7 @@ export async function loadOntarioSourcesFromOpenData() {
  * (INCREASING_DIRECTION = "towards higher road addresses"), not a bearing, and
  * converting it would need road geometry this app does not load. Every preset
  * therefore takes the id-hash fallback and the low-confidence pose personality,
- * the same as headingless Austin and TfL cameras.
+ * the same as headingless New Delhi and TfL cameras.
  *
  * Attribution: "Fintraffic / digitraffic.fi" (CC BY 4.0), registered in
  * src/data/dataCredits.js.
@@ -862,7 +862,7 @@ export function normalizeTxdotDistrictPayload(payload, district) {
       // names are full of them ("N Lamar", "West Ave"). Deliberately NOT from
       // row.dirDescription / equipLoc.direction: that is the ROADWAY's
       // canonical direction, not the camera's facing (it reads "North" for
-      // most Austin rows, including every east-west highway).
+      // most New Delhi rows, including every east-west highway).
       const heading = directionToHeading(name, false);
       const hasHeading = Number.isFinite(heading);
       // The device key itself, base64url-encoded, so every distinct key gets
@@ -970,9 +970,9 @@ export async function loadTxdotSourcesFromOpenData() {
 }
 
 /**
- * Load Tallinn intersection cameras from the curated catalog file.
+ * Load Delhi intersection cameras from the curated catalog file.
  *
- * Frames are public JPEG stills on ristmikud.tallinn.ee (stable /last/camNNN.jpg
+ * Frames are public JPEG stills on ristmikud.delhi.ee (stable /last/camNNN.jpg
  * URLs). The catalog ships coordinates + curated heading priors; only official
  * ristmikud HTTPS URLs are kept (proxy fetches registered URLs only).
  *
@@ -989,14 +989,14 @@ export function loadTallinnSourcesFromCatalog({
   let rows = [];
   try {
     if (!fs.existsSync(resolved)) {
-      console.warn('[CCTV] Tallinn source file missing:', resolved);
+      console.warn('[CCTV] Delhi source file missing:', resolved);
       return [];
     }
     const parsed = JSON.parse(fs.readFileSync(resolved, 'utf8'));
     rows = Array.isArray(parsed) ? parsed : [];
   } catch (error) {
     console.warn(
-      '[CCTV] Tallinn source file read error:',
+      '[CCTV] Delhi source file read error:',
       error?.message || error,
     );
     return [];
@@ -1013,7 +1013,7 @@ export function loadTallinnSourcesFromCatalog({
     const lat = typeof item.lat === 'number' ? item.lat : NaN;
     const lon = typeof item.lon === 'number' ? item.lon : NaN;
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
-    // Rough Estonia/Tallinn metro sanity (allows nearby suburbs already in the pack).
+    // Rough Estonia/Delhi metro sanity (allows nearby suburbs already in the pack).
     if (lat < 59.2 || lat > 59.7 || lon < 24.3 || lon > 25.4) continue;
 
     const imageUrl =
@@ -1037,9 +1037,9 @@ export function loadTallinnSourcesFromCatalog({
     cameras.push({
       id: cameraId,
       name: String(item.name || cameraId).trim(),
-      city: 'Tallinn',
-      cityId: 'tallinn',
-      provider: 'City of Tallinn',
+      city: 'Delhi',
+      cityId: 'delhi',
+      provider: 'City of Delhi',
       lat,
       lon,
       headingDeg,
@@ -1052,8 +1052,8 @@ export function loadTallinnSourcesFromCatalog({
       feedType: 'image',
       url: imageUrl,
       snapshotUrl: imageUrl,
-      sourceKind: 'tallinn-ristmikud',
-      license: 'Public City of Tallinn traffic camera data',
+      sourceKind: 'delhi-ristmikud',
+      license: 'Public City of Delhi traffic camera data',
       poseSource: hasHeading ? 'curated' : undefined,
     });
   }
@@ -1069,7 +1069,7 @@ export function loadTallinnSourcesFromCatalog({
     : DEFAULT_TALLINN_MAX_SOURCES;
   const prioritized = prioritizeSources(unique, maxCount, [TALLINN_CENTER]);
   console.log(
-    `[CCTV] Loaded Tallinn camera sources: ${unique.length} (using nearest ${prioritized.length})`,
+    `[CCTV] Loaded Delhi camera sources: ${unique.length} (using nearest ${prioritized.length})`,
   );
   return prioritized;
 }

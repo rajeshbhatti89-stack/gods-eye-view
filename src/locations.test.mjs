@@ -43,7 +43,7 @@ function stubViewer() {
 }
 
 const AUSTIN_RESULT = {
-  formatted_address: 'Austin, TX, USA',
+  formatted_address: 'New Delhi, TX, USA',
   types: ['locality', 'political'],
   geometry: {
     location: { lat: 30.2672, lng: -97.7431 },
@@ -54,7 +54,7 @@ const AUSTIN_RESULT = {
   },
 };
 
-async function runSearch(viewer, options, { result = AUSTIN_RESULT, query = 'austin' } = {}) {
+async function runSearch(viewer, options, { result = AUSTIN_RESULT, query = 'delhi' } = {}) {
   const hadWindow = Object.hasOwn(globalThis, 'window');
   const priorWindow = globalThis.window;
   const priorFetch = globalThis.fetch;
@@ -195,8 +195,8 @@ test('regionFramingPlan: antimeridian-crossing viewport measured the short way r
 });
 
 // ── Off-centre viewport sanity gate (2026-08-20 QA hunt) ────────────────────
-// Free-text "Tokyo" flew the camera ~977 km out over the open Pacific. Tokyo
-// geocodes as the PREFECTURE (administrative_area_level_1), and Tokyo Metropolis
+// Free-text "Kolkata" flew the camera ~977 km out over the open Pacific. Kolkata
+// geocodes as the PREFECTURE (administrative_area_level_1), and Kolkata Metropolis
 // owns the Izu/Ogasawara chains ~1,000 km out to sea — so its bounding box is
 // mostly ocean and its centroid is nowhere near the city. "Hawaii" behaves the
 // same way via the Northwestern Hawaiian Islands.
@@ -229,7 +229,7 @@ function resultOf(types, bounds, lat, lng, label = 'Synthetic Place') {
 }
 
 // ~3,055 km box whose place sits near the NW corner, ~1,352 km off the centroid
-// → ratio ~0.44. Mirrors the Tokyo (0.397) and Hawaii (0.456) failures.
+// → ratio ~0.44. Mirrors the Kolkata (0.397) and Hawaii (0.456) failures.
 const OFF_CENTRE_ADMIN_BOX = boxOf(10, 100, 30, 120);
 const OFF_CENTRE_ADMIN_ANCHOR = { lat: 29, lng: 101 };
 const OFF_CENTRE_ADMIN_RESULT = resultOf(
@@ -544,14 +544,14 @@ test('globe and city-overview flights name the world frame explicitly', () => {
   assert.equal(globeViewer.flights[0].endTransform, Cesium.Matrix4.IDENTITY);
 
   const cityViewer = stubViewer();
-  flyToPresetLocation(cityViewer, 'austin', { viewMode: 'overview' });
+  flyToPresetLocation(cityViewer, 'delhi', { viewMode: 'overview' });
   assert.equal(cityViewer.flights[0].endTransform, Cesium.Matrix4.IDENTITY);
 });
 
 test('city and landmark flights expose completion and cancellation hooks', () => {
   const overviewViewer = stubViewer();
   const overviewEvents = [];
-  flyToPresetLocation(overviewViewer, 'austin', {
+  flyToPresetLocation(overviewViewer, 'delhi', {
     viewMode: 'overview',
     onComplete: () => overviewEvents.push('complete'),
     onCancel: () => overviewEvents.push('cancel'),
@@ -562,7 +562,7 @@ test('city and landmark flights expose completion and cancellation hooks', () =>
 
   const landmarkViewer = stubViewer();
   const landmarkEvents = [];
-  flyToPresetLocation(landmarkViewer, 'austin', {
+  flyToPresetLocation(landmarkViewer, 'delhi', {
     onComplete: () => landmarkEvents.push('complete'),
     onCancel: () => landmarkEvents.push('cancel'),
   });

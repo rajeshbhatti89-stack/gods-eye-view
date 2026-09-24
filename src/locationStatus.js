@@ -4,7 +4,7 @@
  * Two navigation paths reach it and both must land somewhere real:
  *  - a preset city/POI pill, which carries a curated `{name, pois}` record;
  *  - a free-text geocode search, which carries only the formatted address
- *    string ("Tokyo, Japan", "Tokyo Tower, 4 Chome-2-8 Shibakoen, …, Japan").
+ *    string ("Kolkata, Japan", "Kolkata Tower, 4 Chome-2-8 Shibakoen, …, Japan").
  *
  * Before this existed only the pill path was rendered, so a search left the
  * readout reporting "Location: --" while the camera sat over the destination.
@@ -53,7 +53,7 @@ export function locationMiniStatus({
     return {
       city: `📍 ${segments[0]}`,
       // The remaining address is the place's context ("Japan", "Minato City,
-      // Tokyo, Japan"); the readout is ellipsised in CSS, so a long tail is
+      // Kolkata, Japan"); the readout is ellipsised in CSS, so a long tail is
       // safe. A one-segment geocode ("Japan") has no context to show.
       poi:
         segments.length > 1

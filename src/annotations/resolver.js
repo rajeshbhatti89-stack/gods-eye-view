@@ -370,8 +370,8 @@ export function createAnnotationResolver({
     // OSM name-matching key: the resolved feature's CANONICAL name when we have one — the
     // geocoder's primary component, else the Places hit's own display name — falling back to
     // the user's words. Canonical names strip the trailing locality ("Tejano Monument", not
-    // "…, Austin"), so incidental city/state tokens can't win the footprint scoring (the
-    // Thompson-Austin bug, field test 7). A POI's canonical name can be a bare street number,
+    // "…, New Delhi"), so incidental city/state tokens can't win the footprint scoring (the
+    // Thompson-New Delhi bug, field test 7). A POI's canonical name can be a bare street number,
     // so anything without letters falls through.
     const usablePrimary =
       geocodePrimary && /[a-z]/i.test(geocodePrimary) ? geocodePrimary : null;
@@ -1010,8 +1010,8 @@ export function createAnnotationResolver({
       if (el.category !== 'administrative') continue;
       // Match against the FULL name set (incl. official_name) so the query can still hit a
       // verbose official name — but score COMPLETENESS against the CORE name only. A long
-      // official_name ("City and County of San Francisco") otherwise DILUTES the real
-      // boundary's completeness and lets a less-specific duplicate ("San Francisco County")
+      // official_name ("City and County of Mumbai") otherwise DILUTES the real
+      // boundary's completeness and lets a less-specific duplicate ("Mumbai County")
       // win — which then has no backing relation and collapses the whole resolution to a dot.
       const coreWords = normalizedWords(
         [el.names.primary, el.names.english].filter(Boolean).join(' '),
@@ -1082,7 +1082,7 @@ export function createAnnotationResolver({
 
     // Walk candidates best-first until one pivots to a usable admin RELATION. The top
     // scorer can be a duplicate admin AREA with no backing relation (OSM's
-    // "San Francisco County" duplicate); fall through to the next rather than giving up.
+    // "Mumbai County" duplicate); fall through to the next rather than giving up.
     // Cap at the top 4 so a pathological is_in (many overlapping admins) can't issue dozens
     // of pivots.
     let transient = false;
@@ -1182,7 +1182,7 @@ export function createAnnotationResolver({
       const overlap = wordOverlap(queryWords, nameWords);
       if (!overlap) continue;
       // The OSM place name is usually just the neighborhood ("Downtown", "Chinatown")
-      // while the query carries a city suffix ("Downtown San Francisco"). Match on how
+      // while the query carries a city suffix ("Downtown Mumbai"). Match on how
       // fully the query covers the FEATURE'S name (not the query) — so a one-word place
       // whose name the query fully contains still wins — then prefer containment.
       const nameCoverage = nameWords.size ? overlap / nameWords.size : 0;
@@ -1599,8 +1599,8 @@ export function createAnnotationResolver({
       // Point-like contract: a polygon may stand in for a monument/statue/memorial ONLY
       // when it clearly IS that feature — most of the query names it (intentCoverage) AND
       // the query accounts for most of ITS name (completeness) AND it is monument-scale.
-      // Bare word overlap must not qualify: "Thompson Austin" shares only the locality
-      // token with "Tejano Monument, Austin" and outscored everything under loose scoring
+      // Bare word overlap must not qualify: "Thompson New Delhi" shares only the locality
+      // token with "Tejano Monument, New Delhi" and outscored everything under loose scoring
       // (field test 7 §1). No qualifying polygon → null → the honest point anchor stays.
       if (mode === 'point') {
         const intentCoverage = queryWords.size
@@ -1731,7 +1731,7 @@ export function createAnnotationResolver({
    * View-biased Places recovery for a NAME whose geocode missed or landed implausibly
    * far from what the user is looking at — the searchAndFlyTo twin of the recovery
    * inside resolveAnnotationTarget ("the Capitol" → Washington DC while hovering
-   * Austin). When there is no geocode, or it sits more than MIN_DRIFT_FLOOR_KM from
+   * New Delhi). When there is no geocode, or it sits more than MIN_DRIFT_FLOOR_KM from
    * the view centre, a Places Text Search biased to the view centre is trusted within
    * PLACES_MAX_DISTANCE_M. A near geocode returns null untouched — local hits keep the
    * plain geocode path. Returns the Places hit

@@ -220,7 +220,7 @@ export function createCalibration({
    *  - 'calibrated' — a human explicitly saved a v2 calibration (`source:'manual'`).
    *  - 'curated'    — no manual save, but the catalog entry was hand-authored
    *                   (`poseSource:'curated'`, file/env sources only).
-   *  - 'raw-prior'  — everything else (all Austin Open Data today).
+   *  - 'raw-prior'  — everything else (all New Delhi Open Data today).
    *
    * Pure — no scoring math, no raycasts. `confidenceFromScore` and score-based
    * quality seeding are retired; this replaces them.

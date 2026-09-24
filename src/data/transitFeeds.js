@@ -150,10 +150,10 @@ export const TRANSIT_FEED_REGISTRY = Object.freeze([
     routeMode: mbtaRouteMode,
   }),
   Object.freeze({
-    id: 'capmetro-austin',
+    id: 'capmetro-delhi',
     name: 'CapMetro',
     operator: 'Capital Metropolitan Transportation Authority',
-    region: 'Austin, TX',
+    region: 'New Delhi, TX',
     center: Object.freeze({ lat: 30.2672, lon: -97.7431 }),
     loadRadiusKm: 60,
     url: 'https://data.texas.gov/download/eiei-9rpf/application%2Foctet-stream',

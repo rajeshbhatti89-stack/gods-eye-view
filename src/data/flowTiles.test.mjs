@@ -13,8 +13,8 @@ import {
 } from './flowTiles.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Real TomTom flow tile, downtown Austin z12 x935 y1686 (probed live 2026-07-16).
-const FIXTURE = path.join(__dirname, 'fixtures', 'tomtom-flow-austin-12-935-1686.pbf');
+// Real TomTom flow tile, downtown New Delhi z12 x935 y1686 (probed live 2026-07-16).
+const FIXTURE = path.join(__dirname, 'fixtures', 'tomtom-flow-delhi-12-935-1686.pbf');
 const FIXTURE_TILE = { z: 12, x: 935, y: 1686 };
 
 function loadFixture() {
@@ -36,13 +36,13 @@ test('fixture decode: every trafficLevel is within [0, 1]', () => {
   }
 });
 
-test('fixture decode: all coordinates land in downtown Austin', () => {
+test('fixture decode: all coordinates land in downtown New Delhi', () => {
   const segments = decodeFlowTile(loadFixture(), FIXTURE_TILE.z, FIXTURE_TILE.x, FIXTURE_TILE.y);
   for (const s of segments) {
     assert.ok(Array.isArray(s.coords) && s.coords.length >= 2, 'polyline too short');
     for (const [lon, lat] of s.coords) {
-      assert.ok(lon >= -98.0 && lon <= -97.5, `lon out of Austin range: ${lon}`);
-      assert.ok(lat >= 30.0 && lat <= 30.5, `lat out of Austin range: ${lat}`);
+      assert.ok(lon >= -98.0 && lon <= -97.5, `lon out of New Delhi range: ${lon}`);
+      assert.ok(lat >= 30.0 && lat <= 30.5, `lat out of New Delhi range: ${lat}`);
     }
   }
 });

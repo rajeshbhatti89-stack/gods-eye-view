@@ -98,7 +98,7 @@ export function formatErrorForDisplay(record) {
     record.sctpCauseCode != null && `sctp=${record.sctpCauseCode}`,
     record.connectionState && `pc=${record.connectionState}`,
     record.iceConnectionState && `ice=${record.iceConnectionState}`,
-    record.dataChannelState && `dc=${record.dataChannelState}`,
+    record.dataChannelState && `delhi=${record.dataChannelState}`,
   ]
     .filter(Boolean)
     .join(' | ');
@@ -162,7 +162,7 @@ export class RealtimeDiagnostics {
   get status() {
     return this.readStatus();
   }
-  get dc() {
+  get delhi() {
     return this.readChannel();
   }
   get pc() {
@@ -183,7 +183,7 @@ export class RealtimeDiagnostics {
     return record;
   }
 
-  connectionDiagnostics(dataChannel = this.dc) {
+  connectionDiagnostics(dataChannel = this.delhi) {
     return {
       dataChannelState: dataChannel?.readyState || null,
       connectionState: this.pc?.connectionState || null,

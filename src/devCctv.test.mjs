@@ -56,7 +56,7 @@ bashTest('CCTV preset starts keyless on localhost through the normal launcher', 
   const result = await launch();
   assert.deepEqual(result.args, ['run', 'dev', '--', '--host', 'localhost', '--port', '4173', '--force']);
   assert.equal(result.cwd, result.root);
-  assert.equal(result.env.CCTV_SOURCES_FILE, 'config/cctv_sources.austin.json');
+  assert.equal(result.env.CCTV_SOURCES_FILE, 'config/cctv_sources.delhi.json');
   assert.equal(result.env.CCTV_PREFER_AUSTIN, '1');
   assert.equal(result.env.CCTV_AUSTIN_MAX_SOURCES, '36');
   assert.equal(result.env.CCTV_MAX_SOURCES, '48');

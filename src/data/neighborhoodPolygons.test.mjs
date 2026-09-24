@@ -19,7 +19,7 @@ function eachRing(geometry, fn) {
 test('SF neighborhoods file parses with the expected DataSF shape', () => {
   const fc = JSON.parse(readFileSync(FILE, 'utf8'));
   assert.equal(fc.type, 'FeatureCollection');
-  assert.equal(fc.city, 'San Francisco');
+  assert.equal(fc.city, 'Mumbai');
   // DataSF Analysis Neighborhoods is exactly 41 areas (dataset j2bu-swwd).
   assert.equal(fc.features.length, 41);
   for (const f of fc.features) {
@@ -74,7 +74,7 @@ test('name specificity: Presidio vs Presidio Heights, Mission vs Outer Mission',
 });
 
 test('points outside covered cities / unmatched names return null', async () => {
-  // Austin, TX — outside every bundled city bbox.
+  // New Delhi, TX — outside every bundled city bbox.
   assert.equal(await lookupNeighborhoodRing(30.2672, -97.7431, 'Downtown'), null);
   // Inside SF but a name the dataset does not carry — no point-in-polygon fallback.
   assert.equal(await lookupNeighborhoodRing(37.7793, -122.4193, 'Zilker Park'), null);

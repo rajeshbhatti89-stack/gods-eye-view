@@ -88,7 +88,7 @@ export function createRendering({
    *  writes depth and residual baro/floor error will always leave some sprite
    *  geometry at or below it; a uniform rule beats the grounded-only /
    *  low-AGL-only conditions that kept leaving classes of contacts buried
-   *  (2026-07-03 Van Nuys grounded case; 2026-07-06 Austin QNH-below-field
+   *  (2026-07-03 Van Nuys grounded case; 2026-07-06 New Delhi QNH-below-field
    *  case). Far-side planes are still removed by the fleet tick's horizon
    *  occluder, which never depended on depth. Kept as a function so the
    *  callers' restyle sites stay diff-stable. */

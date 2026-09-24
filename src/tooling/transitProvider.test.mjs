@@ -219,7 +219,7 @@ test('a redirect is followed only within the feed origin, and never contacted fi
     upstreamResponse({ bytes: FULL }),
   ]);
   const call = install(transitProxy({ fetchImpl: sameOrigin.fetchImpl }));
-  const ok = await call('/vehicles/capmetro-austin');
+  const ok = await call('/vehicles/capmetro-delhi');
   assert.equal(ok.status, 200);
   assert.equal(sameOrigin.calls.length, 2);
   assert.equal(
@@ -236,7 +236,7 @@ test('a redirect is followed only within the feed origin, and never contacted fi
     upstreamResponse({ bytes: FULL }),
   ]);
   const refuse = install(transitProxy({ fetchImpl: offOrigin.fetchImpl }));
-  const blocked = await refuse('/vehicles/capmetro-austin');
+  const blocked = await refuse('/vehicles/capmetro-delhi');
   assert.equal(blocked.status, 504);
   assert.equal(
     offOrigin.calls.length,
@@ -364,7 +364,7 @@ test('history reads never fetch upstream, and 304/cache/failure replays never ap
     '/trail/mbta/abc%00bad',
     '/trail/mbta/%E0%A4%A',
     `/trail/mbta/${'a'.repeat(257)}`,
-    '/trail/capmetro-austin/bus-1',
+    '/trail/capmetro-delhi/bus-1',
   ])
     assert.equal((await call(path)).status, 404);
   assert.equal(

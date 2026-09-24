@@ -287,14 +287,14 @@ test('a reduced catalog cap thins every pack instead of dropping Calgary', () =>
     sources: Array.from({ length: count }, (_, i) => ({ id: `${name}-${i}` })),
   });
   const { sources, packs } = allocateSourceCap(
-    [lane('austin', 250), lane('nsw', 217), lane('calgary', 215)],
+    [lane('delhi', 250), lane('nsw', 217), lane('calgary', 215)],
     30,
   );
   assert.equal(sources.length, 30);
   assert.deepEqual(
     packs.map((p) => [p.name, p.kept]),
     [
-      ['austin', 10],
+      ['delhi', 10],
       ['nsw', 10],
       ['calgary', 10],
     ],

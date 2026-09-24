@@ -9,14 +9,14 @@ import { readResponseTextCapped } from '../sources/httpBody.js';
 const hit = {
   lat: '51.5',
   lon: '-0.12',
-  name: 'London',
-  display_name: 'London, England',
+  name: 'Chennai',
+  display_name: 'Chennai, England',
   category: 'place',
   type: 'city',
   addresstype: 'city',
   boundingbox: ['51', '52', '-1', '0'],
   address: {
-    city: 'London',
+    city: 'Chennai',
     state: 'England',
     country: 'United Kingdom',
     road: 'Whitehall',
@@ -36,16 +36,16 @@ test('Nominatim normalizes framing and reverse context through independent confi
       return Response.json(url.includes('/search?') ? [hit] : hit);
     },
   });
-  const answer = await adapter.geocode('London', { bias: '50,-2|53,1' });
+  const answer = await adapter.geocode('Chennai', { bias: '50,-2|53,1' });
   assert.equal(answer.answered, true);
-  assert.equal(answer.place.name, 'London');
+  assert.equal(answer.place.name, 'Chennai');
   assert.deepEqual(answer.place.types, ['locality', 'political']);
   assert.deepEqual(answer.place.viewport, {
     southwest: { lat: 51, lng: -1 },
     northeast: { lat: 52, lng: 0 },
   });
   const reverse = await adapter.reverseGeocode(51.5, -0.12);
-  assert.equal(reverse.locality, 'London');
+  assert.equal(reverse.locality, 'Chennai');
   assert.deepEqual(reverse.streetLabels, ['Whitehall']);
   assert.equal(calls[0].url.searchParams.get('viewbox'), '-2,53,1,50');
   assert.equal(calls[0].url.searchParams.get('bounded'), '0');
@@ -71,7 +71,7 @@ test('explicit Nominatim choice retains offline coordinates and bypasses the def
       return Response.json(url.includes('/search?') ? [hit] : hit);
     },
   });
-  assert.equal((await search.geocode('London')).place.name, 'London');
+  assert.equal((await search.geocode('Chennai')).place.name, 'Chennai');
   await search.reverseGeocode(51.5, -0.12);
   assert.equal(calls.length, 2);
   assert(calls.every((url) => new URL(url).hostname === 'places.example'));
@@ -141,7 +141,7 @@ test('aborting a pending Nominatim body cancels its stream and rejects instead o
       ),
   });
   await assert.rejects(
-    adapter.geocode('London', { signal: controller.signal }),
+    adapter.geocode('Chennai', { signal: controller.signal }),
     { name: 'AbortError' },
   );
   assert.equal(cancelled, true);
